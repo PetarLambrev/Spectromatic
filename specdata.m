@@ -92,7 +92,7 @@ classdef specdata < specparent
                                    error('X and Y must be numeric vectors.');
                                end
                            elseif strcmp(f, 'ID')
-                               if ischar(newX(k).(f)) && ~iscell(newX(k).(f))
+                               if isstring(newX(k).(f)) || (ischar(newX(k).(f)) && ~iscell(newX(k).(f)))
                                    SP(k).ID = newX(k).ID;
                                else
                                    error('ID must be a string.')
@@ -819,6 +819,39 @@ classdef specdata < specparent
            
            fprintf('File %s saved.\r',FileName);
        end %saveh5       
+
+       function T = table(SP, varargin)
+           % TABLE Convert specdata to table
+           %
+           % Synthax
+           %    T = table(S)
+           %
+           % Description
+           % Creates a table with rows for every spectrum and columns
+           % containing properties (metadata), such as ID, XType, etc.
+           % The actual data (X, Y) are also included in the table.
+        
+           for ix = 1:length(SP)
+               A = SP(ix);
+               B = struct;
+               B.ID = string(A.ID);
+               B.X = A.X;
+               B.Y = A.Y;
+               B.XType = string(A.XType);
+               B.XUnit = string(A.XUnit);
+               B.YType = string(A.YType);
+               B.YUnit = string(A.YUnit);
+               B.DateTime = datetime(A.DateTime);
+               B.ExpID = string(A.ExpID);
+               B.Comment = A.Comment;
+               B.History = string(A.History);
+               B.Dim = A.dim;
+               S(ix) = B;
+           end
+           T = struct2table(S);
+
+
+       end
 
        function data2D = unstack(data, expr)
            % UNSTACK Convert specdata array to specdata2D array

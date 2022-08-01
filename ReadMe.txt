@@ -15,7 +15,15 @@ Download the latest version at
 http://www.mathworks.com/matlabcentral/fileexchange/32828-spectr-o-matic
 
 Release notes
+
+v. 2.4
+
+New methods
+
+- table converts the spectra array to a MATLAB table.
+
 v. 2.3
+
 New methods
 - ploterror plots spectra with errors as shaded areas
 - fwhm, to calculate full width at half maximum
@@ -31,6 +39,7 @@ Updated methods
 - setx updated to allow for different interpolation methods (for example spline)
 
 v. 2.2
+
 - New methods trapz and cumtrapz for trapezoid integration of spectra
 - New method fitbaseline for polynomial fit of spectra / baselines
 - The Spectromatic App uses MATLAB 2019b runtime allowing figure export and copying
