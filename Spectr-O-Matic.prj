@@ -1,0 +1,124 @@
+<deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
+  <configuration build-checksum="2338504779" file="d:\Users\parvi\OneDrive\Lab\MATLAB\Spectromatic\Spectr-O-Matic.prj" location="d:\Users\parvi\OneDrive\Lab\MATLAB\Spectromatic" name="Spectr-O-Matic" preferred-package-location="d:\Users\parvi\OneDrive\Lab\MATLAB\Spectromatic\Spectr-O-Matic\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+    <param.appname>spectromatic</param.appname>
+    <param.icon />
+    <param.icons />
+    <param.version>2.1</param.version>
+    <param.authnamewatermark>Petar Lambrev</param.authnamewatermark>
+    <param.email>spectromatic@outlook.com</param.email>
+    <param.company />
+    <param.summary>Spectroscopy Data Analysis</param.summary>
+    <param.description>for more information, visit http://plambrev.wix.com/spectromatic</param.description>
+    <param.screenshot>${PROJECT_ROOT}\_Resources\splash.png</param.screenshot>
+    <param.guid />
+    <param.installpath.string>\spectromatic\</param.installpath.string>
+    <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
+    <param.logo />
+    <param.install.notes />
+    <param.target.install.notes />
+    <param.intermediate>${PROJECT_ROOT}\Spectr-O-Matic\for_testing</param.intermediate>
+    <param.files.only>${PROJECT_ROOT}\Spectr-O-Matic\for_redistribution_files_only</param.files.only>
+    <param.output>${PROJECT_ROOT}\Spectr-O-Matic\for_redistribution</param.output>
+    <param.logdir>${PROJECT_ROOT}\Spectr-O-Matic</param.logdir>
+    <param.enable.clean.build>false</param.enable.clean.build>
+    <param.user.defined.mcr.options />
+    <param.target.type>subtarget.standalone</param.target.type>
+    <param.support.packages />
+    <param.web.mcr>true</param.web.mcr>
+    <param.package.mcr>false</param.package.mcr>
+    <param.no.mcr>false</param.no.mcr>
+    <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
+    <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
+    <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
+    <param.windows.command.prompt>true</param.windows.command.prompt>
+    <param.create.log>false</param.create.log>
+    <param.log.file />
+    <param.native.matlab>false</param.native.matlab>
+    <param.checkbox>false</param.checkbox>
+    <param.example />
+    <param.help.text />
+    <unset>
+      <param.icon />
+      <param.icons />
+      <param.company />
+      <param.guid />
+      <param.installpath.string />
+      <param.installpath.combo />
+      <param.logo />
+      <param.target.install.notes />
+      <param.intermediate />
+      <param.files.only />
+      <param.output />
+      <param.logdir />
+      <param.enable.clean.build />
+      <param.user.defined.mcr.options />
+      <param.target.type />
+      <param.support.packages />
+      <param.web.mcr />
+      <param.package.mcr />
+      <param.no.mcr />
+      <param.web.mcr.name />
+      <param.package.mcr.name />
+      <param.no.mcr.name />
+      <param.windows.command.prompt />
+      <param.create.log />
+      <param.log.file />
+      <param.native.matlab />
+      <param.checkbox />
+      <param.example />
+      <param.help.text />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\spectromatic.mlapp</file>
+    </fileset.main>
+    <fileset.resources />
+    <fileset.package />
+    <fileset.depfun>
+      <file>${PROJECT_ROOT}\catfind.m</file>
+      <file>${PROJECT_ROOT}\database_app_16.png</file>
+      <file>${PROJECT_ROOT}\edit_copy.png</file>
+      <file>${PROJECT_ROOT}\edit_delete.png</file>
+      <file>${PROJECT_ROOT}\getdir.m</file>
+      <file>${PROJECT_ROOT}\import_ts_16.png</file>
+      <file>${PROJECT_ROOT}\legend.png</file>
+      <file>${PROJECT_ROOT}\new_variable_ts_16.png</file>
+      <file>${PROJECT_ROOT}\open_ts_16.png</file>
+      <file>${PROJECT_ROOT}\pan.png</file>
+      <file>${PROJECT_ROOT}\peakdet.m</file>
+      <file>${PROJECT_ROOT}\proptable.m</file>
+      <file>${PROJECT_ROOT}\save_all_ts_16.png</file>
+      <file>${PROJECT_ROOT}\save_ts_16.png</file>
+      <file>${PROJECT_ROOT}\specdata.m</file>
+      <file>${PROJECT_ROOT}\specdata2D.m</file>
+      <file>${PROJECT_ROOT}\specparent.m</file>
+      <file>${PROJECT_ROOT}\stats_app_16.png</file>
+      <file>${PROJECT_ROOT}\variable_editor_16.png</file>
+      <file>${PROJECT_ROOT}\zoom in.png</file>
+    </fileset.depfun>
+    <build-deliverables>
+      <file location="${PROJECT_ROOT}\Spectr-O-Matic\for_testing" name="spectromatic.exe" optional="false">d:\Users\parvi\OneDrive\Lab\MATLAB\Spectromatic\Spectr-O-Matic\for_testing\spectromatic.exe</file>
+      <file location="${PROJECT_ROOT}\Spectr-O-Matic\for_testing" name="splash.png" optional="false">d:\Users\parvi\OneDrive\Lab\MATLAB\Spectromatic\Spectr-O-Matic\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\Spectr-O-Matic\for_testing" name="readme.txt" optional="true">d:\Users\parvi\OneDrive\Lab\MATLAB\Spectromatic\Spectr-O-Matic\for_testing\readme.txt</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2017b</root>
+      <toolboxes />
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.0</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>

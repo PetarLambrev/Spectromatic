@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding="utf-8"?>
+
+<toc version="2.0">
+    <tocitem target="main.html">Spectr-O-Matic Toolbox
+        <tocitem target="main.html">Quick Guide
+            <tocitem target="main.html">Getting Started
+            </tocitem>
+            <tocitem target="main_load.html">Load Data
+            </tocitem>
+            <tocitem target="main_operations.html">Operate with Spectra
+            </tocitem>
+            <tocitem target="main_search.html">Search and Index Spectra
+                <tocitem target="main_search_find.html">Search with find and findindex
+                </tocitem>
+                <tocitem target="main_search_autoindex.html">Create index with autoindex
+                </tocitem>
+                <tocitem target="main_search_catfind.html">Create categorical arrays
+                </tocitem>
+                <tocitem target="main_search_catindex.html">Create categorical index table
+                </tocitem>                
+            </tocitem>
+            <tocitem target="main_plot_spectra.html">Plot Data
+                <tocitem target="main_plot_spectra.html">Plot Spectra
+                </tocitem>
+                <tocitem target="main_plot_groups.html">Plot Spectra by Groups
+                </tocitem>
+            </tocitem>
+            <tocitem target="main_save.html">Save and Export Data
+                <tocitem target="main_save_disk.html">Save data to disk
+                </tocitem>
+                <tocitem target="main_save_tables.html">Create tables from spectra
+                </tocitem>
+            </tocitem>
+            <tocitem target="main_help.html">Get Further Help
+            </tocitem>
+        </tocitem>
+    </tocitem>
+    <tocitem target="ref_toc.html">Function Reference>
+        <tocitem target="ref_toc_load.html">Load data in Spectr-O-Matic
+        </tocitem>
+        <tocitem target="ref_toc_prop.html">Get and set properties
+        </tocitem>
+        <tocitem target="ref_toc_math.html">Mathematical operations
+        </tocitem>
+        <tocitem target="ref_toc_other.html">Other operations
+        </tocitem>        
+        <tocitem target="ref_toc_search.html">Search and indexing
+        </tocitem>
+        <tocitem target="ref_toc_plot.html">Plotting
+        </tocitem>
+        <tocitem target="ref_toc_save.html">Save and export
+        </tocitem>        
+    </tocitem>
+    <tocitem target="example_catindex.html">Examples
+        <tocitem target="example_catindex.html">Categorical index
+        </tocitem>
+        <tocitem target="example_linearfit.html">Linear fit
+        </tocitem>
+    </tocitem>
+    
+</toc>

@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="MATLAB R2016a"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><title>catindex</title><style type="text/css">
+* {margin: 0; padding: 0;}
+body {text-align: start; line-height: 17.2339992523193px; min-height: 0px; white-space: normal; color: rgb(0, 0, 0); font-family: Consolas, Inconsolata, Menlo, monospace; font-style: normal; font-size: 14px; font-weight: normal; text-decoration: none; white-space: normal; }
+h1, h2 {font-weight: normal;}
+.content { padding: 30px; }
+
+.S0 { margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S1 { line-height: 26.3999996185303px; min-height: 24px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-size: 22px; white-space: pre-wrap; margin-left: 4px; margin-top: 3px; margin-bottom: 15px; margin-right: 10px;  }
+.S2 { min-height: 0px; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S3 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 2px; margin-bottom: 9px; margin-right: 10px;  }
+.S4 { line-height: 20.576000213623px; min-height: 20px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; white-space: pre-wrap; margin-left: 4px; margin-top: 15px; margin-bottom: 9px; margin-right: 10px;  }
+.S5 { margin-left: 3px; margin-top: 10px; margin-bottom: 10px; margin-right: 3px;  }
+.S6 { line-height: 15.5926666259766px; min-height: 18px; white-space: nowrap; font-size: 12.6666669845581px; white-space: nowrap; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S7 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S8 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S9 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 10px; margin-bottom: 9px; margin-right: 10px;  }
+.S10 { min-height: 0px; font-family: monospace; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S11 { font-family: Helvetica, Arial, sans-serif; margin-left: 0px; margin-top: 10px; margin-bottom: 20px; margin-right: 0px;  }
+.S12 { text-align: left; line-height: 21px; white-space: pre-wrap; white-space: pre-wrap; margin-left: 56px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S13 { font-family: monospace; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S14 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(160, 32, 240); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+
+.LineNodeBlock {margin: 10px 0 10px 0;}
+.LineNodeBlock+.paragraphNode {margin-top: 10px;}
+.lineNode {padding-left: 10px; background-color: #F7F7F7; border-left: 1px solid #E9E9E9; border-right: 1px solid #E9E9E9;}
+.inlineWrapper:first-child .lineNode,.inlineWrapper.outputs+.inlineWrapper .lineNode {padding-top: 5px; border-top: 1px solid #E9E9E9;}
+.inlineWrapper:last-child .lineNode,.inlineWrapper.outputs .lineNode {padding-bottom: 5px; border-bottom: 1px solid #E9E9E9;}
+.lineNode .textBox {white-space: pre;}
+</style></head><body><div class = "content"><div class = 'SectionBlock containment active'><h1 class = "S1"><span class = "S2">catindex</span></h1><p class = "S3"><span class = "S2">Create a categorical variable table based on list of keywords and variable definitions or a "variable=value" definition list.</span></p><p class = "S3"><span class = "S2"></span></p><h2 class = "S4"><span class = "S2">Synthax</span></h2><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S6 lineNode"><span class = "S7">    </span><span class = "S7">cindex</span><span class = "S8"> = catindex(defs,vardef)</span></p></div><div class = 'inlineWrapper'><p class = "S6 lineNode"><span class = "S7">    </span><span class = "S7">cindex</span><span class = "S8"> = catindex(deflist)</span></p></div></div><p class = "S9"><span class = "S2"></span></p><h2 class = "S4"><span class = "S2">Description</span></h2><p class = "S3"><span class = "S10">catindex(defs,vardef) </span><span class = "S2">searches for keywords in defs and sets the corresponding variable values as defined by </span><span class = "S10">vardef</span></p><p class = "S3"><span class = "S2">Categorical variables are dependent variables that define groups, such as 'Gender'. Variables have a defined set of values, such as 'Male', 'Female'. The struct vars contains fields for each variable. Each field must be a cell array of strings defining the possible values for the given variable. Alternatively, variables can be defined as a cell array of strings. Each string must contain a semicolon-separated values.</span></p><p class = "S3"><span class = "S10">catindex(deflist) </span><span class = "S2">does not need a separate variable definition but reads variable names and corresponding values directly from deflist</span></p><p class = "S3"><span class = "S10">catindex</span><span class = "S2"> parses the array of variable names and values and creates a table with rows for each elements in the array as in the example.</span></p><h2 class = "S4"><span class = "S2">Input/Output parameters</span></h2><ul class = "S11"><li class = "S12"><span class = "S13">defs</span><span class = "S0"> - cell array of strings. Each string contains keywords that will be assigned to variables</span></li><li class = "S12"><span class = "S13">vardef</span><span class = "S0"> - struct with fields that define variables. Each field contains a number/cell array of possible values</span></li><li class = "S12"><span class = "S13">cindex</span><span class = "S0"> - a table with rows for each element in defs and columns (variables) for each variable in vardef.</span></li><li class = "S12"><span class = "S13">deflist</span><span class = "S0"> - cell array of strings with variable name/value definitions</span></li></ul><h2 class = "S4"><span class = "S2">Examples</span></h2><p class = "S3"><span class = "S2"></span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S6 lineNode"><span class = "S7">vars.SampleGroup = { </span><span class = "S14">'groupA'</span><span class = "S7">, </span><span class = "S14">'groupB'</span><span class = "S7">, </span><span class = "S14">'groupC' </span><span class = "S8">};</span></p></div><div class = 'inlineWrapper'><p class = "S6 lineNode"><span class = "S7">vars.Treatment = {</span><span class = "S14">'control'</span><span class = "S7">, </span><span class = "S14">'treated'</span><span class = "S8">};</span></p></div></div><p class = "S9"><span class = "S2"></span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S6 lineNode"><span class = "S8">cindex = catindex(filelist,vars);</span></p></div><div class = 'inlineWrapper'><p class = "S6 lineNode"><span class = "S8">disp(cindex)</span></p></div></div><p class = "S9"><span class = "S10">                          SampleGroup    Treatment</span></p><p class = "S3"><span class = "S10">                          ___________    _________</span></p><p class = "S3"><span class = "S10"></span></p><p class = "S3"><span class = "S10">    groupA_control.dat    groupA         control</span></p><p class = "S3"><span class = "S10">    groupA_treated.dat    groupA         treated</span></p><p class = "S3"><span class = "S10">    groupB_control.dat    groupB         control</span></p><p class = "S3"><span class = "S10">    groupB_treated.dat    groupB         treated</span></p><p class = "S3"><span class = "S10">    groupC_control.dat    groupC         control</span></p><p class = "S3"><span class = "S10">    groupC_treated.dat    groupC         treated</span></p><p class = "S3"><span class = "S2"></span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S6 lineNode"><span class = "S7">    deflist = {</span><span class = "S14">'Name=Anna, Age=32, Gender=F'</span><span class = "S8">;</span></p></div><div class = 'inlineWrapper'><p class = "S6 lineNode"><span class = "S7">               </span><span class = "S14">'Name=John, Age=19, Gender=M'</span><span class = "S8">};</span></p></div><div class = 'inlineWrapper'><p class = "S6 lineNode"><span class = "S8">    cindex = catindex(defs)</span></p></div></div><p class = "S9"><span class = "S2">    </span></p><p class = "S3"><span class = "S10">cindex = </span></p><p class = "S3"><span class = "S10"></span></p><p class = "S3"><span class = "S10">    Name    Age    Gender</span></p><p class = "S3"><span class = "S10">    ____    ___    ______</span></p><p class = "S3"><span class = "S10"></span></p><p class = "S3"><span class = "S10">    Anna    32     F     </span></p><p class = "S3"><span class = "S10">    John    19     M      </span></p></div></div>
+<!-- 
+##### SOURCE BEGIN #####
+%% catindex
+% Create a categorical variable table based on list of keywords and variable 
+% definitions or a "variable=value" definition list.
+% 
+% 
+%% Synthax
+
+    cindex = catindex(defs,vardef)
+    cindex = catindex(deflist)
+%% 
+% 
+%% Description
+% |catindex(defs,vardef) |searches for keywords in defs and sets the corresponding 
+% variable values as defined by |vardef|
+% 
+% Categorical variables are dependent variables that define groups, such 
+% as 'Gender'. Variables have a defined set of values, such as 'Male', 'Female'. 
+% The struct vars contains fields for each variable. Each field must be a cell 
+% array of strings defining the possible values for the given variable. Alternatively, 
+% variables can be defined as a cell array of strings. Each string must contain 
+% a semicolon-separated values.
+% 
+% |catindex(deflist) |does not need a separate variable definition but reads 
+% variable names and corresponding values directly from deflist
+% 
+% |catindex| parses the array of variable names and values and creates a 
+% table with rows for each elements in the array as in the example.
+%% Input/Output parameters
+% * |defs| - cell array of strings. Each string contains keywords that will 
+% be assigned to variables
+% * |vardef| - struct with fields that define variables. Each field contains 
+% a number/cell array of possible values
+% * |cindex| - a table with rows for each element in defs and columns (variables) 
+% for each variable in vardef.
+% * |deflist| - cell array of strings with variable name/value definitions
+%% Examples
+% 
+
+vars.SampleGroup = { 'groupA', 'groupB', 'groupC' };
+vars.Treatment = {'control', 'treated'};
+%% 
+% 
+
+cindex = catindex(filelist,vars);
+disp(cindex)
+%% 
+% |                          SampleGroup    Treatment|
+% 
+% |                          ___________    _________|
+% 
+% ||
+% 
+% |    groupA_control.dat    groupA         control|
+% 
+% |    groupA_treated.dat    groupA         treated|
+% 
+% |    groupB_control.dat    groupB         control|
+% 
+% |    groupB_treated.dat    groupB         treated|
+% 
+% |    groupC_control.dat    groupC         control|
+% 
+% |    groupC_treated.dat    groupC         treated|
+% 
+% 
+
+    deflist = {'Name=Anna, Age=32, Gender=F';
+               'Name=John, Age=19, Gender=M'};
+    cindex = catindex(defs)
+%% 
+%     
+% 
+% |cindex = |
+% 
+% ||
+% 
+% |    Name    Age    Gender|
+% 
+% |    ____    ___    ______|
+% 
+% ||
+% 
+% |    Anna    32     F     |
+% 
+% |    John    19     M      |
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="MATLAB R2016a"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><title>Create a categorical array of keywords</title><style type="text/css">
+* {margin: 0; padding: 0;}
+body {text-align: start; line-height: 17.2339992523193px; min-height: 0px; white-space: normal; color: rgb(0, 0, 0); font-family: Consolas, Inconsolata, Menlo, monospace; font-style: normal; font-size: 14px; font-weight: normal; text-decoration: none; white-space: normal; }
+h1, h2 {font-weight: normal;}
+.content { padding: 30px; }
+
+.S0 { margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S1 { line-height: 26.3999996185303px; min-height: 24px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-size: 22px; white-space: pre-wrap; margin-left: 4px; margin-top: 3px; margin-bottom: 15px; margin-right: 10px;  }
+.S2 { min-height: 0px; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S3 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 2px; margin-bottom: 9px; margin-right: 10px;  }
+.S4 { min-height: 0px; font-weight: bold; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S5 { min-height: 0px; font-style: italic; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S6 { font-family: Helvetica, Arial, sans-serif; margin-left: 0px; margin-top: 10px; margin-bottom: 20px; margin-right: 0px;  }
+.S7 { text-align: left; line-height: 21px; white-space: pre-wrap; white-space: pre-wrap; margin-left: 56px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S8 { font-family: monospace; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S9 { margin-left: 3px; margin-top: 10px; margin-bottom: 10px; margin-right: 3px;  }
+.S10 { line-height: 15.5926666259766px; min-height: 18px; white-space: nowrap; font-size: 12.6666669845581px; white-space: nowrap; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S11 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S12 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(160, 32, 240); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S13 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S14 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 10px; margin-bottom: 9px; margin-right: 10px;  }
+.S15 { min-height: 0px; font-family: monospace; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S16 { margin-left: 3px; margin-top: 10px; margin-bottom: 4px; margin-right: 3px;  }
+
+.LineNodeBlock {margin: 10px 0 10px 0;}
+.LineNodeBlock+.paragraphNode {margin-top: 10px;}
+.lineNode {padding-left: 10px; background-color: #F7F7F7; border-left: 1px solid #E9E9E9; border-right: 1px solid #E9E9E9;}
+.inlineWrapper:first-child .lineNode,.inlineWrapper.outputs+.inlineWrapper .lineNode {padding-top: 5px; border-top: 1px solid #E9E9E9;}
+.inlineWrapper:last-child .lineNode,.inlineWrapper.outputs .lineNode {padding-bottom: 5px; border-bottom: 1px solid #E9E9E9;}
+.lineNode .textBox {white-space: pre;}
+</style></head><body><div class = "content"><div class = 'SectionBlock containment active'><h1 class = "S1"><span class = "S2">Create a categorical array of keywords</span></h1><p class = "S3"><span class = "S2">Often spectra can belong to one of a several mutually exclusive categories. In the </span><span class = "S4">autoindex </span><span class = "S2">example, spectra were recorded from two samples: </span><span class = "S5">sample1</span><span class = "S2">, </span><span class = "S5">sample2.</span><span class = "S2"> Instead of having logical arrays for each category, it is more convenient to index the spectra with a categorical array instead. Use </span><span class = "S4">catfind</span><span class = "S2"> to create a categorical array of keywords.</span></p><p class = "S3"><span class = "S2">Let </span><span class = "S5">dat </span><span class = "S2">contain spectra with IDs:</span></p><ol class = "S6"><li class = "S7"><span class = "S8">sample1 rep1</span></li><li class = "S7"><span class = "S8">sample1 rep2</span></li><li class = "S7"><span class = "S8">sample1 rep3</span></li><li class = "S7"><span class = "S8">sample2 rep1</span></li><li class = "S7"><span class = "S8">sample2 rep2</span></li><li class = "S7"><span class = "S8">reference1</span></li></ol><p class = "S3"><span class = "S2">Suppose we want to index the files for </span><span class = "S5">sample1 </span><span class = "S2">and </span><span class = "S5">sample2</span><span class = "S2">.</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S10 lineNode"><span class = "S11">sample = catfind(dat, {</span><span class = "S12">'sample1'</span><span class = "S11">, </span><span class = "S12">'sample2'</span><span class = "S13">});</span></p></div></div><p class = "S14"><span class = "S2">The command </span><span class = "S4">catfind</span><span class = "S2"> searches for the keywords </span><span class = "S5">sample1</span><span class = "S2"> and </span><span class = "S5">sample2</span><span class = "S2"> in the spectra IDs. The result will be a 6-element categorical array:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S10 lineNode"><span class = "S13">disp(sample')</span></p></div></div><p class = "S14"><span class = "S15">     sample1      sample1      sample1      sample2      sample2      &lt;undefined&gt; </span></p><p class = "S3"><span class = "S2">The categorical array can then be used to make selections and perform operations on specific groups of spectra. The next line will select and average the spectra that belong to </span><span class = "S5">sample1:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S10 lineNode"><span class = "S11">avg1 = dat(sample==</span><span class = "S12">'sample1'</span><span class = "S13">).mean;</span></p></div></div></div></div>
+<!-- 
+##### SOURCE BEGIN #####
+%% Create a categorical array of keywords
+% Often spectra can belong to one of a several mutually exclusive categories. 
+% In the *autoindex *example, spectra were recorded from two samples: _sample1_, 
+% _sample2._ Instead of having logical arrays for each category, it is more convenient 
+% to index the spectra with a categorical array instead. Use *catfind* to create 
+% a categorical array of keywords.
+% 
+% Let _dat _contain spectra with IDs:
+% 
+% # |sample1 rep1|
+% # |sample1 rep2|
+% # |sample1 rep3|
+% # |sample2 rep1|
+% # |sample2 rep2|
+% # |reference1|
+% 
+% Suppose we want to index the files for _sample1 _and _sample2_.
+
+sample = catfind(dat, {'sample1', 'sample2'});
+%% 
+% The command *catfind* searches for the keywords _sample1_ and _sample2_ 
+% in the spectra IDs. The result will be a 6-element categorical array:
+
+disp(sample')
+%% 
+% |     sample1      sample1      sample1      sample2      sample2      
+% <undefined> |
+% 
+% The categorical array can then be used to make selections and perform operations 
+% on specific groups of spectra. The next line will select and average the spectra 
+% that belong to _sample1:_
+
+avg1 = dat(sample=='sample1').mean;
+##### SOURCE END #####
+--></body></html>

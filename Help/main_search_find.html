@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="MATLAB R2016a"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><title>Select spectra with find and findindex</title><style type="text/css">
+* {margin: 0; padding: 0;}
+body {text-align: start; line-height: 17.2339992523193px; min-height: 0px; white-space: normal; color: rgb(0, 0, 0); font-family: Consolas, Inconsolata, Menlo, monospace; font-style: normal; font-size: 14px; font-weight: normal; text-decoration: none; white-space: normal; }
+h1, h2 {font-weight: normal;}
+.content { padding: 30px; }
+
+.S0 { margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S1 { line-height: 26.3999996185303px; min-height: 24px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-size: 22px; white-space: pre-wrap; margin-left: 4px; margin-top: 3px; margin-bottom: 15px; margin-right: 10px;  }
+.S2 { min-height: 0px; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S3 { line-height: 20.576000213623px; min-height: 20px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; white-space: pre-wrap; margin-left: 4px; margin-top: 15px; margin-bottom: 9px; margin-right: 10px;  }
+.S4 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 2px; margin-bottom: 9px; margin-right: 10px;  }
+.S5 { min-height: 0px; font-style: italic; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S6 { min-height: 0px; font-style: italic; font-weight: bold; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S7 { margin-left: 3px; margin-top: 10px; margin-bottom: 10px; margin-right: 3px;  }
+.S8 { line-height: 15.5926666259766px; min-height: 18px; white-space: nowrap; font-size: 12.6666669845581px; white-space: nowrap; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S9 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S10 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(160, 32, 240); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S11 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 10px; margin-bottom: 9px; margin-right: 10px;  }
+.S12 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(160, 32, 240); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S13 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S14 { min-height: 0px; font-weight: bold; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S15 { min-height: 0px; font-family: monospace; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S16 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(34, 139, 34); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S17 { margin-left: 3px; margin-top: 10px; margin-bottom: 4px; margin-right: 3px;  }
+
+.LineNodeBlock {margin: 10px 0 10px 0;}
+.LineNodeBlock+.paragraphNode {margin-top: 10px;}
+.lineNode {padding-left: 10px; background-color: #F7F7F7; border-left: 1px solid #E9E9E9; border-right: 1px solid #E9E9E9;}
+.inlineWrapper:first-child .lineNode,.inlineWrapper.outputs+.inlineWrapper .lineNode {padding-top: 5px; border-top: 1px solid #E9E9E9;}
+.inlineWrapper:last-child .lineNode,.inlineWrapper.outputs .lineNode {padding-bottom: 5px; border-bottom: 1px solid #E9E9E9;}
+.lineNode .textBox {white-space: pre;}
+</style></head><body><div class = "content"><div class = 'SectionBlock containment active'><h1 class = "S1"><span class = "S2">Select spectra with find and findindex</span></h1><h2 class = "S3"><span class = "S2">Select a subset with find</span></h2><p class = "S4"><span class = "S2">Using the methods </span><span class = "S5">find</span><span class = "S2">and </span><span class = "S5">findindex</span><span class = "S6"> </span><span class = "S2">it is possible to perform search queries to select one or more spectra from collections of spectra. The </span><span class = "S5">findindex</span><span class = "S2">method returns a logical index of the spectra matching the search conditions and the </span><span class = "S5">find </span><span class = "S2">method outputs the actual spectra. Consider the following example. Suppose </span><span class = "S5">dat</span><span class = "S2"> contains a set of ten spectra of different samples, test conditions, and measurement types, specified in the spectra IDs:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">F01 </span><span class = "S10">sample1 pH2 UV.dat</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">F02 </span><span class = "S10">sample1 pH5 FL.dat</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">F03 </span><span class = "S10">sample1 pH5 UV.dat</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">F04 </span><span class = "S10">sample1 pH7 FL.dat</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">F05 </span><span class = "S10">sample1 pH7 UV.dat</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">F06 </span><span class = "S10">sample2 pH2 UV.dat</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">F07 </span><span class = "S10">sample2 pH5 FL.dat</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">F08 </span><span class = "S10">sample2 pH5 UV.dat</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">F09 </span><span class = "S10">sample2 pH7 FL.dat</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">F10 </span><span class = "S10">sample2 pH7 UV.dat</span></p></div></div><p class = "S11"><span class = "S2">Using </span><span class = "S5">find</span><span class = "S2"> we can select some of the spectra, for example only those which contain the word 'FL'</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">fl</span><span class = "S9"> = dat.find(</span><span class = "S12">'FL'</span><span class = "S13">);</span></p></div></div><p class = "S11"><span class = "S2">This is equivalent to the command</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">fl</span><span class = "S13"> = dat([2,4,7,9]);</span></p></div></div><p class = "S11"><span class = "S2">The result </span><span class = "S5">fl</span><span class = "S2"> in both cases will be a specdata object containing four spectra:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">F02 </span><span class = "S10">sample1 pH5 FL.dat</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">F04 </span><span class = "S10">sample1 pH7 FL.dat </span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">F07 </span><span class = "S10">sample2 pH5 FL.dat</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">F09 </span><span class = "S10">sample2 pH7 FL.dat</span></p></div></div><p class = "S11"><span class = "S2">It is a good practice to reference spectra by using search queries rather than by their absolute index in the data array. Using search queries will always return the correct spectra even if the contents of the data array have changed – for example if data are added or deleted at a later time. It also creates readable code and helps to avoid errors. </span><span class = "S2"> </span></p><h2 class = "S3"><span class = "S2">Search in properties</span></h2><p class = "S4"><span class = "S2">In the previous examples, the </span><span class = "S5">find</span><span class = "S2"> method was called with a single operand 'FL'. In this case, the method searches for text in the object </span><span class = "S5">ID</span><span class = "S2">property. To search within other properties, give the property name first and then the search text:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">fl = dat.find(</span><span class = "S12">'YType'</span><span class = "S9">, </span><span class = "S12">'Fluorescence'</span><span class = "S13">);</span></p></div></div><p class = "S11"><span class = "S2">The search can be executed with several property/value pairs and will return only those spectra which match ALL of the search criteria (the search criteria are combined with logical AND):</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">fl2</span><span class = "S9"> = dat.find(</span><span class = "S12">'ID'</span><span class = "S9">, </span><span class = "S12">'sample2'</span><span class = "S9">, </span><span class = "S12">'YType'</span><span class = "S9">, </span><span class = "S12">'Fluorescence'</span><span class = "S13">);</span></p></div></div><p class = "S11"><span class = "S2">This command will return only those spectra whose ID contains 'sample2' AND whose </span><span class = "S5">YType </span><span class = "S2">property contains 'Fluorescence'. The function will only return spectra that match both search terms. </span></p><h2 class = "S3"><span class = "S2">Search for multiple strings</span></h2><p class = "S4"><span class = "S2">It is possible to use more than one search term with the </span><span class = "S5">find</span><span class = "S2"> method. A trivial way is to search twice in the same property:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">fl2 = dat.find(</span><span class = "S12">'ID'</span><span class = "S9">, </span><span class = "S12">'sample2'</span><span class = "S9">, </span><span class = "S12">'ID'</span><span class = "S9">, </span><span class = "S12">'FL'</span><span class = "S13">);</span></p></div></div><p class = "S11"><span class = "S2">As above, the command will return only those spectra whose IDs</span><span class = "S5"> </span><span class = "S2">contain </span><span class = "S14">ALL</span><span class = "S2"> search terms, in this case both words 'sample2' and 'FL'. </span></p><p class = "S4"><span class = "S2">To search for spectra matching </span><span class = "S14">ANY</span><span class = "S2"> of the provided search terms, write the possible matches as an array, as in the following example:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">pH_l</span><span class = "S9"> = dat.find({</span><span class = "S12">'pH2'</span><span class = "S9">, </span><span class = "S12">'pH5'</span><span class = "S13">});</span></p></div></div><p class = "S11"><span class = "S2">or</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">pH_l = dat.find(</span><span class = "S12">'ID'</span><span class = "S9">, {</span><span class = "S12">'pH2'</span><span class = "S9">, </span><span class = "S12">'pH5'</span><span class = "S13">});</span></p></div></div><p class = "S11"><span class = "S2">In the commands above, the search argument is </span><span class = "S15">{'pH2', 'pH5'}</span><span class = "S2">, i.e. a list of two terms. The commands will return spectra that match any of the words (either 'pH2' or 'pH5'). </span></p><h2 class = "S3"><span class = "S2">Create an index with findindex</span></h2><p class = "S4"><span class = "S2">The </span><span class = "S5">fi </span><span class = "S2">method (short for </span><span class = "S5">findindex</span><span class = "S2">) applies the same search criteria as </span><span class = "S5">find </span><span class = "S2">but instead of returning objects, it returns a logical array (0s or 1s) specifying which spectra match the search conditions:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">ix = dat.fi(</span><span class = "S12">'FL'</span><span class = "S13">);</span></p></div></div><p class = "S11"><span class = "S2">The line creates the logical array </span><span class = "S5">ix</span><span class = "S2"> = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0], i.e. it specifies that the 2</span><span class = "S2">nd</span><span class = "S2">, 4</span><span class = "S2">th</span><span class = "S2">, 7</span><span class = "S2">th</span><span class = "S2"> and 9</span><span class = "S2">th</span><span class = "S2"> element in </span><span class = "S5">dat</span><span class = "S2"> match the search criteria. </span><span class = "S2"> </span></p><p class = "S4"><span class = "S2">The index</span><span class = "S5"> ix</span><span class = "S2"> can be used to reference the respective spectra in the original array </span><span class = "S5">dat</span><span class = "S2"> and, for example, change their </span><span class = "S5">YType</span><span class = "S2"> property:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">dat(ix) = dat(ix).set(</span><span class = "S12">'YType'</span><span class = "S9">,</span><span class = "S12">'Fluorescence'</span><span class = "S13">);</span></p></div></div><h2 class = "S3"><span class = "S2">Use logical operators</span></h2><p class = "S4"><span class = "S2">Any logical operator (AND – '&amp;', OR – '|', NOT – '~') or combination of them can be used with the results of </span><span class = "S5">fi</span><span class = "S2"> queries, like in the following examples:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">ipH_l = dat.fi(</span><span class = "S12">'pH2'</span><span class = "S9">) | dat.fi(</span><span class = "S12">'pH5'</span><span class = "S9">);   </span><span class = "S16">% either pH2 or pH5</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">ipH_h = dat.fi(</span><span class = "S12">'pH7'</span><span class = "S9">);                   </span><span class = "S16">% pH7</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">iuv1 = dat.fi(</span><span class = "S12">'UV'</span><span class = "S9">) &amp; dat.fi(</span><span class = "S12">'sample1'</span><span class = "S9">); </span><span class = "S16">% UV and sample1 </span></p></div></div><p class = "S11"><span class = "S2">The index arrays </span><span class = "S5">ipH_l, ipH_h, </span><span class = "S2">and </span><span class = "S5">iuv1</span><span class = "S2"> specify different subsets of spectra in </span><span class = "S5">dat</span><span class = "S2">. The index arrays themselves can be combined with logical operators and used to address the respective spectra in </span><span class = "S5">dat</span><span class = "S2">. For example the command</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">uvdiff</span><span class = "S13"> = dat(iuv1 &amp; ipH_l) - dat(iuv1 &amp; ipH_h);</span></p></div></div><p class = "S11"><span class = "S2">is equivalent to</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S13">uvdiff = dat([1 3]) - dat(5);</span></p></div></div></div></div>
+<!-- 
+##### SOURCE BEGIN #####
+%% Select spectra with find and findindex
+%% Select a subset with find
+% Using the methods _find_and _findindex* _*it is possible to perform search 
+% queries to select one or more spectra from collections of spectra. The _findindex_method 
+% returns a logical index of the spectra matching the search conditions and the 
+% _find _method outputs the actual spectra. Consider the following example. Suppose 
+% _dat_ contains a set of ten spectra of different samples, test conditions, and 
+% measurement types, specified in the spectra IDs:
+
+F01 sample1 pH2 UV.dat
+F02 sample1 pH5 FL.dat
+F03 sample1 pH5 UV.dat
+F04 sample1 pH7 FL.dat
+F05 sample1 pH7 UV.dat
+F06 sample2 pH2 UV.dat
+F07 sample2 pH5 FL.dat
+F08 sample2 pH5 UV.dat
+F09 sample2 pH7 FL.dat
+F10 sample2 pH7 UV.dat
+%% 
+% Using _find_ we can select some of the spectra, for example only those 
+% which contain the word 'FL'
+
+fl = dat.find('FL');
+%% 
+% This is equivalent to the command
+
+fl = dat([2,4,7,9]);
+%% 
+% The result _fl_ in both cases will be a specdata object containing four 
+% spectra:
+
+F02 sample1 pH5 FL.dat
+F04 sample1 pH7 FL.dat 
+F07 sample2 pH5 FL.dat
+F09 sample2 pH7 FL.dat
+%% 
+% It is a good practice to reference spectra by using search queries rather 
+% than by their absolute index in the data array. Using search queries will always 
+% return the correct spectra even if the contents of the data array have changed 
+% – for example if data are added or deleted at a later time. It also creates 
+% readable code and helps to avoid errors.  
+%% Search in properties
+% In the previous examples, the _find_ method was called with a single operand 
+% 'FL'. In this case, the method searches for text in the object _ID_property. 
+% To search within other properties, give the property name first and then the 
+% search text:
+
+fl = dat.find('YType', 'Fluorescence');
+%% 
+% The search can be executed with several property/value pairs and will 
+% return only those spectra which match ALL of the search criteria (the search 
+% criteria are combined with logical AND):
+
+fl2 = dat.find('ID', 'sample2', 'YType', 'Fluorescence');
+%% 
+% This command will return only those spectra whose ID contains 'sample2' 
+% AND whose _YType _property contains 'Fluorescence'. The function will only return 
+% spectra that match both search terms. 
+%% Search for multiple strings
+% It is possible to use more than one search term with the _find_ method. A 
+% trivial way is to search twice in the same property:
+
+fl2 = dat.find('ID', 'sample2', 'ID', 'FL');
+%% 
+% As above, the command will return only those spectra whose IDs_ _contain 
+% *ALL* search terms, in this case both words 'sample2' and 'FL'. 
+% 
+% To search for spectra matching *ANY* of the provided search terms, write 
+% the possible matches as an array, as in the following example:
+
+pH_l = dat.find({'pH2', 'pH5'});
+%% 
+% or
+
+pH_l = dat.find('ID', {'pH2', 'pH5'});
+%% 
+% In the commands above, the search argument is |{'pH2', 'pH5'}|, i.e. a 
+% list of two terms. The commands will return spectra that match any of the words 
+% (either 'pH2' or 'pH5'). 
+%% Create an index with findindex
+% The _fi _method (short for _findindex_) applies the same search criteria as 
+% _find _but instead of returning objects, it returns a logical array (0s or 1s) 
+% specifying which spectra match the search conditions:
+
+ix = dat.fi('FL');
+%% 
+% The line creates the logical array _ix_ = [0, 1, 0, 1, 0, 0, 1, 0, 1, 
+% 0], i.e. it specifies that the 2nd, 4th, 7th and 9th element in _dat_ match 
+% the search criteria.  
+% 
+% The index_ ix_ can be used to reference the respective spectra in the original 
+% array _dat_ and, for example, change their _YType_ property:
+
+dat(ix) = dat(ix).set('YType','Fluorescence');
+%% Use logical operators
+% Any logical operator (AND – '&', OR – '|', NOT – '~') or combination of them 
+% can be used with the results of _fi_ queries, like in the following examples:
+
+ipH_l = dat.fi('pH2') | dat.fi('pH5');   % either pH2 or pH5
+ipH_h = dat.fi('pH7');                   % pH7
+iuv1 = dat.fi('UV') & dat.fi('sample1'); % UV and sample1 
+%% 
+% The index arrays _ipH_l, ipH_h, _and _iuv1_ specify different subsets 
+% of spectra in _dat_. The index arrays themselves can be combined with logical 
+% operators and used to address the respective spectra in _dat_. For example the 
+% command
+
+uvdiff = dat(iuv1 & ipH_l) - dat(iuv1 & ipH_h);
+%% 
+% is equivalent to
+
+uvdiff = dat([1 3]) - dat(5);
+##### SOURCE END #####
+--></body></html>

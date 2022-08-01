@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="MATLAB R2016a"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><title>Create a keyword index with autoindex</title><style type="text/css">
+* {margin: 0; padding: 0;}
+body {text-align: start; line-height: 17.2339992523193px; min-height: 0px; white-space: normal; color: rgb(0, 0, 0); font-family: Consolas, Inconsolata, Menlo, monospace; font-style: normal; font-size: 14px; font-weight: normal; text-decoration: none; white-space: normal; }
+h1, h2 {font-weight: normal;}
+.content { padding: 30px; }
+
+.S0 { margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S1 { line-height: 26.3999996185303px; min-height: 24px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-size: 22px; white-space: pre-wrap; margin-left: 4px; margin-top: 3px; margin-bottom: 15px; margin-right: 10px;  }
+.S2 { min-height: 0px; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S3 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 2px; margin-bottom: 9px; margin-right: 10px;  }
+.S4 { min-height: 0px; font-style: italic; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S5 { min-height: 0px; font-style: italic; font-weight: bold; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S6 { margin-left: 3px; margin-top: 10px; margin-bottom: 10px; margin-right: 3px;  }
+.S7 { line-height: 15.5926666259766px; min-height: 18px; white-space: nowrap; font-size: 12.6666669845581px; white-space: nowrap; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S8 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S9 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 10px; margin-bottom: 9px; margin-right: 10px;  }
+.S10 { min-height: 0px; font-family: monospace; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S11 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S12 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(34, 139, 34); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S13 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(255, 0, 0); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S14 { margin-left: 3px; margin-top: 10px; margin-bottom: 4px; margin-right: 3px;  }
+
+.LineNodeBlock {margin: 10px 0 10px 0;}
+.LineNodeBlock+.paragraphNode {margin-top: 10px;}
+.lineNode {padding-left: 10px; background-color: #F7F7F7; border-left: 1px solid #E9E9E9; border-right: 1px solid #E9E9E9;}
+.inlineWrapper:first-child .lineNode,.inlineWrapper.outputs+.inlineWrapper .lineNode {padding-top: 5px; border-top: 1px solid #E9E9E9;}
+.inlineWrapper:last-child .lineNode,.inlineWrapper.outputs .lineNode {padding-bottom: 5px; border-bottom: 1px solid #E9E9E9;}
+.lineNode .textBox {white-space: pre;}
+</style></head><body><div class = "content"><div class = 'SectionBlock containment active'><h1 class = "S1"><span class = "S2">Create a keyword index with autoindex</span></h1><p class = "S3"><span class = "S2">In the previous section, the </span><span class = "S4">findindex</span><span class = "S2"> method was used to create a set of index arrays that specify groups of data. Instead of manually typing findindex commands for every keyword, the </span><span class = "S5">autoindex</span><span class = "S2"> method will automatically create a set of index arrays for a list of keywords. The simplest way to use the command is</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">ix = dat.autoindex;</span></p></div></div><p class = "S9"><span class = "S2">The command will first scan the IDs of all spectra in </span><span class = "S4">dat</span><span class = "S2"> and extract a list of keywords. Then it will create an index for every keyword found. The output </span><span class = "S4">ix</span><span class = "S2"> is a structure containing the indices for all keywords: </span></p><p class = "S3"><span class = "S2">According to the above example, the output </span><span class = "S4">ix</span><span class = "S2"> will be a structure with contents:</span></p><p class = "S3"><span class = "S10">         FL: [0 1 0 1 0 0 1 0 1 0]</span></p><p class = "S3"><span class = "S10">         UV: [1 0 1 0 1 1 0 1 0 1]</span></p><p class = "S3"><span class = "S10">        pH2: [1 0 0 0 0 1 0 0 0 0]</span></p><p class = "S3"><span class = "S10">        pH5: [0 1 1 0 0 0 1 1 0 0]</span></p><p class = "S3"><span class = "S10">        pH7: [0 0 0 1 1 0 0 0 1 1]</span></p><p class = "S3"><span class = "S10">    sample1: [1 1 1 1 1 0 0 0 0 0]</span></p><p class = "S3"><span class = "S10">    sample2: [0 0 0 0 0 1 1 1 1 1]</span></p><p class = "S3"><span class = "S2">The indices can be then used as previously to select groups of spectra: </span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S11">FL = dat(ix.FL);                     </span><span class = "S12">% FL spectra </span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S11">pH_l = dat(ix.pH2 | ix.pH5);         </span><span class = "S12">% pH2 or pH5</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S11">pHdiff5 = dat(ix.pH5) </span><span class = "S13">–</span><span class = "S13"> </span><span class = "S11">dat(ix.pH7); </span><span class = "S12">% pH5-pH7 difference</span></p></div></div><p class = "S9"><span class = "S2">Note that if the contents of </span><span class = "S4">dat</span><span class = "S2"> are changed so that spectra are added, deleted or rearranged, the index will no longer be valid. After any such operation, the </span><span class = "S4">autoindex</span><span class = "S2"> command must be executed again to create an updated index.</span></p><p class = "S3"><span class = "S2">Conversely, an index created from one object array can be used with another array if there is a logical relationship between the elements of the two arrays. This is illustrated in the next example:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S11">Gm = max(dat);        </span><span class = "S12">% get the global maximum for each spectrum </span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S11">ix = dat.autoindex;   </span><span class = "S12">% create an index</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S11">Fm = P(ix.FL);        </span><span class = "S12">% access a subset of Gm using the index</span></p></div></div></div></div>
+<!-- 
+##### SOURCE BEGIN #####
+%% Create a keyword index with autoindex
+% In the previous section, the _findindex_ method was used to create a set of 
+% index arrays that specify groups of data. Instead of manually typing findindex 
+% commands for every keyword, the _*autoindex_* method will automatically create 
+% a set of index arrays for a list of keywords. The simplest way to use the command 
+% is
+
+ix = dat.autoindex;
+%% 
+% The command will first scan the IDs of all spectra in _dat_ and extract 
+% a list of keywords. Then it will create an index for every keyword found. The 
+% output _ix_ is a structure containing the indices for all keywords: 
+% 
+% According to the above example, the output _ix_ will be a structure with 
+% contents:
+% 
+% |         FL: [0 1 0 1 0 0 1 0 1 0]|
+% 
+% |         UV: [1 0 1 0 1 1 0 1 0 1]|
+% 
+% |        pH2: [1 0 0 0 0 1 0 0 0 0]|
+% 
+% |        pH5: [0 1 1 0 0 0 1 1 0 0]|
+% 
+% |        pH7: [0 0 0 1 1 0 0 0 1 1]|
+% 
+% |    sample1: [1 1 1 1 1 0 0 0 0 0]|
+% 
+% |    sample2: [0 0 0 0 0 1 1 1 1 1]|
+% 
+% The indices can be then used as previously to select groups of spectra: 
+
+FL = dat(ix.FL);                     % FL spectra 
+pH_l = dat(ix.pH2 | ix.pH5);         % pH2 or pH5
+pHdiff5 = dat(ix.pH5) – dat(ix.pH7); % pH5-pH7 difference
+%% 
+% Note that if the contents of _dat_ are changed so that spectra are added, 
+% deleted or rearranged, the index will no longer be valid. After any such operation, 
+% the _autoindex_ command must be executed again to create an updated index.
+% 
+% Conversely, an index created from one object array can be used with another 
+% array if there is a logical relationship between the elements of the two arrays. 
+% This is illustrated in the next example:
+
+Gm = max(dat);        % get the global maximum for each spectrum 
+ix = dat.autoindex;   % create an index
+Fm = P(ix.FL);        % access a subset of Gm using the index
+##### SOURCE END #####
+--></body></html>

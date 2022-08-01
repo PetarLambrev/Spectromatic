@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="MATLAB R2016a"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><title>Plot spectra</title><style type="text/css">
+* {margin: 0; padding: 0;}
+body {text-align: start; line-height: 17.2339992523193px; min-height: 0px; white-space: normal; color: rgb(0, 0, 0); font-family: Consolas, Inconsolata, Menlo, monospace; font-style: normal; font-size: 14px; font-weight: normal; text-decoration: none; white-space: normal; }
+h1, h2 {font-weight: normal;}
+.content { padding: 30px; }
+
+.S0 { margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S1 { line-height: 26.3999996185303px; min-height: 24px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-size: 22px; white-space: pre-wrap; margin-left: 4px; margin-top: 3px; margin-bottom: 15px; margin-right: 10px;  }
+.S2 { min-height: 0px; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S3 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 2px; margin-bottom: 9px; margin-right: 10px;  }
+.S4 { min-height: 0px; font-style: italic; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S5 { min-height: 0px; font-style: italic; font-weight: bold; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S6 { margin-left: 3px; margin-top: 10px; margin-bottom: 10px; margin-right: 3px;  }
+.S7 { line-height: 15.5926666259766px; min-height: 18px; white-space: nowrap; font-size: 12.6666669845581px; white-space: nowrap; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S8 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S9 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 10px; margin-bottom: 9px; margin-right: 10px;  }
+.S10 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S11 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(160, 32, 240); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S12 { text-align: center; line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 2px; margin-bottom: 9px; margin-right: 10px;  }
+
+.LineNodeBlock {margin: 10px 0 10px 0;}
+.LineNodeBlock+.paragraphNode {margin-top: 10px;}
+.lineNode {padding-left: 10px; background-color: #F7F7F7; border-left: 1px solid #E9E9E9; border-right: 1px solid #E9E9E9;}
+.inlineWrapper:first-child .lineNode,.inlineWrapper.outputs+.inlineWrapper .lineNode {padding-top: 5px; border-top: 1px solid #E9E9E9;}
+.inlineWrapper:last-child .lineNode,.inlineWrapper.outputs .lineNode {padding-bottom: 5px; border-bottom: 1px solid #E9E9E9;}
+.lineNode .textBox {white-space: pre;}
+</style></head><body><div class = "content"><div class = 'SectionBlock containment active'><h1 class = "S1"><span class = "S2">Plot spectra</span></h1><p class = "S3"><span class = "S2">The simplest way to visualize the data in </span><span class = "S4">specdata</span><span class = "S2"> objects is to use the </span><span class = "S5">plot </span><span class = "S2">method:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">figure; plot(dat)</span></p></div></div><p class = "S9"><span class = "S2">The </span><span class = "S4">figure</span><span class = "S2"> command creates a new empty figure window, and the </span><span class = "S4">plot</span><span class = "S2">command draws the spectra in </span><span class = "S4">dat</span><span class = "S2"> on the figure. Here is an example that plots the trigonometric sine and cosine functions:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">x = 0:2:360; ysin = sind(x); ycos = cosd(x);</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S10">l = struct(</span><span class = "S11">'XType'</span><span class = "S10">,</span><span class = "S11">'Angle'</span><span class = "S10">,</span><span class = "S11">'XUnit'</span><span class = "S10">,</span><span class = "S11">'deg'</span><span class = "S10">,</span><span class = "S11">'YType'</span><span class = "S10">,</span><span class = "S11">'Value'</span><span class = "S8">);</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S10">trig(1) = specdata(x, ysin, </span><span class = "S11">'sin'</span><span class = "S8">, l);</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S10">trig(2) = specdata(x, ycos, </span><span class = "S11">'cos'</span><span class = "S8">, l);</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">figure; plot(trig)</span></p></div></div><p class = "S9"><span class = "S2">Executing the script will produce a figure like this:</span></p><p class = "S12"><img class="imageNode" style="vertical-align: baseline" src="data:image/png;base64,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" alt="plot_spectra_fig.png"></p><p class = "S3"><span class = "S2">The spectra (</span><span class = "S4">Y</span><span class = "S2">values vs </span><span class = "S4">X</span><span class = "S2"> values) are plotted in different colours. The axis labels are set by the </span><span class = "S4">XType</span><span class = "S2">, </span><span class = "S4">XUnit</span><span class = "S2">, </span><span class = "S4">YType</span><span class = "S2">, and </span><span class = "S4">YUnit</span><span class = "S2"> properties and the figure legend is set by the </span><span class = "S4">ID</span><span class = "S2"> properties. Note that MATLAB accepts LaTeX codes for formatting the legend text, which may lead to unwanted formatting if your IDs contain special characters. In such cases, call the </span><span class = "S4">plot</span><span class = "S2"> method with parameter ('notex').</span></p><p class = "S3"><span class = "S2">You can select which spectra from the array to plot, e.g. to plot only the sine function from the above example, type</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">plot(trig(1))</span></p></div></div><p class = "S9"><span class = "S2">or</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S10">plot(trig.find(</span><span class = "S11">'sin'</span><span class = "S8">))</span></p></div></div><p class = "S9"><span class = "S2">Conversely, you can combine different objects to plot together on the same figure, like</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">plot([a b c])</span></p></div></div><p class = "S9"><span class = "S2">There is no general plot method available for </span><span class = "S4">specdata2D</span><span class = "S2"> objects. Two-way datasets can be plotted as a colour surface using the </span><span class = "S5">plot2D</span><span class = "S2"> method. Spectra (</span><span class = "S4">Y</span><span class = "S2"> vs </span><span class = "S4">X</span><span class = "S2">) for selected </span><span class = "S4">T</span><span class = "S2"> values are plotted with the </span><span class = "S5">plotxy</span><span class = "S2"> method and time traces (</span><span class = "S4">Y</span><span class = "S2"> vs </span><span class = "S4">T</span><span class = "S2">) for selected </span><span class = "S4">X </span><span class = "S2">values are plotted with the </span><span class = "S5">plotty</span><span class = "S4"> </span><span class = "S2">method. </span></p><p class = "S3"><span class = "S2"> </span></p></div></div>
+<!-- 
+##### SOURCE BEGIN #####
+%% Plot spectra
+% The simplest way to visualize the data in _specdata_ objects is to use the 
+% _*plot _*method:
+
+figure; plot(dat)
+%% 
+% The _figure_ command creates a new empty figure window, and the _plot_command 
+% draws the spectra in _dat_ on the figure. Here is an example that plots the 
+% trigonometric sine and cosine functions:
+
+x = 0:2:360; ysin = sind(x); ycos = cosd(x);
+l = struct('XType','Angle','XUnit','deg','YType','Value');
+trig(1) = specdata(x, ysin, 'sin', l);
+trig(2) = specdata(x, ycos, 'cos', l);
+figure; plot(trig)
+%% 
+% Executing the script will produce a figure like this:
+% 
+% 
+% 
+% The spectra (_Y_values vs _X_ values) are plotted in different colours. 
+% The axis labels are set by the _XType_, _XUnit_, _YType_, and _YUnit_ properties 
+% and the figure legend is set by the _ID_ properties. Note that MATLAB accepts 
+% LaTeX codes for formatting the legend text, which may lead to unwanted formatting 
+% if your IDs contain special characters. In such cases, call the _plot_ method 
+% with parameter ('notex').
+% 
+% You can select which spectra from the array to plot, e.g. to plot only 
+% the sine function from the above example, type
+
+plot(trig(1))
+%% 
+% or
+
+plot(trig.find('sin'))
+%% 
+% Conversely, you can combine different objects to plot together on the 
+% same figure, like
+
+plot([a b c])
+%% 
+% There is no general plot method available for _specdata2D_ objects. Two-way 
+% datasets can be plotted as a colour surface using the _*plot2D_* method. Spectra 
+% (_Y_ vs _X_) for selected _T_ values are plotted with the _*plotxy_* method 
+% and time traces (_Y_ vs _T_) for selected _X _values are plotted with the _*plotty* 
+% _method. 
+% 
+%
+##### SOURCE END #####
+--></body></html>

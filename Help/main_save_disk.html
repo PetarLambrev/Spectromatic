@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="MATLAB R2016a"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><title>Save data to disk</title><style type="text/css">
+* {margin: 0; padding: 0;}
+body {text-align: start; line-height: 17.2339992523193px; min-height: 0px; white-space: normal; color: rgb(0, 0, 0); font-family: Consolas, Inconsolata, Menlo, monospace; font-style: normal; font-size: 14px; font-weight: normal; text-decoration: none; white-space: normal; }
+h1, h2 {font-weight: normal;}
+.content { padding: 30px; }
+
+.S0 { margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S1 { line-height: 26.3999996185303px; min-height: 24px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-size: 22px; white-space: pre-wrap; margin-left: 4px; margin-top: 3px; margin-bottom: 15px; margin-right: 10px;  }
+.S2 { min-height: 0px; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S3 { line-height: 20.576000213623px; min-height: 20px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; white-space: pre-wrap; margin-left: 4px; margin-top: 15px; margin-bottom: 9px; margin-right: 10px;  }
+.S4 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 2px; margin-bottom: 9px; margin-right: 10px;  }
+.S5 { min-height: 0px; font-style: italic; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S6 { margin-left: 3px; margin-top: 10px; margin-bottom: 10px; margin-right: 3px;  }
+.S7 { line-height: 15.5926666259766px; min-height: 18px; white-space: nowrap; font-size: 12.6666669845581px; white-space: nowrap; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S8 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S9 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(160, 32, 240); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S10 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 10px; margin-bottom: 9px; margin-right: 10px;  }
+.S11 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(160, 32, 240); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S12 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+
+.LineNodeBlock {margin: 10px 0 10px 0;}
+.LineNodeBlock+.paragraphNode {margin-top: 10px;}
+.lineNode {padding-left: 10px; background-color: #F7F7F7; border-left: 1px solid #E9E9E9; border-right: 1px solid #E9E9E9;}
+.inlineWrapper:first-child .lineNode,.inlineWrapper.outputs+.inlineWrapper .lineNode {padding-top: 5px; border-top: 1px solid #E9E9E9;}
+.inlineWrapper:last-child .lineNode,.inlineWrapper.outputs .lineNode {padding-bottom: 5px; border-bottom: 1px solid #E9E9E9;}
+.lineNode .textBox {white-space: pre;}
+</style></head><body><div class = "content"><div class = 'SectionBlock containment active'><h1 class = "S1"><span class = "S2">Save data to disk</span></h1><h2 class = "S3"><span class = "S2">Save MATLAB files</span></h2><p class = "S4"><span class = "S2">To save data for later use in MATLAB, use the built-in </span><span class = "S5">save</span><span class = "S2"> command:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">save </span><span class = "S9">datafile dat</span></p></div></div><p class = "S10"><span class = "S2">where </span><span class = "S5">datafile </span><span class = "S2">is the name of the disk file (it will have a .mat extension) and </span><span class = "S5">dat</span><span class = "S2"> is the name of the variable(s) to be saved. When needed later, the data can be loaded again with the command</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">load </span><span class = "S9">datafile</span></p></div></div><p class = "S10"><span class = "S2">It is good practice to load external data into Spectr-O-Matic objects once and immediately save them as .mat files for later use. The advantage is that .mat files are more compact and loading them is much faster than using the Spectr-O-Matic </span><span class = "S5">load </span><span class = "S2">methods that can take a long time to process large datasets. </span></p><h2 class = "S3"><span class = "S2">Export text files</span></h2><p class = "S4"><span class = "S2">If you want to use your MATLAB results in another application, you can export the data as ASCII files instead of .mat files. Appending the parameter '-ascii' to MATLAB's built-in </span><span class = "S5">save</span><span class = "S2"> command will create an ASCII text file. This way you can export numeric tables but not Spectr-O-Matic objects.</span></p><p class = "S4"><span class = "S2">To export specdata objects as text files, use the specdata.save method:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">dat.save(</span><span class = "S11">'MyData.txt'</span><span class = "S12">);</span></p></div></div><p class = "S10"><span class = "S2">If </span><span class = "S5">dat</span><span class = "S2"> is an array of spectra, the command will create a tab-delimited text file with </span><span class = "S5">X</span><span class = "S2"> values in the first column. Note that this is only possible if all spectra have the same </span><span class = "S5">X</span><span class = "S2"> axis values.</span></p></div></div>
+<!-- 
+##### SOURCE BEGIN #####
+%% Save data to disk
+%% Save MATLAB files
+% To save data for later use in MATLAB, use the built-in _save_ command:
+
+save datafile dat
+%% 
+% where _datafile _is the name of the disk file (it will have a .mat extension) 
+% and _dat_ is the name of the variable(s) to be saved. When needed later, the 
+% data can be loaded again with the command
+
+load datafile
+%% 
+% It is good practice to load external data into Spectr-O-Matic objects 
+% once and immediately save them as .mat files for later use. The advantage is 
+% that .mat files are more compact and loading them is much faster than using 
+% the Spectr-O-Matic _load _methods that can take a long time to process large 
+% datasets. 
+%% Export text files
+% If you want to use your MATLAB results in another application, you can export 
+% the data as ASCII files instead of .mat files. Appending the parameter '-ascii' 
+% to MATLAB's built-in _save_ command will create an ASCII text file. This way 
+% you can export numeric tables but not Spectr-O-Matic objects.
+% 
+% To export specdata objects as text files, use the specdata.save method:
+
+dat.save('MyData.txt');
+%% 
+% If _dat_ is an array of spectra, the command will create a tab-delimited 
+% text file with _X_ values in the first column. Note that this is only possible 
+% if all spectra have the same _X_ axis values.
+##### SOURCE END #####
+--></body></html>

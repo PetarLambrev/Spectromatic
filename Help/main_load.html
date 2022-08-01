@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="MATLAB R2016a"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><title>Load data</title><style type="text/css">
+* {margin: 0; padding: 0;}
+body {text-align: start; line-height: 17.2339992523193px; min-height: 0px; white-space: normal; color: rgb(0, 0, 0); font-family: Consolas, Inconsolata, Menlo, monospace; font-style: normal; font-size: 14px; font-weight: normal; text-decoration: none; white-space: normal; }
+h1, h2 {font-weight: normal;}
+.content { padding: 30px; }
+
+.S0 { margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S1 { line-height: 26.3999996185303px; min-height: 24px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-size: 22px; white-space: pre-wrap; margin-left: 4px; margin-top: 3px; margin-bottom: 15px; margin-right: 10px;  }
+.S2 { min-height: 0px; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S3 { line-height: 20.576000213623px; min-height: 20px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; white-space: pre-wrap; margin-left: 4px; margin-top: 15px; margin-bottom: 9px; margin-right: 10px;  }
+.S4 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 2px; margin-bottom: 9px; margin-right: 10px;  }
+.S5 { min-height: 0px; font-style: italic; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S6 { margin-left: 3px; margin-top: 10px; margin-bottom: 10px; margin-right: 3px;  }
+.S7 { line-height: 15.5926666259766px; min-height: 18px; white-space: nowrap; font-size: 12.6666669845581px; white-space: nowrap; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S8 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S9 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S10 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(160, 32, 240); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S11 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 10px; margin-bottom: 9px; margin-right: 10px;  }
+.S12 { min-height: 0px; font-family: monospace; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S13 { min-height: 0px; font-weight: bold; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S14 { min-height: 0px; color: rgb(0, 95, 206); margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S15 { font-weight: bold; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S16 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(0, 0, 255); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S17 { min-height: 0px; font-style: italic; font-weight: bold; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+
+.LineNodeBlock {margin: 10px 0 10px 0;}
+.LineNodeBlock+.paragraphNode {margin-top: 10px;}
+.lineNode {padding-left: 10px; background-color: #F7F7F7; border-left: 1px solid #E9E9E9; border-right: 1px solid #E9E9E9;}
+.inlineWrapper:first-child .lineNode,.inlineWrapper.outputs+.inlineWrapper .lineNode {padding-top: 5px; border-top: 1px solid #E9E9E9;}
+.inlineWrapper:last-child .lineNode,.inlineWrapper.outputs .lineNode {padding-bottom: 5px; border-bottom: 1px solid #E9E9E9;}
+.lineNode .textBox {white-space: pre;}
+</style></head><body><div class = "content"><div class = 'SectionBlock containment active'><h1 class = "S1"><span class = "S2">Load data</span></h1><h2 class = "S3"><span class = "S2">Create specdata objects from workspace variables</span></h2><p class = "S4"><span class = "S5">specdata</span><span class = "S2"> objects can be created using data stored in MATLAB variables:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">X = 1:10;</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">Y = [0 0.5 2 5.5 9 9 5.5 2 0.5 0];</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">ID = </span><span class = "S10">'spectrum1'</span><span class = "S8">;</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">S1</span><span class = "S8"> = specdata(X, Y, ID);</span></p></div></div><p class = "S11"><span class = "S2">The object </span><span class = "S5">S</span><span class = "S2">1 will be a spectrum with </span><span class = "S5">X</span><span class = "S2"> values 1, 2, 3, … to 10, </span><span class = "S5">Y</span><span class = "S2"> values 0, 0.5, 2, … and </span><span class = "S5">ID</span><span class = "S2"> property containing the string literal 'spectrum1'.</span></p><p class = "S4"><span class = "S2">Additional properties can be assigned to the spectrum using name/value pairs:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">S1</span><span class = "S9"> = specdata(X, Y, </span><span class = "S10">'spectrum1'</span><span class = "S9">, </span><span class = "S10">'XType'</span><span class = "S9">, </span><span class = "S10">'Time'</span><span class = "S9">, </span><span class = "S10">'XUnit'</span><span class = "S9">, </span><span class = "S10">'s'</span><span class = "S8">);</span></p></div></div><p class = "S11"><span class = "S2">Now the spectrum has </span><span class = "S5">XType</span><span class = "S2">and </span><span class = "S5">XUnit</span><span class = "S2"> properties equal to 'time' and 's', respectively.</span></p><p class = "S4"><span class = "S2">You can also use a struct or table variable containing all data and properties:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">s1 = struct(</span><span class = "S10">'X'</span><span class = "S9">, X, </span><span class = "S10">'Y'</span><span class = "S9">, Y, </span><span class = "S10">'ID'</span><span class = "S8">, ID);</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">S1</span><span class = "S8"> = specdata(s1);</span></p></div></div><p class = "S11"><span class = "S2">Collections of spectra can be created in this way from struct arrays or tables with multiple rows:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">S1</span><span class = "S8"> = specdata([s1 s2]);</span></p></div></div><h2 class = "S3"><span class = "S2">Load data from a text file</span></h2><p class = "S4"><span class = "S2">It is practical to create </span><span class = "S5">specdata</span><span class = "S2"> objects from data stored in a text (ASCII) file. This is done with commands of this kind:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">S1 = specdata.load(</span><span class = "S10">'data_1.txt'</span><span class = "S8">);</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">S2 = specdata.load(</span><span class = "S10">'data_2.csv'</span><span class = "S9">, </span><span class = "S10">'Delimiter'</span><span class = "S9">, </span><span class = "S10">';'</span><span class = "S8">)</span></p></div></div><p class = "S11"><span class = "S2">The command will create a </span><span class = "S5">specdata</span><span class = "S2"> object </span><span class = "S12">S1</span><span class = "S2">, which has </span><span class = "S5">X</span><span class = "S2"> and </span><span class = "S5">Y</span><span class = "S2"> values read from the first two columns of the text file 'data_1.txt'. The </span><span class = "S5">ID</span><span class = "S2"> and </span><span class = "S5">DateTime </span><span class = "S2">properties in this case are automatically assigned from the file's name and time stamp, and the </span><span class = "S5">ExpID</span><span class = "S2">property contains the source folder.</span></p><h2 class = "S3"><span class = "S2">Load multiple files</span></h2><p class = "S4"><span class = "S2">A single command can load more than one file (spectrum) into a specdata object:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">s = specdata.load({'data_1.txt','data_2.txt'});</span></p></div></div><p class = "S11"><span class = "S2">The command reads the files 'data_1.txt' and 'data_2.txt'. Note that the list of files is enclosed in braces { } (in MATLAB this is called a cell array of strings). </span></p><p class = "S4"><span class = "S2">Instead of providing a list of all files to load, it is simpler to use wild-card characters, such as </span><span class = "S12">*</span><span class = "S2">:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">u = specdata.load(</span><span class = "S10">'data*.txt'</span><span class = "S8">);</span></p></div></div><p class = "S11"><span class = "S2">The command will read all files in the current folder with names starting with 'data' and ending with '.txt'. To read all TXT files at once, write '*.txt' instead. In both cases, provided that such files exist and can be read, the commands will create object </span><span class = "S5">arrays</span><span class = "S2">, i.e. </span><span class = "S12">s</span><span class = "S2"> and </span><span class = "S12">u</span><span class = "S2"> will contain more than one spectrum. MATLAB expressions containing </span><span class = "S12">s</span><span class = "S2"> or </span><span class = "S12">u</span><span class = "S2"> will operate on </span><span class = "S13">all</span><span class = "S2"> spectra in the arrays, which makes Spectr-O-Matic</span><span class = "S2">  </span><span class = "S2">a very powerful tool (see </span><a href = 'https://localhost:61415/toolbox/matlab/codetools/liveeditor/index.html?id=1692990705&showLineNumbers=false&clipboardtempdirpath=C:\Users\Petar\AppData\Local\Temp\ConnectorClipboard3773686164931414569&snc=D6FC25#_Working_with_object'><span class = "S15">Working with object arrays</span></a><span class = "S2">).</span></p><h2 class = "S3"><span class = "S2">Set additional properties</span></h2><p class = "S4"><span class = "S2">When loading </span><span class = "S5">specdata</span><span class = "S2"> objects, additional properties (metadata) can be passed as name/value arguments to the </span><span class = "S12">specdata</span><span class = "S2"> or </span><span class = "S12">specdata.load</span><span class = "S2"> functions:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">data</span><span class = "S9"> = specdata.load(</span><span class = "S10">'*.dat'</span><span class = "S9">, </span><span class = "S10">'XType'</span><span class = "S9">, </span><span class = "S10">'Frequency'</span><span class = "S9">, </span><span class = "S16">...</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">      </span><span class = "S10">'YType'</span><span class = "S9">, </span><span class = "S10">'Power'</span><span class = "S9">, </span><span class = "S10">'YUnit'</span><span class = "S9">, </span><span class = "S10">'mW'</span><span class = "S8">);</span></p></div></div><p class = "S11"><span class = "S2">The command will load all files with extension '.dat' into object array </span><span class = "S5">data</span><span class = "S2"> and will set the </span><span class = "S5">XType</span><span class = "S2"> property to 'Frequency', the </span><span class = "S5">YType</span><span class = "S2"> property to 'Power', and the </span><span class = "S5">YUnit</span><span class = "S2"> property to 'mW'. Note that all string literals in MATLAB are enclosed in 'single quotes'.</span></p><p class = "S4"><span class = "S2">Another way to do the same is to first define all necessary properties in a </span><span class = "S5">struct</span><span class = "S2"> object and then pass this </span><span class = "S5">struct</span><span class = "S2"> to the </span><span class = "S5">specdata.load</span><span class = "S2"> function:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">prp = struct(</span><span class = "S10">'XType'</span><span class = "S9">, </span><span class = "S10">'Frequency'</span><span class = "S9">, </span><span class = "S16">...</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">             </span><span class = "S10">'XUnit'</span><span class = "S9">, </span><span class = "S10">'Hz'</span><span class = "S9">, </span><span class = "S16">...</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">             </span><span class = "S10">'YType'</span><span class = "S9">, </span><span class = "S10">'Power'</span><span class = "S9">, </span><span class = "S16">...</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">             </span><span class = "S10">'YUnit'</span><span class = "S9">, </span><span class = "S10">'mW'</span><span class = "S8">); </span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">data = specdata.load(</span><span class = "S10">'*.dat'</span><span class = "S8">, prp);</span></p></div></div><p class = "S11"><span class = "S2">The advantage is that the struct </span><span class = "S5">prp</span><span class = "S2"> can be reused.</span></p><h2 class = "S3"><span class = "S2">Load two-way data</span></h2><p class = "S4"><span class = "S2">Two-way (time-resolved) spectroscopy data can be loaded in a similar way, except in this case the </span><span class = "S5">specdata2D</span><span class = "S2"> class is used, two independent variables must be supplied (</span><span class = "S5">X</span><span class = "S2"> and </span><span class = "S5">T</span><span class = "S2">) and the </span><span class = "S5">Y </span><span class = "S2">values are not a single column but a matrix with rows corresponding to </span><span class = "S5">X</span><span class = "S2">values and columns corresponding to </span><span class = "S5">T </span><span class = "S2">values:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">X = 1:10;</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">T = 1:2:60;</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">Y = load(</span><span class = "S10">'2Ddata.txt'</span><span class = "S8">);</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S9">mydata = specdata2D(X,T,Y,</span><span class = "S10">'MyData'</span><span class = "S9">,</span><span class = "S10">'TUnit'</span><span class = "S9">,</span><span class = "S10">'seconds'</span><span class = "S8">);</span></p></div></div><p class = "S11"><span class = "S2">In this example the </span><span class = "S5">X</span><span class = "S2">and </span><span class = "S5">T</span><span class = "S2"> axis values of the 2D dataset </span><span class = "S12">mydata</span><span class = "S2"> are created in MATLAB and the actual measured data are read from a text file '2Ddata.txt'. The file 2Ddata.txt must contain 10 rows and 30 columns; otherwise an error message will be generated when creating the </span><span class = "S5">specdata2D </span><span class = "S2">object.</span></p><p class = "S4"><span class = "S2">For further information on what file types can be read, consult the </span><span class = "S17">specdata.load</span><span class = "S2"> and </span><span class = "S17">specdata2D.load</span><span class = "S2"> reference documentation.</span></p></div></div>
+<!-- 
+##### SOURCE BEGIN #####
+%% Load data
+%% Create specdata objects from workspace variables
+% _specdata_ objects can be created using data stored in MATLAB variables:
+
+X = 1:10;
+Y = [0 0.5 2 5.5 9 9 5.5 2 0.5 0];
+ID = 'spectrum1';
+S1 = specdata(X, Y, ID);
+%% 
+% The object _S_1 will be a spectrum with _X_ values 1, 2, 3, … to 10, _Y_ 
+% values 0, 0.5, 2, … and _ID_ property containing the string literal 'spectrum1'.
+% 
+% Additional properties can be assigned to the spectrum using name/value 
+% pairs:
+
+S1 = specdata(X, Y, 'spectrum1', 'XType', 'Time', 'XUnit', 's');
+%% 
+% Now the spectrum has _XType_and _XUnit_ properties equal to 'time' and 
+% 's', respectively.
+% 
+% You can also use a struct or table variable containing all data and properties:
+
+s1 = struct('X', X, 'Y', Y, 'ID', ID);
+S1 = specdata(s1);
+%% 
+% Collections of spectra can be created in this way from struct arrays or 
+% tables with multiple rows:
+
+S1 = specdata([s1 s2]);
+%% Load data from a text file
+% It is practical to create _specdata_ objects from data stored in a text (ASCII) 
+% file. This is done with commands of this kind:
+
+S1 = specdata.load('data_1.txt');
+S2 = specdata.load('data_2.csv', 'Delimiter', ';')
+%% 
+% The command will create a _specdata_ object |S1|, which has _X_ and _Y_ 
+% values read from the first two columns of the text file 'data_1.txt'. The _ID_ 
+% and _DateTime _properties in this case are automatically assigned from the file's 
+% name and time stamp, and the _ExpID_property contains the source folder.
+%% Load multiple files
+% A single command can load more than one file (spectrum) into a specdata object:
+
+s = specdata.load({'data_1.txt','data_2.txt'});
+%% 
+% The command reads the files 'data_1.txt' and 'data_2.txt'. Note that the 
+% list of files is enclosed in braces { } (in MATLAB this is called a cell array 
+% of strings). 
+% 
+% Instead of providing a list of all files to load, it is simpler to use 
+% wild-card characters, such as |*|:
+
+u = specdata.load('data*.txt');
+%% 
+% The command will read all files in the current folder with names starting 
+% with 'data' and ending with '.txt'. To read all TXT files at once, write '*.txt' 
+% instead. In both cases, provided that such files exist and can be read, the 
+% commands will create object _arrays_, i.e. |s| and |u| will contain more than 
+% one spectrum. MATLAB expressions containing |s| or |u| will operate on *all* 
+% spectra in the arrays, which makes Spectr-O-Matic  a very powerful tool (see 
+% *<#_Working_with_object Working with object arrays>*).
+%% Set additional properties
+% When loading _specdata_ objects, additional properties (metadata) can be passed 
+% as name/value arguments to the |specdata| or |specdata.load| functions:
+
+data = specdata.load('*.dat', 'XType', 'Frequency', ...
+      'YType', 'Power', 'YUnit', 'mW');
+%% 
+% The command will load all files with extension '.dat' into object array 
+% _data_ and will set the _XType_ property to 'Frequency', the _YType_ property 
+% to 'Power', and the _YUnit_ property to 'mW'. Note that all string literals 
+% in MATLAB are enclosed in 'single quotes'.
+% 
+% Another way to do the same is to first define all necessary properties 
+% in a _struct_ object and then pass this _struct_ to the _specdata.load_ function:
+
+prp = struct('XType', 'Frequency', ...
+             'XUnit', 'Hz', ...
+             'YType', 'Power', ...
+             'YUnit', 'mW'); 
+data = specdata.load('*.dat', prp);
+%% 
+% The advantage is that the struct _prp_ can be reused.
+%% Load two-way data
+% Two-way (time-resolved) spectroscopy data can be loaded in a similar way, 
+% except in this case the _specdata2D_ class is used, two independent variables 
+% must be supplied (_X_ and _T_) and the _Y _values are not a single column but 
+% a matrix with rows corresponding to _X_values and columns corresponding to _T 
+% _values:
+
+X = 1:10;
+T = 1:2:60;
+Y = load('2Ddata.txt');
+mydata = specdata2D(X,T,Y,'MyData','TUnit','seconds');
+%% 
+% In this example the _X_and _T_ axis values of the 2D dataset |mydata| 
+% are created in MATLAB and the actual measured data are read from a text file 
+% '2Ddata.txt'. The file 2Ddata.txt must contain 10 rows and 30 columns; otherwise 
+% an error message will be generated when creating the _specdata2D _object.
+% 
+% For further information on what file types can be read, consult the _*specdata.load_* 
+% and _*specdata2D.load_* reference documentation.
+##### SOURCE END #####
+--></body></html>

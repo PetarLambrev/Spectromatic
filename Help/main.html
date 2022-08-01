@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="MATLAB R2016a"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><title>Getting Started with Spectr-O-Matic</title><style type="text/css">
+* {margin: 0; padding: 0;}
+body {text-align: start; line-height: 17.2339992523193px; min-height: 0px; white-space: normal; color: rgb(0, 0, 0); font-family: Consolas, Inconsolata, Menlo, monospace; font-style: normal; font-size: 14px; font-weight: normal; text-decoration: none; white-space: normal; }
+h1, h2 {font-weight: normal;}
+.content { padding: 30px; }
+
+.S0 { margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S1 { line-height: 26.3999996185303px; min-height: 24px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-size: 22px; white-space: pre-wrap; margin-left: 4px; margin-top: 3px; margin-bottom: 15px; margin-right: 10px;  }
+.S2 { min-height: 0px; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S3 { min-height: 0px; font-style: italic; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S4 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 2px; margin-bottom: 9px; margin-right: 10px;  }
+.S5 { line-height: 20.576000213623px; min-height: 20px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; white-space: pre-wrap; margin-left: 4px; margin-top: 15px; margin-bottom: 9px; margin-right: 10px;  }
+.S6 { min-height: 0px; font-family: monospace; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S7 { font-family: Helvetica, Arial, sans-serif; margin-left: 0px; margin-top: 10px; margin-bottom: 20px; margin-right: 0px;  }
+.S8 { text-align: left; line-height: 21px; white-space: pre-wrap; white-space: pre-wrap; margin-left: 56px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S9 { font-family: monospace; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S10 { font-style: italic; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S11 { line-height: 20.576000213623px; min-height: 20px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; white-space: pre-wrap; margin-left: 4px; margin-top: 3px; margin-bottom: 9px; margin-right: 10px;  }
+
+.LineNodeBlock {margin: 10px 0 10px 0;}
+.LineNodeBlock+.paragraphNode {margin-top: 10px;}
+.lineNode {padding-left: 10px; background-color: #F7F7F7; border-left: 1px solid #E9E9E9; border-right: 1px solid #E9E9E9;}
+.inlineWrapper:first-child .lineNode,.inlineWrapper.outputs+.inlineWrapper .lineNode {padding-top: 5px; border-top: 1px solid #E9E9E9;}
+.inlineWrapper:last-child .lineNode,.inlineWrapper.outputs .lineNode {padding-bottom: 5px; border-bottom: 1px solid #E9E9E9;}
+.lineNode .textBox {white-space: pre;}
+</style></head><body><div class = "content"><div class = 'SectionBlock containment'><h1 class = "S1"><span class = "S2">Getting Started with </span><span class = "S3">Spectr-O-Matic</span></h1></div><p class = "S0"></p><div class = 'SectionBlock containment active'><p class = "S4"><span class = "S2">The</span><span class = "S2"> </span><span class = "S3">Spectr-O-Matic</span><span class = "S2"> toolbox is designed to organize, visualize and perform calculations with spectroscopic data.</span></p><h2 class = "S5"><span class = "S2">What is a spectrum</span></h2><p class = "S4"><span class = "S2">Generally speaking, a spectrum is an array of related X-Y number pairs:</span></p><p class = "S4"><span class = "S6">Y = f(X)</span></p><p class = "S4"><span class = "S2">Thus, a spectrum consists of two columns of real numbers:</span><span class = "S2"> </span><span class = "S6">X</span><span class = "S2"> and</span><span class = "S2"> </span><span class = "S6">Y</span><span class = "S2">. </span></p><p class = "S4"><span class = "S6">X</span><span class = "S2"> typically represents frequency, wavelength, or time, and</span><span class = "S2"> </span><span class = "S6">Y</span><span class = "S2"> – a measured quantity, such as absorbance.</span></p><p class = "S4"><span class = "S2">Spectr-O-Matic stores spectra as objects of class </span><span class = "S6">specdata</span><span class = "S2">. A</span><span class = "S2"> </span><span class = "S6">specdata</span><span class = "S2"> object contains one column vector of</span><span class = "S2"> </span><span class = "S3">X</span><span class = "S2"> values, one column vector of</span><span class = "S2"> </span><span class = "S3">Y</span><span class = "S2"> values, and additional properties (storing related metadata:</span></p><ul class = "S7"><li class = "S8"><span class = "S9">ID</span><span class = "S0"> - a string identifying the spectrum</span></li><li class = "S8"><span class = "S9">ExpID</span><span class = "S0"> - a string identifying the experiment</span></li><li class = "S8"><span class = "S9">XType, YType</span><span class = "S0"> - type of</span><span class = "S0"> </span><span class = "S10">X </span><span class = "S0">and</span><span class = "S10"> Y</span><span class = "S0"> data (e.g. 'Wavelength', 'Absorbance')</span></li><li class = "S8"><span class = "S9">XUnit, YUnit</span><span class = "S0"> - measurement units (e.g. 'nm',  'mOD')</span></li><li class = "S8"><span class = "S9">DateTime</span><span class = "S0"> - date and time of the measurement (date string).</span></li><li class = "S8"><span class = "S9">Comment</span><span class = "S0"> - user remarks</span></li><li class = "S8"><span class = "S9">History</span><span class = "S0"> - operations log string</span></li></ul><p class = "S4"><span class = "S2">A separate class,</span><span class = "S2"> </span><span class = "S6">specdata2D</span><span class = "S2">, is designed for two-way spectroscopy data, such that</span><span class = "S2"> </span><span class = "S6">Y</span><span class = "S2"> is measured as a function of two independent variables,</span><span class = "S2"> </span><span class = "S6">X</span><span class = "S2"> and</span><span class = "S2"> </span><span class = "S6">T</span><span class = "S2"> :</span></p><p class = "S4"><span class = "S6">Y = f(X,T)</span></p><p class = "S4"><span class = "S2">where</span><span class = "S2"> </span><span class = "S6">T</span><span class = "S2"> could represent time (in time-resolved spectroscopy) or any other quantity. The main difference between </span><span class = "S6">specdata</span><span class = "S2"> and</span><span class = "S2"> </span><span class = "S6">specdata2D</span><span class = "S2"> is that the</span><span class = "S2"> </span><span class = "S3">Y</span><span class = "S2"> values in</span><span class = "S2"> </span><span class = "S6">specdata</span><span class = "S2"> are a single column of numbers (vector), whereas in</span><span class = "S2"> </span><span class = "S6">specdata2D</span><span class = "S2"> the</span><span class = "S2"> </span><span class = "S3">Y</span><span class = "S2"> values are a two-dimensional matrix with a number of rows equal to the number of</span><span class = "S2"> </span><span class = "S3">X</span><span class = "S2"> values and a number of columns equal to the number of</span><span class = "S2"> </span><span class = "S3">T</span><span class = "S2"> values.</span></p></div><p class = "S0"></p><div class = 'SectionBlock containment'><h2 class = "S11"><span class = "S2">Access data in a spectrum</span></h2><p class = "S4"><span class = "S2">In MATLAB, objects stored in memory can be addressed and manipulated by their unique identifier (name). Let a spectrum be stored in memory by the name</span><span class = "S2"> </span><span class = "S6">SP</span><span class = "S2">. Its properties can be accessed using dot-notation:</span><span class = "S2"> </span><span class = "S6">SP.X</span><span class = "S2"> and</span><span class = "S2"> </span><span class = "S6">SP.Y</span><span class = "S2"> will return the array of</span><span class = "S2"> </span><span class = "S3">X</span><span class = "S2"> and</span><span class = "S2"> </span><span class = "S3">Y</span><span class = "S2"> values, respectively,</span><span class = "S2"> </span><span class = "S6">SP.DateTime</span><span class = "S2"> will return the date and time of the measurement, etc.</span></p><p class = "S4"><span class = "S2">The simplicity and elegance of </span><span class = "S3">Spectr-O-Matic</span><span class = "S2"> lies in the fact that spectra stored as objects can be used in mathematical expressions like</span><span class = "S2"> </span><span class = "S6">c = 2*a</span><span class = "S2"> or</span><span class = "S2"> </span><span class = "S6">c = a + b</span><span class = "S2"> , just as if they were simple numbers. In the latter expression, if</span><span class = "S2"> </span><span class = "S6">a</span><span class = "S2"> and</span><span class = "S2"> </span><span class = "S6">b</span><span class = "S2"> are spectra of class </span><span class = "S6">specdata</span><span class = "S2">, the result </span><span class = "S6">c</span><span class = "S2"> will be the summed spectrum. </span></p></div><p class = "S0"></p><div class = 'SectionBlock containment'><h2 class = "S11"><span class = "S2">General workflow</span></h2><p class = "S4"><span class = "S2">A sequence of</span><span class = "S2"> </span><span class = "S3">Spectr-O-Matic</span><span class = "S2"> operations can be written as a MATLAB script and executed or modified later as many times as needed. Typically the data analysis involves these steps:</span></p><ol class = "S7"><li class = "S8"><span class = "S0">Load data into</span><span class = "S0"> </span><span class = "S10">Spectr-O-Matic</span><span class = "S0"> objects</span></li><li class = "S8"><span class = "S0">Perform operations – mathematical operations, preprocessing</span></li><li class = "S8"><span class = "S0">Search and index – categorize data, make selections, perform operations on groups of data</span></li><li class = "S8"><span class = "S0">Plot data</span></li><li class = "S8"><span class = "S0">Save or export processed data</span></li></ol></div></div>
+<!-- 
+##### SOURCE BEGIN #####
+%% Getting Started with _Spectr-O-Matic_
+% The _Spectr-O-Matic_ toolbox is designed to organize, visualize and perform 
+% calculations with spectroscopic data.
+%% What is a spectrum
+% Generally speaking, a spectrum is an array of related X-Y number pairs:
+% 
+% |Y = f(X)|
+% 
+% Thus, a spectrum consists of two columns of real numbers: |X| and |Y|. 
+% 
+% |X| typically represents frequency, wavelength, or time, and |Y| – a measured 
+% quantity, such as absorbance.
+% 
+% Spectr-O-Matic stores spectra as objects of class |specdata|. A |specdata| 
+% object contains one column vector of _X_ values, one column vector of _Y_ values, 
+% and additional properties (storing related metadata:
+% 
+% * |ID| - a string identifying the spectrum
+% * |ExpID| - a string identifying the experiment
+% * |XType, YType| - type of _X _and_ Y_ data (e.g. 'Wavelength', 'Absorbance')
+% * |XUnit, YUnit| - measurement units (e.g. 'nm',  'mOD')
+% * |DateTime| - date and time of the measurement (date string).
+% * |Comment| - user remarks
+% * |History| - operations log string
+% 
+% A separate class, |specdata2D|, is designed for two-way spectroscopy data, 
+% such that |Y| is measured as a function of two independent variables, |X| and 
+% |T| :
+% 
+% |Y = f(X,T)|
+% 
+% where |T| could represent time (in time-resolved spectroscopy) or any other 
+% quantity. The main difference between |specdata| and |specdata2D| is that the 
+% _Y_ values in |specdata| are a single column of numbers (vector), whereas in 
+% |specdata2D| the _Y_ values are a two-dimensional matrix with a number of rows 
+% equal to the number of _X_ values and a number of columns equal to the number 
+% of _T_ values.
+%% Access data in a spectrum
+% In MATLAB, objects stored in memory can be addressed and manipulated by their 
+% unique identifier (name). Let a spectrum be stored in memory by the name |SP|. 
+% Its properties can be accessed using dot-notation: |SP.X| and |SP.Y| will return 
+% the array of _X_ and _Y_ values, respectively, |SP.DateTime| will return the 
+% date and time of the measurement, etc.
+% 
+% The simplicity and elegance of _Spectr-O-Matic_ lies in the fact that spectra 
+% stored as objects can be used in mathematical expressions like |c = 2*a| or 
+% |c = a + b| , just as if they were simple numbers. In the latter expression, 
+% if |a| and |b| are spectra of class |specdata|, the result |c| will be the summed 
+% spectrum. 
+%% General workflow
+% A sequence of _Spectr-O-Matic_ operations can be written as a MATLAB script 
+% and executed or modified later as many times as needed. Typically the data analysis 
+% involves these steps:
+% 
+% # Load data into _Spectr-O-Matic_ objects
+% # Perform operations – mathematical operations, preprocessing
+% # Search and index – categorize data, make selections, perform operations 
+% on groups of data
+% # Plot data
+% # Save or export processed data
+##### SOURCE END #####
+--></body></html>

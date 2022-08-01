@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="MATLAB R2016a"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><title>Operate with spectra</title><style type="text/css">
+* {margin: 0; padding: 0;}
+body {text-align: start; line-height: 17.2339992523193px; min-height: 0px; white-space: normal; color: rgb(0, 0, 0); font-family: Consolas, Inconsolata, Menlo, monospace; font-style: normal; font-size: 14px; font-weight: normal; text-decoration: none; white-space: normal; }
+h1, h2 {font-weight: normal;}
+.content { padding: 30px; }
+
+.S0 { margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S1 { line-height: 26.3999996185303px; min-height: 24px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-size: 22px; white-space: pre-wrap; margin-left: 4px; margin-top: 3px; margin-bottom: 15px; margin-right: 10px;  }
+.S2 { min-height: 0px; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S3 { line-height: 20.576000213623px; min-height: 20px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; white-space: pre-wrap; margin-left: 4px; margin-top: 15px; margin-bottom: 9px; margin-right: 10px;  }
+.S4 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 2px; margin-bottom: 9px; margin-right: 10px;  }
+.S5 { min-height: 0px; font-style: italic; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S6 { min-height: 0px; font-weight: bold; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S7 { margin-left: 3px; margin-top: 10px; margin-bottom: 10px; margin-right: 3px;  }
+.S8 { line-height: 15.5926666259766px; min-height: 18px; white-space: nowrap; font-size: 12.6666669845581px; white-space: nowrap; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S9 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S10 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S11 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 10px; margin-bottom: 9px; margin-right: 10px;  }
+.S12 { min-height: 0px; font-family: monospace; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S13 { min-height: 0px; color: rgb(0, 95, 206); margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S14 { font-weight: bold; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S15 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(160, 32, 240); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S16 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(255, 0, 0); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S17 { min-height: 0px; font-style: italic; font-weight: bold; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+
+.LineNodeBlock {margin: 10px 0 10px 0;}
+.LineNodeBlock+.paragraphNode {margin-top: 10px;}
+.lineNode {padding-left: 10px; background-color: #F7F7F7; border-left: 1px solid #E9E9E9; border-right: 1px solid #E9E9E9;}
+.inlineWrapper:first-child .lineNode,.inlineWrapper.outputs+.inlineWrapper .lineNode {padding-top: 5px; border-top: 1px solid #E9E9E9;}
+.inlineWrapper:last-child .lineNode,.inlineWrapper.outputs .lineNode {padding-bottom: 5px; border-bottom: 1px solid #E9E9E9;}
+.lineNode .textBox {white-space: pre;}
+</style></head><body><div class = "content"><div class = 'SectionBlock containment active'><h1 class = "S1"><span class = "S2">Operate with spectra</span></h1><h2 class = "S3"><span class = "S2">Perform arithmetic operations</span></h2><p class = "S4"><span class = "S2">Once the data are loaded into appropriate </span><span class = "S5">specdata</span><span class = "S2"> or </span><span class = "S5">specdata2D</span><span class = "S2"> objects, these objects can be used to perform calculations, such as arithmetic operations. A fundamental concept when performing any type of operations with Spectr-O-Matic is to create a </span><span class = "S6">new</span><span class = "S2"> object entity by performing operations on one or more </span><span class = "S6">old</span><span class = "S2"> objects:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">c</span><span class = "S10"> = a + b;</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S10">f = d/2;</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">x</span><span class = "S10"> = sum([u, v, w]);</span></p></div></div><p class = "S11"><span class = "S2">The new objects </span><span class = "S5">c</span><span class = "S2">, </span><span class = "S5">f</span><span class = "S2"> and </span><span class = "S5">x</span><span class = "S2"> are created by performing operations on </span><span class = "S5">a, b, d, u, v</span><span class = "S2">, and </span><span class = "S5">w</span><span class = "S2">. The original objects are not modified. If you want to </span><span class = "S6">modify</span><span class = "S2"> an existing object entity instead, simply place its name on the left side of the '=' sign:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S10">a = a + b;</span></p></div></div><p class = "S11"><span class = "S2">The expression will calculate the sum of </span><span class = "S5">a</span><span class = "S2"> and </span><span class = "S5">b</span><span class = "S2"> and the result will be stored in </span><span class = "S5">a</span><span class = "S2">, effectively replacing the contents of </span><span class = "S5">a.</span></p><p class = "S4"><span class = "S2">The four basic arithmetic operations addition, subtraction, multiplication and division can be performed on Spectr-O-Matic objects with the respective binary operators </span><span class = "S12">+</span><span class = "S2">, </span><span class = "S12">-</span><span class = "S2">, </span><span class = "S12">/</span><span class = "S2">, and </span><span class = "S12">*</span><span class = "S2">. In the expression</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S10">c = a + b;</span></p></div></div><p class = "S11"><span class = "S5">c</span><span class = "S2"> is the result, + is the operator sign, </span><span class = "S5">a</span><span class = "S2"> is the left operand and </span><span class = "S5">b</span><span class = "S2"> is the right operand. When either of the operands </span><span class = "S5">a</span><span class = "S2"> or </span><span class = "S5">b</span><span class = "S2"> is a Spectr-O-Matic object, the result </span><span class = "S5">c</span><span class = "S2"> is also a Spectr-O-Matic object. The operation is always performed on the </span><span class = "S5">Y</span><span class = "S2">values of the operands. The rest of the properties are transferred without change from the left operand </span><span class = "S5">a </span><span class = "S2">to the result </span><span class = "S5">c</span><span class = "S2">. </span></p><p class = "S4"><span class = "S2">Either operand of binary arithmetic operations can be a real number, rather than a </span><span class = "S5">Spectr-O-Matic</span><span class = "S2"> object. For example the expression </span><span class = "S12">b = 5; c = a - b </span><span class = "S2">will subtract 5 from each </span><span class = "S5">Y</span><span class = "S2"> value in </span><span class = "S5">a</span><span class = "S2"> and the expression </span><span class = "S12">a = 10*a</span><span class = "S2"> will multiply </span><span class = "S5">a</span><span class = "S2"> by 10. </span></p><p class = "S4"><span class = "S2">As mentioned in the previous section, the operands can be arrays of numbers or spectra, in which case the operations will be performed on every number/spectrum in the array.</span></p><h2 class = "S3"><span class = "S2">Object arrays</span></h2><p class = "S4"><span class = "S2">Multiple </span><span class = "S5">specdata</span><span class = "S2"> (and </span><span class = "S5">specdata2D</span><span class = "S2">) objects can be combined in object arrays and then accessed under the same MATLAB identifier. One way of creating an array is by reading several data files at once as shown in </span><a href = 'https://localhost:61415/toolbox/matlab/codetools/liveeditor/index.html?id=834506756&file=D%3A%5CPetar%5COneDrive%5CLab%5CMATLAB%5CSpectromatic%5C_HelpFiles%5Cmain_operations.mlx&showLineNumbers=false&clipboardtempdirpath=C:\Users\Petar\AppData\Local\Temp\ConnectorClipboard4760756073828118005&snc=329D38#_Creating_SpecData_objects'><span class = "S14">Creating specdata objects</span></a><span class = "S2">. Existing objects can be combined into arrays using MATLAB's array operator [ ]. The command</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S10">x = [u v w];</span></p></div></div><p class = "S11"><span class = "S2">creates an array </span><span class = "S5">x </span><span class = "S2">with three elements, which will be copies of </span><span class = "S5">u</span><span class = "S2">, </span><span class = "S5">v</span><span class = "S2"> and </span><span class = "S5">w</span><span class = "S2">. In this expression any or all of the operands </span><span class = "S5">u, v </span><span class = "S2">and </span><span class = "S5">w</span><span class = "S2"> can be object arrays themselves. In such case they will be </span><span class = "S5">concatenated</span><span class = "S2"> (appended one after another).</span></p><p class = "S4"><span class = "S2">Objects are indexed in object arrays in the same way as numbers in number arrays. To reference a particular object, specify its index in parentheses ( ). The next command statement has the same result as the one above, although it is less efficient to write and execute:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S10">x(1) = u; x(2) = v; x(3) = w;</span></p></div></div><p class = "S11"><span class = "S2">Range of objects can be specified with the range operator '</span><span class = "S12">:</span><span class = "S2">' in expressions such as </span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S10">B = A(1:5); C = A(6:end)</span></p></div></div><p class = "S11"><span class = "S2">Most </span><span class = "S5">Spectr-O-Matic</span><span class = "S2"> operations can be performed on single objects as well as object arrays. If </span><span class = "S5">x </span><span class = "S2">is an array, the statement </span><span class = "S12">y = 2*x;</span><span class = "S2">will multiply all spectra in </span><span class = "S5">x</span><span class = "S2"> by 2 and the result </span><span class = "S5">y</span><span class = "S2"> will also be an object array with the same number of spectra as </span><span class = "S5">x</span><span class = "S2">. Not that in this binary operation, the right operand is an object array and the left operand is a single number. </span><span class = "S5">Spectr-O-Matic</span><span class = "S2"> will recycle that number to perform operations on all objects in the array. However, both operands can be arrays, as in the next example:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">A = specdata.load({</span><span class = "S15">'dat1.txt'</span><span class = "S9">, </span><span class = "S15">'dat2.txt'</span><span class = "S9">, </span><span class = "S15">'dat3.txt'</span><span class = "S10">});</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S10">N = [1, 0.8, 1.5];</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">An</span><span class = "S10"> = A / N;</span></p></div></div><p class = "S11"><span class = "S2">Here </span><span class = "S5">A</span><span class = "S2"> is an array created by loading three files. </span><span class = "S5">N</span><span class = "S2"> is an array of three numbers, representing normalization factors. The last statement divides each spectrum in </span><span class = "S5">A</span><span class = "S2">by the corresponding number in </span><span class = "S5">N</span><span class = "S2">. The normalized spectra are stored in </span><span class = "S5">An</span><span class = "S2">.</span></p><p class = "S4"><span class = "S2">When performing binary operations with two array operands, the number of elements in one array should be the same as in the other array. If one array has fewer elements then its elements will be reused. For example, if </span><span class = "S5">b</span><span class = "S2"> is an array of two elements, then the result of the expression </span><span class = "S12">a*b</span><span class = "S2"> will be an array </span><span class = "S2">[</span><span class = "S5">a</span><span class = "S2">1</span><span class = "S5">b</span><span class = "S2">1</span><span class = "S2">, </span><span class = "S5">a</span><span class = "S2">2</span><span class = "S5">b</span><span class = "S2">2</span><span class = "S2">, </span><span class = "S5">a</span><span class = "S2">3</span><span class = "S5">b</span><span class = "S2">1</span><span class = "S2">, </span><span class = "S5">a</span><span class = "S2">4</span><span class = "S5">b</span><span class = "S2">2</span><span class = "S2">, …]</span><span class = "S2">.</span></p><p class = "S4"><span class = "S2">Both operands can be arrays of spectra, or one operand can be an array and the other a single spectrum:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">x = [u v w] </span><span class = "S16">–</span><span class = "S16"> </span><span class = "S10">x0;</span></p></div></div><p class = "S11"><span class = "S2">The spectrum </span><span class = "S5">x</span><span class = "S2">0 will be subtracted from each of the spectra in the left operand. Note that here an array was created directly in the expression where it was used.</span></p><h2 class = "S3"><span class = "S2">Other operations on spectra</span></h2><p class = "S4"><span class = "S2">Most of the functionality of </span><span class = "S5">Spectr-O-Matic</span><span class = "S2"> is implemented as </span><span class = "S5">methods</span><span class = "S2"> of the classes </span><span class = "S5">specdata</span><span class = "S2"> and </span><span class = "S5">specdata2D</span><span class = "S2">. There are methods that calculate properties, such as the number of datapoints in a spectrum (</span><span class = "S17">dim</span><span class = "S2">), methods to normalize (</span><span class = "S17">norm</span><span class = "S2">), integrate (</span><span class = "S17">int</span><span class = "S2">), differentiate (</span><span class = "S17">diff</span><span class = "S2">), smoothen (</span><span class = "S17">smooth</span><span class = "S2">) spectra and so on. The same concept applies as with arithmetic operations, i.e. a new object is created by performing operations using a given method. Methods are called either by using dot notation:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">S</span><span class = "S10"> = A.sum;</span></p></div></div><p class = "S11"><span class = "S2">or by using function notation:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S10">S = sum(A);</span></p></div></div><p class = "S11"><span class = "S2">The two expressions are equivalent and will calculate the sum of </span><span class = "S5">A</span><span class = "S2">, assuming that </span><span class = "S5">A</span><span class = "S2"> is an array of spectra.</span></p><p class = "S4"><span class = "S2">Some methods return real numbers as a result instead of objects. For example the method dim returns the number of data points in a one-way spectrum, or the number of </span><span class = "S5">X</span><span class = "S2">and </span><span class = "S5">T</span><span class = "S2"> values in a 2D dataset. The methods </span><span class = "S17">max</span><span class = "S2"> and </span><span class = "S17">min</span><span class = "S2"> return the global maximum and global minimum of each operand spectrum. The expression:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">An</span><span class = "S10"> = A / A.max;</span></p></div></div><p class = "S11"><span class = "S2">will divide the spectrum </span><span class = "S5">A</span><span class = "S2">by its maximum. If </span><span class = "S5">A</span><span class = "S2"> is an array, all spectra will be divided by their corresponding maxima. The statement is equivalent to:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S9">An</span><span class = "S10"> = A.norm;</span></p></div></div><p class = "S11"><span class = "S2">The method </span><span class = "S17">Xind</span><span class = "S2"> searches for a given </span><span class = "S5">X</span><span class = "S2"> value and returns its index in the </span><span class = "S5">X</span><span class = "S2"> array. A similar method </span><span class = "S17">Yx</span><span class = "S2">searches for an </span><span class = "S5">X</span><span class = "S2"> value and returns the corresponding </span><span class = "S5">Y</span><span class = "S2"> value. The statement</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S10">An = A / A.Yx(650);</span></p></div></div><p class = "S11"><span class = "S2">will normalize the spectrum (or spectra) </span><span class = "S5">A</span><span class = "S2"> at </span><span class = "S12">X = 650</span><span class = "S2">. </span></p><p class = "S4"><span class = "S2">For </span><span class = "S5">specdata2D</span><span class = "S2">objects the method will return an array of all </span><span class = "S5">Y</span><span class = "S2"> values that correspond to the given </span><span class = "S5">X.</span><span class = "S2"> An equivalent method Yt returns the </span><span class = "S5">Y</span><span class = "S2"> values for a given </span><span class = "S5">T</span><span class = "S2">.</span></p><p class = "S4"><span class = "S2">In addition to methods operating on the </span><span class = "S5">Y</span><span class = "S2"> data only, there are a few methods operating on the </span><span class = "S5">X</span><span class = "S2"> (and </span><span class = "S5">T</span><span class = "S2">) axes of Spectr-O-Matic objects. The methods </span><span class = "S17">setxlim</span><span class = "S2"> and </span><span class = "S17">settlim</span><span class = "S2">trim the spectra to a range of </span><span class = "S5">X</span><span class = "S2"> (</span><span class = "S5">T</span><span class = "S2">) values:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S10">Ablu = A.setxlim([420 480]);</span></p></div><div class = 'inlineWrapper'><p class = "S8 lineNode"><span class = "S10">Ared = A.setxlim([620 680]);</span></p></div></div><p class = "S11"><span class = "S2">The result is a spectrum, in which any data lying outside the specified </span><span class = "S5">X</span><span class = "S2"> range are discarded. Other methods operating on </span><span class = "S5">X</span><span class = "S2"> are </span><span class = "S17">bin</span><span class = "S2">(box-car averaging), </span><span class = "S17">setx</span><span class = "S2"> (replaces the </span><span class = "S5">X</span><span class = "S2"> axis and interpolates the </span><span class = "S5">Y</span><span class = "S2"> data to match the new axis), and </span><span class = "S17">merge</span><span class = "S2">(joins spectra together).</span></p></div></div>
+<!-- 
+##### SOURCE BEGIN #####
+%% Operate with spectra
+%% Perform arithmetic operations
+% Once the data are loaded into appropriate _specdata_ or _specdata2D_ objects, 
+% these objects can be used to perform calculations, such as arithmetic operations. 
+% A fundamental concept when performing any type of operations with Spectr-O-Matic 
+% is to create a *new* object entity by performing operations on one or more *old* 
+% objects:
+
+c = a + b;
+f = d/2;
+x = sum([u, v, w]);
+%% 
+% The new objects _c_, _f_ and _x_ are created by performing operations 
+% on _a, b, d, u, v_, and _w_. The original objects are not modified. If you want 
+% to *modify* an existing object entity instead, simply place its name on the 
+% left side of the '=' sign:
+
+a = a + b;
+%% 
+% The expression will calculate the sum of _a_ and _b_ and the result will 
+% be stored in _a_, effectively replacing the contents of _a._
+% 
+% The four basic arithmetic operations addition, subtraction, multiplication 
+% and division can be performed on Spectr-O-Matic objects with the respective 
+% binary operators |+|, |-|, |/|, and |*|. In the expression
+
+c = a + b;
+%% 
+% _c_ is the result, + is the operator sign, _a_ is the left operand and 
+% _b_ is the right operand. When either of the operands _a_ or _b_ is a Spectr-O-Matic 
+% object, the result _c_ is also a Spectr-O-Matic object. The operation is always 
+% performed on the _Y_values of the operands. The rest of the properties are transferred 
+% without change from the left operand _a _to the result _c_. 
+% 
+% Either operand of binary arithmetic operations can be a real number, rather 
+% than a _Spectr-O-Matic_ object. For example the expression |b = 5; c = a - b 
+% |will subtract 5 from each _Y_ value in _a_ and the expression |a = 10*a| will 
+% multiply _a_ by 10. 
+% 
+% As mentioned in the previous section, the operands can be arrays of numbers 
+% or spectra, in which case the operations will be performed on every number/spectrum 
+% in the array.
+%% Object arrays
+% Multiple _specdata_ (and _specdata2D_) objects can be combined in object arrays 
+% and then accessed under the same MATLAB identifier. One way of creating an array 
+% is by reading several data files at once as shown in *<#_Creating_SpecData_objects 
+% Creating specdata objects>*. Existing objects can be combined into arrays using 
+% MATLAB's array operator [ ]. The command
+
+x = [u v w];
+%% 
+% creates an array _x _with three elements, which will be copies of _u_, 
+% _v_ and _w_. In this expression any or all of the operands _u, v _and _w_ can 
+% be object arrays themselves. In such case they will be _concatenated_ (appended 
+% one after another).
+% 
+% Objects are indexed in object arrays in the same way as numbers in number 
+% arrays. To reference a particular object, specify its index in parentheses ( 
+% ). The next command statement has the same result as the one above, although 
+% it is less efficient to write and execute:
+
+x(1) = u; x(2) = v; x(3) = w;
+%% 
+% Range of objects can be specified with the range operator '|:|' in expressions 
+% such as 
+
+B = A(1:5); C = A(6:end)
+%% 
+% Most _Spectr-O-Matic_ operations can be performed on single objects as 
+% well as object arrays. If _x _is an array, the statement |y = 2*x;|will multiply 
+% all spectra in _x_ by 2 and the result _y_ will also be an object array with 
+% the same number of spectra as _x_. Not that in this binary operation, the right 
+% operand is an object array and the left operand is a single number. _Spectr-O-Matic_ 
+% will recycle that number to perform operations on all objects in the array. 
+% However, both operands can be arrays, as in the next example:
+
+A = specdata.load({'dat1.txt', 'dat2.txt', 'dat3.txt'});
+N = [1, 0.8, 1.5];
+An = A / N;
+%% 
+% Here _A_ is an array created by loading three files. _N_ is an array of 
+% three numbers, representing normalization factors. The last statement divides 
+% each spectrum in _A_by the corresponding number in _N_. The normalized spectra 
+% are stored in _An_.
+% 
+% When performing binary operations with two array operands, the number of 
+% elements in one array should be the same as in the other array. If one array 
+% has fewer elements then its elements will be reused. For example, if _b_ is 
+% an array of two elements, then the result of the expression |a*b| will be an 
+% array [_a_1_b_1, _a_2_b_2, _a_3_b_1, _a_4_b_2, …].
+% 
+% Both operands can be arrays of spectra, or one operand can be an array 
+% and the other a single spectrum:
+
+x = [u v w] – x0;
+%% 
+% The spectrum _x_0 will be subtracted from each of the spectra in the left 
+% operand. Note that here an array was created directly in the expression where 
+% it was used.
+%% Other operations on spectra
+% Most of the functionality of _Spectr-O-Matic_ is implemented as _methods_ 
+% of the classes _specdata_ and _specdata2D_. There are methods that calculate 
+% properties, such as the number of datapoints in a spectrum (_*dim_*), methods 
+% to normalize (_*norm_*), integrate (_*int_*), differentiate (_*diff_*), smoothen 
+% (_*smooth_*) spectra and so on. The same concept applies as with arithmetic 
+% operations, i.e. a new object is created by performing operations using a given 
+% method. Methods are called either by using dot notation:
+
+S = A.sum;
+%% 
+% or by using function notation:
+
+S = sum(A);
+%% 
+% The two expressions are equivalent and will calculate the sum of _A_, 
+% assuming that _A_ is an array of spectra.
+% 
+% Some methods return real numbers as a result instead of objects. For example 
+% the method dim returns the number of data points in a one-way spectrum, or the 
+% number of _X_and _T_ values in a 2D dataset. The methods _*max_* and _*min_* 
+% return the global maximum and global minimum of each operand spectrum. The expression:
+
+An = A / A.max;
+%% 
+% will divide the spectrum _A_by its maximum. If _A_ is an array, all spectra 
+% will be divided by their corresponding maxima. The statement is equivalent to:
+
+An = A.norm;
+%% 
+% The method _*Xind_* searches for a given _X_ value and returns its index 
+% in the _X_ array. A similar method _*Yx_*searches for an _X_ value and returns 
+% the corresponding _Y_ value. The statement
+
+An = A / A.Yx(650);
+%% 
+% will normalize the spectrum (or spectra) _A_ at |X = 650|. 
+% 
+% For _specdata2D_objects the method will return an array of all _Y_ values 
+% that correspond to the given _X._ An equivalent method Yt returns the _Y_ values 
+% for a given _T_.
+% 
+% In addition to methods operating on the _Y_ data only, there are a few 
+% methods operating on the _X_ (and _T_) axes of Spectr-O-Matic objects. The methods 
+% _*setxlim_* and _*settlim_*trim the spectra to a range of _X_ (_T_) values:
+
+Ablu = A.setxlim([420 480]);
+Ared = A.setxlim([620 680]);
+%% 
+% The result is a spectrum, in which any data lying outside the specified 
+% _X_ range are discarded. Other methods operating on _X_ are _*bin_*(box-car 
+% averaging), _*setx_* (replaces the _X_ axis and interpolates the _Y_ data to 
+% match the new axis), and _*merge_*(joins spectra together).
+##### SOURCE END #####
+--></body></html>

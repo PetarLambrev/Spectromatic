@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="MATLAB R2016a"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><title>Plot spectra by groups</title><style type="text/css">
+* {margin: 0; padding: 0;}
+body {text-align: start; line-height: 17.2339992523193px; min-height: 0px; white-space: normal; color: rgb(0, 0, 0); font-family: Consolas, Inconsolata, Menlo, monospace; font-style: normal; font-size: 14px; font-weight: normal; text-decoration: none; white-space: normal; }
+h1, h2 {font-weight: normal;}
+.content { padding: 30px; }
+
+.S0 { margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S1 { line-height: 26.3999996185303px; min-height: 24px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-size: 22px; white-space: pre-wrap; margin-left: 4px; margin-top: 3px; margin-bottom: 15px; margin-right: 10px;  }
+.S2 { min-height: 0px; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S3 { line-height: 20.576000213623px; min-height: 20px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; white-space: pre-wrap; margin-left: 4px; margin-top: 15px; margin-bottom: 9px; margin-right: 10px;  }
+.S4 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 2px; margin-bottom: 9px; margin-right: 10px;  }
+.S5 { min-height: 0px; font-weight: bold; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S6 { margin-left: 3px; margin-top: 10px; margin-bottom: 10px; margin-right: 3px;  }
+.S7 { line-height: 15.5926666259766px; min-height: 18px; white-space: nowrap; font-size: 12.6666669845581px; white-space: nowrap; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S8 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S9 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(160, 32, 240); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S10 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S11 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 10px; margin-bottom: 9px; margin-right: 10px;  }
+.S12 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(0, 0, 255); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S13 { min-height: 0px; font-style: italic; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S14 { margin-left: 3px; margin-top: 10px; margin-bottom: 4px; margin-right: 3px;  }
+.S15 { margin-left: 3px; margin-top: 4px; margin-bottom: 10px; margin-right: 3px;  }
+.S16 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(0, 0, 255); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+
+.LineNodeBlock {margin: 10px 0 10px 0;}
+.LineNodeBlock+.paragraphNode {margin-top: 10px;}
+.lineNode {padding-left: 10px; background-color: #F7F7F7; border-left: 1px solid #E9E9E9; border-right: 1px solid #E9E9E9;}
+.inlineWrapper:first-child .lineNode,.inlineWrapper.outputs+.inlineWrapper .lineNode {padding-top: 5px; border-top: 1px solid #E9E9E9;}
+.inlineWrapper:last-child .lineNode,.inlineWrapper.outputs .lineNode {padding-bottom: 5px; border-bottom: 1px solid #E9E9E9;}
+.lineNode .textBox {white-space: pre;}
+</style></head><body><div class = "content"><div class = 'SectionBlock containment active'><h1 class = "S1"><span class = "S2">Plot spectra by groups</span></h1><h2 class = "S3"><span class = "S2">Plot using splitop</span></h2><p class = "S4"><span class = "S2">If the data are classified in categories with a categorical index, the command </span><span class = "S5">splitop</span><span class = "S2"> can automatically plot the spectra grouped by category. The command line looks like this:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">dat.splitop(@plotf, catx, {</span><span class = "S9">'sample'</span><span class = "S8">, </span><span class = "S9">'type'</span><span class = "S10">});</span></p></div></div><p class = "S11"><span class = "S2">The command will first group all spectra into groups based on the “sample” and “type” variables and then execute the helper function </span><span class = "S5">plotf</span><span class = "S2"> with each group. The result will be a set of figures with spectra belonging to the same group (sample and type).</span></p><p class = "S4"><span class = "S5">plotf</span><span class = "S2"> contains commands to create a new figure file, plot the data and any additional figure customization commands. You can copy the file plotf.m to your data folder and modify as required by the specific project. </span></p><p class = "S4"><span class = "S5">plotf</span><span class = "S2"> can also write the specific group (sample, type) in the figure title. To be able to do this, add the operand ‘PassGroupVars’:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">dat.splitop(@plotf, catx, {</span><span class = "S9">'sample'</span><span class = "S8">, </span><span class = "S9">'type'</span><span class = "S8">}, [], </span><span class = "S9">'PassGroupVars'</span><span class = "S10">);</span></p></div></div><p class = "S11"><span class = "S2">By default, the legend text will contain each spectrum ID. To use a custom legend, the easiest way is to replace the ID field with the custom text. The next example will write the sample pH in the legend:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S10">ph = cellstr(catx.pH);</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">dat.set(</span><span class = "S9">'ID'</span><span class = "S8">,ph).splitop(@plotf, catx, {</span><span class = "S9">'sample'</span><span class = "S8">, </span><span class = "S9">'type'</span><span class = "S8">}, </span><span class = "S12">...</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">       [], </span><span class = "S9">'PassGroupVars'</span><span class = "S10">);</span></p></div></div><p class = "S11"><span class = "S2">The first line creates a cell array of strings from the categorical table column </span><span class = "S13">catx.pH</span><span class = "S2">. The second line replaces the data IDs with </span><span class = "S13">ph</span><span class = "S2">and plots the data grouped by sample and type. The figure titles will state the sample and type, and the legends will state the pH.</span></p><h2 class = "S3"><span class = "S2">Plot using splitapply</span></h2><p class = "S4"><span class = "S2">Another, more flexible method is to use MATLAB’s built-in functions </span><span class = "S5">findgroups</span><span class = "S2"> and </span><span class = "S5">splitapply</span><span class = "S2">.</span></p><p class = "S4"><span class = "S2">The next example splits the data into groups by </span><span class = "S13">Sample</span><span class = "S2"> and then plots spectra in different figures per group. A custom function </span><span class = "S13">plt</span><span class = "S2"> plots the data in a new figure and adds a title (from x.</span><span class = "S13">Sample</span><span class = "S2">) and a legend (x.</span><span class = "S13">Species</span><span class = "S2">). Note that you can place the function definition at the end of your script in MATLAB 2016b or later. In earlier MATLAB versions it must be in a separate file </span><span class = "S13">plt.m.</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S10">g = findgroups(x.Sample);</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S10">splitapply(@plt, dat, x.Sample, x.Species, g)</span></p></div></div></div><p class = "S0"></p><div class = 'SectionBlock containment'><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S16">function </span><span class = "S10">plt(d, t, l)</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S10">    figure; plot(d); </span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S8">    title(sprintf(</span><span class = "S9">'Sample: %s'</span><span class = "S10">, t(1))); legend(cellstr(l))</span></p></div><div class = 'inlineWrapper'><p class = "S7 lineNode"><span class = "S12">end</span></p></div></div><p class = "S11"><span class = "S2"> </span></p></div></div>
+<!-- 
+##### SOURCE BEGIN #####
+%% Plot spectra by groups
+%% Plot using splitop
+% If the data are classified in categories with a categorical index, the command 
+% *splitop* can automatically plot the spectra grouped by category. The command 
+% line looks like this:
+
+dat.splitop(@plotf, catx, {'sample', 'type'});
+%% 
+% The command will first group all spectra into groups based on the “sample” 
+% and “type” variables and then execute the helper function *plotf* with each 
+% group. The result will be a set of figures with spectra belonging to the same 
+% group (sample and type).
+% 
+% *plotf* contains commands to create a new figure file, plot the data and 
+% any additional figure customization commands. You can copy the file plotf.m 
+% to your data folder and modify as required by the specific project. 
+% 
+% *plotf* can also write the specific group (sample, type) in the figure 
+% title. To be able to do this, add the operand ‘PassGroupVars’:
+
+dat.splitop(@plotf, catx, {'sample', 'type'}, [], 'PassGroupVars');
+%% 
+% By default, the legend text will contain each spectrum ID. To use a custom 
+% legend, the easiest way is to replace the ID field with the custom text. The 
+% next example will write the sample pH in the legend:
+
+ph = cellstr(catx.pH);
+dat.set('ID',ph).splitop(@plotf, catx, {'sample', 'type'}, ...
+       [], 'PassGroupVars');
+%% 
+% The first line creates a cell array of strings from the categorical table 
+% column _catx.pH_. The second line replaces the data IDs with _ph_and plots the 
+% data grouped by sample and type. The figure titles will state the sample and 
+% type, and the legends will state the pH.
+%% Plot using splitapply
+% Another, more flexible method is to use MATLAB’s built-in functions *findgroups* 
+% and *splitapply*.
+% 
+% The next example splits the data into groups by _Sample_ and then plots 
+% spectra in different figures per group. A custom function _plt_ plots the data 
+% in a new figure and adds a title (from x._Sample_) and a legend (x._Species_). 
+% Note that you can place the function definition at the end of your script in 
+% MATLAB 2016b or later. In earlier MATLAB versions it must be in a separate file 
+% _plt.m._
+
+g = findgroups(x.Sample);
+splitapply(@plt, dat, x.Sample, x.Species, g)
+function plt(d, t, l)
+    figure; plot(d); 
+    title(sprintf('Sample: %s', t(1))); legend(cellstr(l))
+end
+%% 
+%
+##### SOURCE END #####
+--></body></html>

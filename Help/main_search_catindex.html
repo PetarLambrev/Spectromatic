@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="MATLAB R2016a"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><title>Create a categorical index</title><style type="text/css">
+* {margin: 0; padding: 0;}
+body {text-align: start; line-height: 17.2339992523193px; min-height: 0px; white-space: normal; color: rgb(0, 0, 0); font-family: Consolas, Inconsolata, Menlo, monospace; font-style: normal; font-size: 14px; font-weight: normal; text-decoration: none; white-space: normal; }
+h1, h2 {font-weight: normal;}
+.content { padding: 30px; }
+
+.S0 { margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S1 { line-height: 26.3999996185303px; min-height: 24px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-size: 22px; white-space: pre-wrap; margin-left: 4px; margin-top: 3px; margin-bottom: 15px; margin-right: 10px;  }
+.S2 { min-height: 0px; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S3 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 2px; margin-bottom: 9px; margin-right: 10px;  }
+.S4 { min-height: 0px; font-weight: bold; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S5 { min-height: 0px; font-style: italic; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S6 { line-height: 20.576000213623px; min-height: 20px; white-space: pre-wrap; color: rgb(60, 60, 60); font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; white-space: pre-wrap; margin-left: 4px; margin-top: 15px; margin-bottom: 9px; margin-right: 10px;  }
+.S7 { font-family: Helvetica, Arial, sans-serif; margin-left: 0px; margin-top: 10px; margin-bottom: 20px; margin-right: 0px;  }
+.S8 { text-align: left; line-height: 21px; white-space: pre-wrap; white-space: pre-wrap; margin-left: 56px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S9 { font-family: monospace; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S10 { margin-left: 3px; margin-top: 10px; margin-bottom: 10px; margin-right: 3px;  }
+.S11 { line-height: 15.5926666259766px; min-height: 18px; white-space: nowrap; font-size: 12.6666669845581px; white-space: nowrap; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S12 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S13 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(160, 32, 240); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S14 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S15 { line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 10px; margin-bottom: 9px; margin-right: 10px;  }
+.S16 { min-height: 0px; font-style: italic; font-weight: bold; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S17 { min-height: 0px; font-family: monospace; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S18 { line-height: 15.5926675796509px; min-height: 0px; white-space: pre; color: rgb(0, 0, 255); font-size: 12.6666679382324px; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+
+.LineNodeBlock {margin: 10px 0 10px 0;}
+.LineNodeBlock+.paragraphNode {margin-top: 10px;}
+.lineNode {padding-left: 10px; background-color: #F7F7F7; border-left: 1px solid #E9E9E9; border-right: 1px solid #E9E9E9;}
+.inlineWrapper:first-child .lineNode,.inlineWrapper.outputs+.inlineWrapper .lineNode {padding-top: 5px; border-top: 1px solid #E9E9E9;}
+.inlineWrapper:last-child .lineNode,.inlineWrapper.outputs .lineNode {padding-bottom: 5px; border-bottom: 1px solid #E9E9E9;}
+.lineNode .textBox {white-space: pre;}
+</style></head><body><div class = "content"><div class = 'SectionBlock containment active'><h1 class = "S1"><span class = "S2">Create a categorical index</span></h1><p class = "S3"><span class = "S2">A categorical index is a more powerful and flexible way to organize your data. Categorical index is a MATLAB table with rows for every spectrum and columns that describe the spectrum. Columns are typically categorical variables, but can be strings or numbers as well. Variables can be species, gender, age group, sample ID, pH, temperature, and so on. This way define logical relationships between spectra that can make operations on groups of spectra much easier to code. </span></p><p class = "S3"><span class = "S2">There are two ways to create a categorical index. </span><span class = "S4">catindex</span><span class = "S2"> creates an index by searching the spectra ID’s for keywords that match a predefined list of variables. </span><span class = "S4">indextable</span><span class = "S2"> matches the spectra ID’s to an already existing table. See </span><span class = "S5">Examples\catindex</span><span class = "S2">for example data and code.</span></p><h2 class = "S6"><span class = "S2">catindex – search for keywords to variables</span></h2><p class = "S3"><span class = "S4">catindex </span><span class = "S2">creates categorical index tables from spectra IDs. </span><span class = "S4">catindex</span><span class = "S2"> works similarly to </span><span class = "S4">catfind</span><span class = "S2"> but instead of a single categorical array for a single list of keywords (categories), it searches in several keyword lists (variables) and returns a collection of categorical arrays in the form of a table.</span></p><p class = "S3"><span class = "S2">The first step is to define the variables and the possible values (keywords) for each variable. Let </span><span class = "S5">dat</span><span class = "S2"> contain the same spectra IDs as  in the </span><span class = "S4">find</span><span class = "S2"> example:</span></p><ol class = "S7"><li class = "S8"><span class = "S9">F01 sample1 pH2 UV.dat</span></li><li class = "S8"><span class = "S9">F02 sample1 pH5 FL.dat</span></li><li class = "S8"><span class = "S9">F03 sample1 pH5 UV.dat</span></li><li class = "S8"><span class = "S9">F04 sample1 pH7 FL.dat</span></li><li class = "S8"><span class = "S9">F05 sample1 pH7 UV.dat</span></li><li class = "S8"><span class = "S9">F06 sample2 pH2 UV.dat</span></li><li class = "S8"><span class = "S9">F07 sample2 pH5 FL.dat</span></li><li class = "S8"><span class = "S9">F08 sample2 pH5 UV.dat</span></li><li class = "S8"><span class = "S9">F09 sample2 pH7 FL.dat</span></li><li class = "S8"><span class = "S9">F10 sample2 pH7 UV.dat</span></li></ol><p class = "S3"><span class = "S2">The relevant groups of keywords are sample, pH and measurement type (UV/FL). Create a struct </span><span class = "S5">vars</span><span class = "S2"> with three variables - </span><span class = "S5">sample, pH</span><span class = "S2">, </span><span class = "S5">type</span><span class = "S2">. For each variable, list the possible keywords:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">vars.sample = {</span><span class = "S13">'sample1'</span><span class = "S12">, </span><span class = "S13">'sample2'</span><span class = "S14">};</span></p></div><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">vars.pH = {</span><span class = "S13">'pH2'</span><span class = "S12">, </span><span class = "S13">'pH5'</span><span class = "S12">, </span><span class = "S13">'pH7'</span><span class = "S14">};</span></p></div><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">vars.type = {</span><span class = "S13">'UV'</span><span class = "S12">, </span><span class = "S13">'FL'</span><span class = "S14">};</span></p></div></div><p class = "S15"><span class = "S2">Next, execute </span><span class = "S16">catindex</span><span class = "S2"> to create the index table:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">catx</span><span class = "S14"> = dat.catindex(vars)</span></p></div></div><p class = "S15"><span class = "S2">The result </span><span class = "S5">catx</span><span class = "S2"> is a categorical index table that looks like this:</span></p><p class = "S3"><span class = "S17">catx =</span></p><p class = "S3"><span class = "S17">                              sample     pH     type</span></p><p class = "S3"><span class = "S17">                              _______    ___    ____</span></p><p class = "S3"><span class = "S17">    F01 sample1 pH2 UV.dat    sample1    pH2    UV  </span></p><p class = "S3"><span class = "S17">    F02 sample1 pH5 FL.dat    sample1    pH5    FL  </span></p><p class = "S3"><span class = "S17">    F03 sample1 pH5 UV.dat    sample1    pH5    UV  </span></p><p class = "S3"><span class = "S17">    F04 sample1 pH7 FL.dat    sample1    pH7    FL  </span></p><p class = "S3"><span class = "S17">    F05 sample1 pH7 UV.dat    sample1    pH7    UV  </span></p><p class = "S3"><span class = "S17">    F06 sample2 pH2 UV.dat    sample2    pH2    UV  </span></p><p class = "S3"><span class = "S17">    F07 sample2 pH5 FL.dat    sample2    pH5    FL  </span></p><p class = "S3"><span class = "S17">    F08 sample2 pH5 UV.dat    sample2    pH5    UV  </span></p><p class = "S3"><span class = "S17">    F09 sample2 pH7 FL.dat    sample2    pH7    FL  </span></p><p class = "S3"><span class = "S17">    F10 sample2 pH7 UV.dat    sample2    pH7    UV  </span></p><p class = "S3"><span class = "S2">The index is a MATLAB table with rows for each spectrum and three columns – </span><span class = "S5">sample</span><span class = "S2">, </span><span class = "S5">pH</span><span class = "S2"> and </span><span class = "S5">type</span><span class = "S2">. Each column is a categorical variable. It gives an overview of the collection of spectra and which categories they belong to.</span></p><p class = "S3"><span class = "S2">Note that, to classify spectra according to the set of variables, </span><span class = "S4">catindex</span><span class = "S2"> searches the spectra IDs for keywords that match the predefined values in the struct </span><span class = "S5">vars</span><span class = "S2">. It is not necessary that the keywords are always in the spectra IDs – </span><span class = "S4">catindex </span><span class = "S2">can be instructed to search in any list of strings. For example, to search in the Comments field, type</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">catx</span><span class = "S14"> = catindex({dat.Comment}, vars);</span></p></div></div><p class = "S15"><span class = "S2">This command uses the synthax </span><span class = "S17">{dat.Comment}</span><span class = "S2">to extract the contents of a data field (</span><span class = "S5">Comment</span><span class = "S2">) for all spectra in </span><span class = "S5">dat</span><span class = "S2">. The result is a cell array of strings.</span></p><h2 class = "S6"><span class = "S2">indextable – match spectra to an existing table</span></h2><p class = "S3"><span class = "S2">Sometimes it is not practical to define all necessary information in the data file names, spectra IDs or any single string, especially if the experiment contains many variables. It may be more efficient to externally create the table describing the measurements, for example in Excel. If such a table exists, Spectr-O-Matic can automatically use it to create a categorical index. For example, suppose that an Excel file named ‘Workbook.xls’ contains the file name in the first column and subsequent columns describe the data. To create a categorical index table, write:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">catx</span><span class = "S12"> = indextable({dat.ID}, </span><span class = "S13">'Workbook.xls'</span><span class = "S14">);</span></p></div></div><p class = "S15"><span class = "S2">The command will read ‘Workbook.xls’ and look up the first column for elements that match the IDs in the object </span><span class = "S5">dat</span><span class = "S2">. It will then create the table </span><span class = "S5">catx</span><span class = "S2">, with rows corresponding to the data in </span><span class = "S5">dat</span><span class = "S2">. Note that ‘Workbook.xls’ may contain more entries </span><span class = "S5">dat</span><span class = "S2"> but all spectra in </span><span class = "S5">dat</span><span class = "S2"> need to have a corresponding entry in ‘Workbook.xls’ for the command to work properly.</span></p><p class = "S3"><span class = "S4">indextable</span><span class = "S2"> can also accept an existing MATLAB table, as in this example:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">wbk = readtable(</span><span class = "S13">'Workbook.xls'</span><span class = "S12">, </span><span class = "S13">'ReadRowNames'</span><span class = "S14">, true);</span></p></div><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S14">catx = indextable({dat.ID}, wbk);</span></p></div></div><h2 class = "S6"><span class = "S2">Use the categorical index to select data</span></h2><p class = "S3"><span class = "S2">A simple way to use the categorical index table is to make selections on the data:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">dat(catx.sample==</span><span class = "S13">'pH2'</span><span class = "S14">).plot;</span></p></div><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">s1 = catx.type==</span><span class = "S13">'UV' </span><span class = "S12">&amp; catx.sample==</span><span class = "S13">'sample1'</span><span class = "S14">;</span></p></div><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">s2 = catx.type==</span><span class = "S13">'UV' </span><span class = "S12">&amp; catx.sample==</span><span class = "S13">'sample2'</span><span class = "S14">;</span></p></div><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">dif</span><span class = "S14"> = dat(s1) - dat(s2); </span></p></div></div><h2 class = "S6"><span class = "S2">Use the categorical index as a table</span></h2><p class = "S3"><span class = "S2">The categorical index table can be modified, for example adding or deleting columns. The variables (columns) do not need to be categorical but can also contain numerical data, such as the results of some calculations on the spectra:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S14">catx.Smax = dat.max; </span></p></div><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S14">catx.Area = dat.int;</span></p></div><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S14">catx.S663 = dat.Yx(663) - dat.Yx(750);</span></p></div></div><p class = "S15"><span class = "S2">The lines above will create three new variables with corresponding values for each spectrum. This data table can be exported, filtered, subjected to statistical analysis, etc. </span></p><p class = "S3"><span class = "S2">You can add all or selected data properties to the table using the method </span><span class = "S16">proptable</span><span class = "S4"> </span><span class = "S2">(or its shortcut </span><span class = "S16">pt</span><span class = "S2">):</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">ptab = dat.proptable({</span><span class = "S13">'ID'</span><span class = "S12">, </span><span class = "S13">'DateTime'</span><span class = "S14">});</span></p></div><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S14">exptab = [ptab, catx];</span></p></div><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">writetable(exptab, </span><span class = "S13">'Data.xls'</span><span class = "S14">);</span></p></div></div><p class = "S15"><span class = "S2">The first line creates a table with the spectra IDs and time stamps as columns. The second line combines that table with the table </span><span class = "S5">catx</span><span class = "S2">. The last line exports the combined table as an Excel file.</span></p><p class = "S3"><span class = "S2">The categorical index can be combined with the actual measurement data as well. See </span><span class = "S4">Create a data table</span><span class = "S2">.</span></p><p class = "S3"><span class = "S2">For more information see MATLAB's documentation on using tables.</span></p><h2 class = "S6"><span class = "S2">Perform operations on groups of spectra using a categorical index</span></h2><p class = "S3"><span class = "S2">Using a categorical index table it is possible to split spectra into logical groups and apply operations to each group, i.e. applying a </span><span class = "S5">split-apply-combine</span><span class = "S2"> workflow. This is achieved by the methods </span><span class = "S16">splitop</span><span class = "S4"> </span><span class = "S2">and </span><span class = "S16">splitbinop</span><span class = "S2">. A more general approach is using the MATLAB functions </span><span class = "S16">findgroups</span><span class = "S2"> and </span><span class = "S16">splitapply</span><span class = "S2">. </span></p><p class = "S3"><span class = "S2">For example </span><span class = "S4">splitop</span><span class = "S2">can be used to automatically average spectra that belong to the same group:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S14">avg = dat.splitop(@mean, catx)</span></p></div></div><p class = "S15"><span class = "S5">@mean</span><span class = "S2"> is a reference to the function to be applied, </span><span class = "S5">catx</span><span class = "S2">is the categorical index for the collection </span><span class = "S5">dat</span><span class = "S2">. The command will find spectra that belong the same category group – i.e. that have the same values for all variables in </span><span class = "S5">catx</span><span class = "S2">– and calculate their average.</span></p><p class = "S3"><span class = "S16">splitbinop</span><span class = "S4"> </span><span class = "S2">performs per-category binary operations on two subsets of spectra:</span></p><div class = 'LineNodeBlock contiguous'><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">dif = dat.splitbinop(@minus, catx.group==</span><span class = "S13">'test'</span><span class = "S12">, </span><span class = "S18">...</span></p></div><div class = 'inlineWrapper'><p class = "S11 lineNode"><span class = "S12">      catx.group==</span><span class = "S13">'control'</span><span class = "S12">, catx, {</span><span class = "S13">'age'</span><span class = "S12">, </span><span class = "S13">'gender'</span><span class = "S14">})</span></p></div></div><p class = "S15"><span class = "S2">The command will first split the data in </span><span class = "S5">dat</span><span class = "S2"> into two groups – </span><span class = "S5">'test'</span><span class = "S2"> and </span><span class = "S5">'control'</span><span class = "S2">. Then it will search for data files between the two groups that belong to the same </span><span class = "S5">'age'</span><span class = "S2">and </span><span class = "S5">'gender'</span><span class = "S2"> category. If matching pairs are found, the differences </span><span class = "S5">test</span><span class = "S2">–</span><span class = "S5">control</span><span class = "S2"> will be calculated.</span></p><p class = "S3"><span class = "S2">See </span><span class = "S4">Plot using splitapply</span><span class = "S2"> for an example of using MATLAB functions </span><span class = "S4">findgroups</span><span class = "S2"> and </span><span class = "S4">splitapply</span><span class = "S2">.</span></p><p class = "S3"><span class = "S2"> </span></p></div></div>
+<!-- 
+##### SOURCE BEGIN #####
+%% Create a categorical index
+% A categorical index is a more powerful and flexible way to organize your data. 
+% Categorical index is a MATLAB table with rows for every spectrum and columns 
+% that describe the spectrum. Columns are typically categorical variables, but 
+% can be strings or numbers as well. Variables can be species, gender, age group, 
+% sample ID, pH, temperature, and so on. This way define logical relationships 
+% between spectra that can make operations on groups of spectra much easier to 
+% code. 
+% 
+% There are two ways to create a categorical index. *catindex* creates an 
+% index by searching the spectra ID’s for keywords that match a predefined list 
+% of variables. *indextable* matches the spectra ID’s to an already existing table. 
+% See _Examples\catindex_for example data and code.
+%% catindex – search for keywords to variables
+% *catindex *creates categorical index tables from spectra IDs. *catindex* works 
+% similarly to *catfind* but instead of a single categorical array for a single 
+% list of keywords (categories), it searches in several keyword lists (variables) 
+% and returns a collection of categorical arrays in the form of a table.
+% 
+% The first step is to define the variables and the possible values (keywords) 
+% for each variable. Let _dat_ contain the same spectra IDs as  in the *find* 
+% example:
+% 
+% # |F01 sample1 pH2 UV.dat|
+% # |F02 sample1 pH5 FL.dat|
+% # |F03 sample1 pH5 UV.dat|
+% # |F04 sample1 pH7 FL.dat|
+% # |F05 sample1 pH7 UV.dat|
+% # |F06 sample2 pH2 UV.dat|
+% # |F07 sample2 pH5 FL.dat|
+% # |F08 sample2 pH5 UV.dat|
+% # |F09 sample2 pH7 FL.dat|
+% # |F10 sample2 pH7 UV.dat|
+% 
+% The relevant groups of keywords are sample, pH and measurement type (UV/FL). 
+% Create a struct _vars_ with three variables - _sample, pH_, _type_. For each 
+% variable, list the possible keywords:
+
+vars.sample = {'sample1', 'sample2'};
+vars.pH = {'pH2', 'pH5', 'pH7'};
+vars.type = {'UV', 'FL'};
+%% 
+% Next, execute _*catindex_* to create the index table:
+
+catx = dat.catindex(vars)
+%% 
+% The result _catx_ is a categorical index table that looks like this:
+% 
+% |catx =|
+% 
+% |                              sample     pH     type|
+% 
+% |                              _______    ___    ____|
+% 
+% |    F01 sample1 pH2 UV.dat    sample1    pH2    UV  |
+% 
+% |    F02 sample1 pH5 FL.dat    sample1    pH5    FL  |
+% 
+% |    F03 sample1 pH5 UV.dat    sample1    pH5    UV  |
+% 
+% |    F04 sample1 pH7 FL.dat    sample1    pH7    FL  |
+% 
+% |    F05 sample1 pH7 UV.dat    sample1    pH7    UV  |
+% 
+% |    F06 sample2 pH2 UV.dat    sample2    pH2    UV  |
+% 
+% |    F07 sample2 pH5 FL.dat    sample2    pH5    FL  |
+% 
+% |    F08 sample2 pH5 UV.dat    sample2    pH5    UV  |
+% 
+% |    F09 sample2 pH7 FL.dat    sample2    pH7    FL  |
+% 
+% |    F10 sample2 pH7 UV.dat    sample2    pH7    UV  |
+% 
+% The index is a MATLAB table with rows for each spectrum and three columns 
+% – _sample_, _pH_ and _type_. Each column is a categorical variable. It gives 
+% an overview of the collection of spectra and which categories they belong to.
+% 
+% Note that, to classify spectra according to the set of variables, *catindex* 
+% searches the spectra IDs for keywords that match the predefined values in the 
+% struct _vars_. It is not necessary that the keywords are always in the spectra 
+% IDs – *catindex *can be instructed to search in any list of strings. For example, 
+% to search in the Comments field, type
+
+catx = catindex({dat.Comment}, vars);
+%% 
+% This command uses the synthax |{dat.Comment}|to extract the contents of 
+% a data field (_Comment_) for all spectra in _dat_. The result is a cell array 
+% of strings.
+%% indextable – match spectra to an existing table
+% Sometimes it is not practical to define all necessary information in the data 
+% file names, spectra IDs or any single string, especially if the experiment contains 
+% many variables. It may be more efficient to externally create the table describing 
+% the measurements, for example in Excel. If such a table exists, Spectr-O-Matic 
+% can automatically use it to create a categorical index. For example, suppose 
+% that an Excel file named ‘Workbook.xls’ contains the file name in the first 
+% column and subsequent columns describe the data. To create a categorical index 
+% table, write:
+
+catx = indextable({dat.ID}, 'Workbook.xls');
+%% 
+% The command will read ‘Workbook.xls’ and look up the first column for 
+% elements that match the IDs in the object _dat_. It will then create the table 
+% _catx_, with rows corresponding to the data in _dat_. Note that ‘Workbook.xls’ 
+% may contain more entries _dat_ but all spectra in _dat_ need to have a corresponding 
+% entry in ‘Workbook.xls’ for the command to work properly.
+% 
+% *indextable* can also accept an existing MATLAB table, as in this example:
+
+wbk = readtable('Workbook.xls', 'ReadRowNames', true);
+catx = indextable({dat.ID}, wbk);
+%% Use the categorical index to select data
+% A simple way to use the categorical index table is to make selections on the 
+% data:
+
+dat(catx.sample=='pH2').plot;
+s1 = catx.type=='UV' & catx.sample=='sample1';
+s2 = catx.type=='UV' & catx.sample=='sample2';
+dif = dat(s1) - dat(s2); 
+%% Use the categorical index as a table
+% The categorical index table can be modified, for example adding or deleting 
+% columns. The variables (columns) do not need to be categorical but can also 
+% contain numerical data, such as the results of some calculations on the spectra:
+
+catx.Smax = dat.max; 
+catx.Area = dat.int;
+catx.S663 = dat.Yx(663) - dat.Yx(750);
+%% 
+% The lines above will create three new variables with corresponding values 
+% for each spectrum. This data table can be exported, filtered, subjected to statistical 
+% analysis, etc. 
+% 
+% You can add all or selected data properties to the table using the method 
+% _*proptable_ *(or its shortcut _*pt_*):
+
+ptab = dat.proptable({'ID', 'DateTime'});
+exptab = [ptab, catx];
+writetable(exptab, 'Data.xls');
+%% 
+% The first line creates a table with the spectra IDs and time stamps as 
+% columns. The second line combines that table with the table _catx_. The last 
+% line exports the combined table as an Excel file.
+% 
+% The categorical index can be combined with the actual measurement data 
+% as well. See *Create a data table*.
+% 
+% For more information see MATLAB's documentation on using tables.
+%% Perform operations on groups of spectra using a categorical index
+% Using a categorical index table it is possible to split spectra into logical 
+% groups and apply operations to each group, i.e. applying a _split-apply-combine_ 
+% workflow. This is achieved by the methods _*splitop_ *and _*splitbinop_*. A 
+% more general approach is using the MATLAB functions _*findgroups_* and _*splitapply_*. 
+% 
+% For example *splitop*can be used to automatically average spectra that 
+% belong to the same group:
+
+avg = dat.splitop(@mean, catx)
+%% 
+% _@mean_ is a reference to the function to be applied, _catx_is the categorical 
+% index for the collection _dat_. The command will find spectra that belong the 
+% same category group – i.e. that have the same values for all variables in _catx_– 
+% and calculate their average.
+% 
+% _*splitbinop_ *performs per-category binary operations on two subsets of 
+% spectra:
+
+dif = dat.splitbinop(@minus, catx.group=='test', ...
+      catx.group=='control', catx, {'age', 'gender'})
+%% 
+% The command will first split the data in _dat_ into two groups – _'test'_ 
+% and _'control'_. Then it will search for data files between the two groups that 
+% belong to the same _'age'_and _'gender'_ category. If matching pairs are found, 
+% the differences _test_–_control_ will be calculated.
+% 
+% See *Plot using splitapply* for an example of using MATLAB functions *findgroups* 
+% and *splitapply*.
+% 
+%
+##### SOURCE END #####
+--></body></html>
