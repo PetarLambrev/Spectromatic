@@ -1,42 +1,42 @@
 classdef specparent
     % specparent - Common methods for 1D and 2D data
-    % Spectr-O-Matic version 2.3
+    % Spectr-O-Matic version 2.4
     %
     % Parent class for specdata and specdata2D
     %
-    % Petar Lambrev, 2012-2021
+    % Petar Lambrev, 2012-2022
         
     properties
-        XType = 'X';    % X-axis quantity
-        XUnit = '';     % X-axis unit
-        YType = 'Y';    % Y-axis quantity
-        YUnit = '';     % Y-axis unit
+        ID = "";        % string identifying the spectrum
+        DateTime = datetime;  % date and time
+        ExpID = "";     % experiment ID (default ? current directory)
         X = [];         % vector (array) of X values
         Y = [];         % vector (array) of Y values
-        ID = '';        % string identifying the spectrum
-        ExpID = '';     % experiment ID (default ? current directory)
-        Comment = '';   % various comments
-        History = '';   % operations log
-        DateTime = datestr(now, 'yyyy-mm-dd HH:MM:SS'); % date and time
+        XType = "X";    % X-axis quantity
+        XUnit = "";     % X-axis unit
+        YType = "Y";    % Y-axis quantity
+        YUnit = "";     % Y-axis unit
+        Comment = "";   % various comments
+        History = "";   % operations log
     end 
     
     methods
        %% Queries %%
-       function tbl = proptable(SP, varargin)
+       function T = proptable(SP, varargin)
            % PROPTABLE Table of properties
            %
            % Synthax
-           %    tbl = proptable(SP)
-           %    tbl = SP.pt
-           %    tbl = SP.pt(props)
-           %    tbl = SP.pt(prop1, prop2, ...)
+           %    T = proptable(SP)
+           %    T = SP.pt
+           %    T = SP.pt(props)
+           %    T = SP.pt(prop1, prop2, ...)
            %
            % Description
            % Creates a table with rows for every spectrum and columns
            % containing properties (metadata), such as ID, XType, etc.
-           % The actual data (X, Y) are not included in the table.
-           %
-           % tbl = SP.pt(props) returns only specified properties
+           % 
+           % T = SP.pt returns ID, DateTime and ExpID only
+           % T = SP.pt(props) returns the specified properties
            %
            % Example
            %
@@ -52,63 +52,32 @@ classdef specparent
            %     'CD ID144.3-1'     ' 2017-03-09 11:33:14'    'D:\...\2017-03-09'    801    'Wavelength'    'nm'     'CD'     'mdeg'    'CD ID141.3'     'load CD ID144.3-1.txt' 
            %     'CD baseline-1'    ' 2017-03-09 11:38:37'    'D:\...\2017-03-09'    801    'Wavelength'    'nm'     'CD'     'mdeg'    'CD baseline'    'load CD baseline-1.txt'
            
-%            if exist('props','var')
-%                if ~iscell(props)
-%                    props = {props};
-%                end
-%            else
            if isempty(varargin)    
-               mainprops = {'ID'; 'DateTime'; 'ExpID'};
-               
-               % get property names of spectra
-               props = fields(SP(1));
-               
-               % find properties that are not numeric arrays
-               pscalar = false(numel(props),1);
-               for k = 1:numel(props)
-                   prop = SP(1).(props{k});
-                   if isnumeric(prop) && ~isscalar(prop)
-                       pscalar(k) = false;
-                   else
-                       pscalar(k) = true;
-                   end
-               end
-               props = props(pscalar & ~ismember(props,mainprops));
-               props = [mainprops; props];
+               props = {'ID'; 'DateTime'; 'ExpID'};
            else
-               props = varargin;
-               if numel(props)==1 
-                   props = props{1};
-                   if ~iscell(props)
-                       props = {props};
-                   end
+               if numel(varargin)==1
+                    props = varargin{1};
+               else
+                   props = varargin;
                end
            end
-           % Create a blank table
-           nprop = numel(props); % number of columns (properties)
-           nspec = numel(SP); % number of rows (spectra)
-           propcell = cell(nspec,nprop);
-           
-           for k = 1:numel(SP)
-               for p = 1:nprop
-                   propcell{k, p} = SP(k).(props{p});
-               end
-           end
-           
-           tbl = cell2table(propcell, 'VariableNames', props);
+           Tbl = table(SP);
+           T = Tbl(:,props);           
        end
        
-       function tbl = pt(SP,varargin)
+       function T = pt(SP,varargin)
            % See also: proptable
            if nargin<2
-               tbl = proptable(SP);
+               T = proptable(SP);
            else
-               tbl = proptable(SP,varargin{:});
+               T = proptable(SP,varargin{:});
            end
        end
        
        function tbl = datatable(SP)
-           % DATATABLE get all data as a MATLAB table object
+           % DATATABLE get all data (single spectrum) as a MATLAB table object
+           %
+           % DATATABLE is deprecated. Use TABLE instead
            %
            % Synthax
            %    tbl = datatable(SP)
@@ -119,7 +88,7 @@ classdef specparent
            % containing properties (metadata), such as ID, XType, etc.
            % and the actual data (X, Y) arrays
            %
-           % see also proptable, xytable
+           % see also table, proptable, xytable
 
            % get property names of spectra
            mainprops = {'ID'; 'DateTime'; 'ExpID'};
@@ -131,7 +100,7 @@ classdef specparent
            nspec = numel(SP); % number of rows (spectra)
            propcell = cell(nspec,nprop);
            
-           for k = 1:numel(SP);
+           for k = 1:numel(SP)
                for p = 1:nprop
                    propcell{k, p} = SP(k).(props{p});
                end
@@ -155,7 +124,7 @@ classdef specparent
            % see also proptable, xytable
            tbl = datatable(SP);
        end
-       
+
        function res = xind(SP,x)
            % XIND index of X values
            %
@@ -840,7 +809,7 @@ classdef specparent
            end %for
        end %setxlim
        
-       function res = get(SP,propname,arg)
+       function P = get(SP,propname,arg)
            % GET get property values
            %
            % Synthax
@@ -863,9 +832,9 @@ classdef specparent
                p0 = SP(1).(propname);
            end
            if isscalar(p0)               
-               res = repmat(p0,size(SP));
+               P = repmat(p0,size(SP));
            else
-               res = cell(size(SP));
+               P = cell(size(SP));
            end
            for k = 1:numel(SP)
                if exist('arg','var')
@@ -873,16 +842,16 @@ classdef specparent
                else
                    p1 = SP(k).(propname);
                end
-               if iscell(res)
-                   res{k} = p1;
+               if iscell(P)
+                   P{k} = p1;
                else
-                   res(k) = p1;                   
+                   P(k) = p1;                   
                end
            end           
            if iscategorical(p0)
                catnames = categories(SP(1).(propname));
                ncats = numel(catnames);
-               res = categorical(res,1:ncats,catnames);
+               P = categorical(P,1:ncats,catnames);
            end
        end
        
@@ -1059,7 +1028,7 @@ classdef specparent
                 case 1                                                        
                     terms = varargin;
                     num_args = 1;
-                    props = {'ID'};
+                    props = cellstr({'ID'});
                     wholewords = 0;
                 otherwise
                     if strcmpi(varargin(numel(varargin)),'w')
@@ -1080,7 +1049,7 @@ classdef specparent
                         if(~isprop(SP(1),props{i})) % check for a valid property name
                             error('%s is not a valid specdata property',props{i});
                         end
-                        terms(i) = varargin((i-1)*2+2);
+                        terms(i) = varargin((i-1)*2+2);                        
                     end
             end
                 % perform search
@@ -1089,6 +1058,7 @@ classdef specparent
                     for j = 1:n % spectra in SP
                         str = SP(j).(props{i});
                         term = terms{i};
+                        if isstring(term),term = cellstr(term); end
                         if ~iscell(term), term = {term}; end
                            for k = 1:numel(term)    
                                if iscategorical(str)
@@ -1275,7 +1245,7 @@ classdef specparent
            %
            % Description
            %    B = catfind(valueset) searches for keywords in A.ID
-           %    and returns a returns a categorical array of matches. 
+           %    and returns a categorical array of matches. 
            %    The keywords are specified in valueset.
            %
            %    If an element in A matches more than one keyword in valueset, the
@@ -1287,8 +1257,9 @@ classdef specparent
            %
            %    B = catfind(A, ...) searches for keywords in the array A
            %    A can be a cell array of strings.
-           s = {SP.ID};
+           s = string(SP.get('ID'));
            s = reshape(s, size(SP));
+        
            if exist('catnames','var')
                B = catfind(s, valueset, catnames);
            else
@@ -1444,8 +1415,9 @@ classdef specparent
            else
                cindex = bindex;
            end
-           if numel(unique({SP.ID})) == n
-               cindex = struct2table(cindex,'RowNames',{SP.ID});
+           IDs = string({SP.ID});
+           if numel(unique(IDs)) == n
+               cindex = struct2table(cindex,'RowNames',IDs);
            else
                cindex = struct2table(cindex);
            end

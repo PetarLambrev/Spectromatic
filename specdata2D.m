@@ -1,8 +1,8 @@
 classdef specdata2D < specparent
     % specdata2D - two-way (time-resolved) data
-    % Spectr-O-Matic version 2.3
+    % Spectr-O-Matic version 2.4
     % 
-    % Petar Lambrev, 2012-2021
+    % Petar Lambrev, 2012-2022
     %
     % Container for time-resolved spectroscopy data
     % A specdata2D dataset contains a 2D array of data (Z) dependent on two variables 
@@ -54,7 +54,7 @@ classdef specdata2D < specparent
            %
            % The optional parameters can be also passed as one struct.
            
-           proplist = {'ID','XType','XUnit','TType','TUnit','YType','YUnit','ExpID','Comment','DateTime'};           
+           proplist = {'ID','DateTime','ExpID','XType','XUnit','TType','TUnit','YType','YUnit','Comment',};           
            
            if nargin==1 && isa(newX,'specdata')
               % Convert specdata to specdata2D
@@ -83,7 +83,7 @@ classdef specdata2D < specparent
                   validspec = find(validspec);
                   
                   % Copy Y from all valid spectra into SP.Y
-                  for y = 1:numel(validspec);
+                  for y = 1:numel(validspec)
                       SP(r,1).Y(:,y) = newX(r,validspec(y)).Y;
                   end   
                   
@@ -108,10 +108,10 @@ classdef specdata2D < specparent
                if (~isreal(newY))
                    error('Cannot create specdata2D object. Invalid Y data.')
                end               
-               if (length(newX)~=size(newY,1)),
+               if (length(newX)~=size(newY,1))
                    error('Cannot create specdata2D object. X and Y data dimensions do not match.');
                end
-               if (length(newT)~=size(newY,2)),
+               if (length(newT)~=size(newY,2))
                    error('Cannot create specdata2D object. T and Y data dimensions do not match.');
                end
                
@@ -120,7 +120,7 @@ classdef specdata2D < specparent
                [SP.X, Xind] = sort(SP.X);
                SP.Y = newY(Xind, :);
                
-               if (nargin >= 4),
+               if (nargin >= 4)
                    SP.ID = ID;
                end %if
                if nargin > 4
@@ -132,9 +132,9 @@ classdef specdata2D < specparent
                else
                    optlist = [];
                end
-               if (exist('optlist','var') && isstruct(optlist)),
+               if (exist('optlist','var') && isstruct(optlist))
                    for i = 1:length(proplist)
-                       if(isfield(optlist,proplist{i}));
+                       if(isfield(optlist,proplist{i}))
                            SP.(proplist{i}) = optlist.(proplist{i});
                        end
                    end %for
@@ -358,6 +358,41 @@ function res = sett(SP,newT)
                res(i).Comment = sprintf('%s; bint %.f', SP(i).Comment,step);
            end %for
        end %bin
+
+       function T = table(SP, varargin)
+           % TABLE Convert specdata to table
+           %
+           % Synthax
+           %    T = table(S)
+           %
+           % Description
+           % Creates a table with rows for every spectrum and columns
+           % containing properties (metadata), such as ID, XType, etc.
+           % The actual data (X, Y) are also included in the table.
+
+           for ix = 1:length(SP)
+               A = SP(ix);
+               B = struct;
+               B.ID = string(A.ID);
+               B.DateTime = datetime(A.DateTime);
+               B.ExpID = string(A.ExpID);
+               B.dim = A.dim;
+               B.X = A.X;
+               B.Y = A.Y;
+               B.T = A.T;
+               B.XType = string(A.XType);
+               B.XUnit = string(A.XUnit);               
+               B.YType = string(A.YType);
+               B.YUnit = string(A.YUnit);
+               B.TType = string(A.TType);
+               B.TUnit = string(A.TUnit);
+               B.Comment = A.Comment;
+               B.History = string(A.History);
+
+               S(ix) = B;
+           end
+           T = struct2table(S);
+       end
        
       %% Save
       function saveTIMP(SP,filename)

@@ -15,18 +15,19 @@ function B = catfind( A, valueset, catnames)
 %    element.
 %    
 
-C = repmat({''},size(A));
+valueset = string(valueset);
+if nargin>2
+    catnames = string(catnames);
+end
+C = repmat("",size(A));
 valuesorted = sort(valueset);
 for k = 1:numel(valueset)
-    cmatch = contains(A, valuesorted{k});    
+    cmatch = contains(A, valuesorted(k));    
     if any(cmatch)
-        cn = find(cmatch);
-        for l = 1:numel(cn)
-            C{cn(l)} = valuesorted{k};
-        end
+        C(cmatch) = valuesorted(k);
     end
 end
-if exist('catnames','var')
+if nargin>2
     B = categorical(C, valueset, catnames);
 else
     B = categorical(C, valueset);

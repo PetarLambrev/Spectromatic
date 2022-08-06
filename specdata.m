@@ -1,13 +1,13 @@
 classdef specdata < specparent
     % specdata - one-way (X/Y) spectroscopy data
-    % Spectr-O-Matic version 2.3
+    % Spectr-O-Matic version 2.4
     %
     % Container for X-Y data (wavelength, amplitude)
     % and methods for general spectral manipulation - 
     % arithmetic, normalization, smoothing, etc., 
     % and plotting
     %
-    % Petar Lambrev, 2012-2021
+    % Petar Lambrev, 2012-2022
 
     properties (Dependent = true, SetAccess = private)
         dim % number of data points
@@ -53,7 +53,7 @@ classdef specdata < specparent
            % id = {'sinx', 'cosx'}; % id: array of 2 strings
            % A = specdata(x,y,id);  % A: array of 2 spectra
            
-           proplist = {'XType','XUnit','YType','YUnit','ExpID','Comment','DateTime', 'History'};           
+           proplist = {'DateTime','ExpID','XType','XUnit','YType','YUnit','Comment','History'};           
            if exist('newX','var') || exist('newY','var')
                if istable(newX), newX = table2struct(newX); end
                if isa(newX, 'specdata2D')
@@ -130,7 +130,7 @@ classdef specdata < specparent
                                SP(j) = specdata(X,newY(:,j),ID{j});
                            else
                                if numY > 1
-                                   SP(j) = specdata(X,newY(:,j),sprintf('%s %d',ID,j));
+                                   SP(j) = specdata(X,newY(:,j),sprintf("%s %d",ID,j));
                                else
                                    SP(j) = specdata(X,newY(:,j),ID);
                                end
@@ -835,22 +835,20 @@ classdef specdata < specparent
                A = SP(ix);
                B = struct;
                B.ID = string(A.ID);
+               B.DateTime = datetime(A.DateTime);
+               B.ExpID = string(A.ExpID);
+               B.dim = A.dim;
                B.X = A.X;
                B.Y = A.Y;
                B.XType = string(A.XType);
                B.XUnit = string(A.XUnit);
                B.YType = string(A.YType);
                B.YUnit = string(A.YUnit);
-               B.DateTime = datetime(A.DateTime);
-               B.ExpID = string(A.ExpID);
                B.Comment = A.Comment;
                B.History = string(A.History);
-               B.Dim = A.dim;
                S(ix) = B;
            end
            T = struct2table(S);
-
-
        end
 
        function data2D = unstack(data, expr)
@@ -903,7 +901,7 @@ classdef specdata < specparent
     
     %% Load data
     methods (Static)
-        function spect = load(filepattern,varargin)
+        function S = load(FilePattern,varargin)
             % LOAD Load spectra from ASCII file
             %
             % Synthax
@@ -948,141 +946,142 @@ classdef specdata < specparent
             %       options.FileType = 'XY';
             %       data = specdata.load('file1.txt',options);
             
-            if (iscell(filepattern))
-                files = filepattern;
+            if (iscell(FilePattern))
+                Files = FilePattern;
             else
-                files = getdir(filepattern, 'FullPath', true);
+                Files = getdir(FilePattern, 'FullPath', true);
             end %if
-            if isempty(files) || length(files)<1, error('File not found.'); end
+            if isempty(Files) || length(Files)<1, error('File not found.'); end
             disp('Loading spectra...');
             if nargin > 1
                 if isstruct(varargin(1))
-                    options = varargin(1);
+                    Options = varargin(1);
                 else
-                    options = struct(varargin{:});
+                    Options = struct(varargin{:});
                 end
             else
-                options = [];
+                Options = [];
             end                
-            spect = specdata.empty(length(files),0);
+            S = specdata.empty(length(Files),0);
             multicol = 0;
             n = 0;
-            for j = 1:length(files)
-                if isfield(options,'Delimiter')
-                    delim = options.Delimiter;
+            for j = 1:length(Files)
+                if isfield(Options,'Delimiter')
+                    delim = Options.Delimiter;
                 else                    
                     delim = -1;
                 end
-                if isfield(options,'Variable')
+                if isfield(Options,'Variable')
                     % Variable (YType) to load from data file
                     % Applicable to Chirascan
-                    loadvariable = options.Variable;
+                    loadvariable = Options.Variable;
                 else
                     loadvariable = '';
                 end
-                if isfield(options,'FileType')
-                    switch options.FileType 
+                if isfield(Options,'FileType')
+                    switch Options.FileType 
                         case 'XY' 
-                            d = specdata.loadXY(files{j});
+                            d = specdata.loadXY(Files{j});
                         case 'JWS'
-                            [d, datetime, ytype, comment] = specdata.loadJWS(files{j}); 
-                            xtype = 'Wavelength'; xunit = 'nm';
+                            [d, DateTime, YType, Comment] = specdata.loadJWS(Files{j}); 
+                            XType = 'Wavelength'; xunit = 'nm';
                         case {'ASCII','ascii'}
-                            if isfield(options,'Decimal')
-                                DecimalSeparator = options.Decimal;
-                                d = specdata.loadascii(files{j},delim,DecimalSeparator);
+                            if isfield(Options,'Decimal')
+                                DecimalSeparator = Options.Decimal;
+                                d = specdata.loadascii(Files{j},delim,DecimalSeparator);
                             else
-                                d = specdata.loadascii(files{j},delim);
+                                d = specdata.loadascii(Files{j},delim);
                             end
                         case {'Chirascan','chirascan'}
-                            [d, datetime, xtype, ytype, comment] = specdata.loadChirascan(files{j},loadvariable);
+                            [d, DateTime,XType, YType, Comment] = specdata.loadChirascan(Files{j},loadvariable);
                         case 'SpectraSuite'
-                            [d, datetime] = specdata.loadSpectraSuite(files{j});                              
+                            [d, DateTime] = specdata.loadSpectraSuite(Files{j});                              
                         case {'MultiCol','Multicol','MultiColumn','Multicolumn'}
                             multicol = 1;
-                            [d, comment] = specdata.loadMultiCol(files{j},delim);
+                            [d, Comment] = specdata.loadMultiCol(Files{j},delim);
                         case {'SpreadSheet','spreadsheet','text'}
-                            [d, xtype, ytype] = specdata.loadSpreadsheet(files{j},varargin);
+                            [d, XType, YType] = specdata.loadSpreadsheet(Files{j},varargin);
                         otherwise                            
-                            error('%s is not a recognized file type.',options.FileType);
+                            error('%s is not a recognized file type.',Options.FileType);
                     end
                 else
                     % Get MATLAB Version
                     MATLAB_Version = ver('MATLAB');
                     MATLAB_Version = str2double(MATLAB_Version.Version);
                     if MATLAB_Version >= 9.1   
-                        [d, xtype, ytype] = specdata.loadSpreadsheet(files{j},varargin);
+                        [d, XType, YType] = specdata.loadSpreadsheet(Files{j},varargin);
                     else
-                        d = specdata.loadascii(files{j},delim);
+                        d = specdata.loadascii(Files{j},delim);
                     end
                 end
                 d = sortrows(d,1);
                 
                 for k = 1:(size(d,2))-1
-                    spect(j,k) = specdata(d(:,1),d(:,k+1));
-                    if exist('comment','var')
-                        spect(j,k).Comment = comment;
+                    S(j,k) = specdata(d(:,1),d(:,k+1));
+                    if exist('Comment','var')
+                        S(j,k).Comment = string(Comment);
                     end
-                    spect(j,k).History = sprintf('load %s',files{j});
-                    if exist('ytype','var')
-                        if iscell(ytype)                            
-                            yunit = regexp(ytype{k},'\w*','match');
-                            if ~isempty(yunit)
-                                spect(j,k).YType = yunit{1};
-                                if length(yunit)>1
-                                    spect(j,k).YUnit = yunit{2};
+                    S(j,k).History = sprintf("load %s",Files{j});
+                    if exist('YType','var')
+                        if iscell(YType)                            
+                            YUnit = regexp(YType{k},'\w*','match');
+                            if ~isempty(YUnit)
+                                S(j,k).YType = string(YUnit{1});
+                                if length(YUnit)>1
+                                    S(j,k).YUnit = string(YUnit{2});
                                 end
                             end
                         else
-                            spect(j,k).YType = ytype;
+                            S(j,k).YType = string(YType);
                         end
                     end
-                    if exist('xtype','var')
-                        if iscell(xtype)
-                            spect(j,k).XType = xtype{k};
+                    if exist('XType','var')
+                        if iscell(XType)
+                            S(j,k).XType = string(XType{k});
                         else
-                            spect(j,k).XType = xtype;
+                            S(j,k).XType = string(XType);
                         end
                     end
                     if exist('xunit','var')
-                        if iscell(xtype)
-                            spect(j,k).XUnit = xunit{k};
+                        if iscell(XType)
+                            S(j,k).XUnit = string(xunit{k});
                         else
-                            spect(j,k).XUnit = xunit;
+                            S(j,k).XUnit = string(xunit);
                         end
                     end                    
-                    ft = dir(files{j});
+                    ft = dir(Files{j});
                     if (~exist('datetime','var'))
-                        datetime = datestr(ft.datenum, 'yyyy-mm-dd HH:MM:SS');
+                        DateTime = ft.datenum;
                     end
-                    spect(j,k).DateTime = datetime;
-                    [dirname, filename] = fileparts(files{j});
+                    if isdatetime(DateTime)
+                        S(j,k).DateTime = DateTime;
+                    elseif isnumeric(DateTime)
+                        S(j,k).DateTime = datetime(DateTime,'ConvertFrom','datenum');
+                    else
+                        S(j,k).DateTime = datetime(DateTime,'InputFormat','yyyy-MM-dd HH:mm:ss');
+                    end
+                    [DirName, FileName] = fileparts(Files{j});
                     % get relative path
-                    s = strfind(dirname, filesep);
-                    if ~isempty(s), dirname = dirname(s(end)+1:end); end                    
-                    spect(j,k).ExpID = dirname;
-                    spect(j,k).ID = regexprep(filename, '\.(\w{3})$','');
-%                     if multicol && length(header) >= k+1
-%                         spect(j,k).ID = sprintf('%s - %s', filename, header{k+1});
-%                     else
-%                         spect(j,k).ID = filename;
-%                     end
+                    s = strfind(DirName, filesep);
+                    if ~isempty(s), DirName = DirName(s(end)+1:end); end                    
+                    S(j,k).ExpID = string(DirName);
+                    S(j,k).ID = string(regexprep(FileName, "\.(\w{3})$",""));
                     
                     props = {'XType','XUnit','YType','YUnit','ExpID','Comment','Date'};
-                    if (exist('options','var'))
+                    if (exist('Options','var'))
                         for p = 1:length(props)
-                            if (isfield(options,props{p}))
-                                prop = options.(props{p});
+                            if (isfield(Options,props{p}))
+                                prop = Options.(props{p});
                                 if iscell(prop)
-                                    spect(j,k).(props{p}) = prop{j};
+                                    S(j,k).(props{p}) = string(prop{j});
                                 else
-                                    spect(j,k).(props{p}) = prop;
+                                    S(j,k).(props{p}) = string(prop);
                                 end
                             end
                         end %for p
                     end %if exist
                 end %for k
-                fprintf('File %d: %s\n',j,files{j});
+                fprintf('File %d: %s\n',j,Files{j});
             end %for j
         end       
         
@@ -1302,37 +1301,45 @@ classdef specdata < specparent
             end
         end
         
-        function [d, datetime, yunits, comment] = loadJWS(filename)
+        function [d, DateTime, YUnits, Comment] = loadJWS(filename)
             fi = fopen(filename);
             if (fi == -1)
                 error('File %s could not be opened.', filename);
             end %if
             begindata = 0;
-            yunits = cell(0,3);
-            comment = '';
+            YUnits = cell(0,3);
+            Comment = '';
             while (begindata==0)
                 l = fgetl(fi);
                 if (l == -1), error('Invalid file format.'), end
                 if (strfind(l,'YUNITS'))
                     ChannelNum = 1;
-                    yunits{1} = l(8:end);
+                    YUnits{1} = l(8:end);
                 end                    
                 if(strcmp(l(1:5),'TITLE'))
-                    comment = l(7:end);
+                    Comment = l(7:end);
                 end                
                 if (strfind(l,'Y2UNITS'))
                     ChannelNum = 2; 
-                    yunits{2} = l(8:end);
-                end;                
+                    YUnits{2} = l(8:end);
+                end                
                 if (strfind(l,'Y3UNITS'))
                     ChannelNum = 3; 
-                    yunits{3} = l(8:end);
-                end;
-                if(strcmpi(l(1:4),'DATE'))                   
+                    YUnits{3} = l(8:end);
+                end
+                if(strcmpi(l(1:4),'DATE'))      
+                    try
                     datev = datevec(l(6:end),'yy/mm/dd');
+                    catch
+                        warning('Could not interpret Date in file %s. Using file date/time instead',filename)
+                    end
                 end
                 if(strcmpi(l(1:4),'TIME'))
+                    try
                     timev = datevec(l(6:end),'HH:MM:SS');
+                    catch
+                         warning('Could not interpret Time in file %s. Using file date/time instead',filename)
+                    end
                 end
                 if (strcmpi(l,'XYDATA')), begindata = 1; end
             end
@@ -1345,9 +1352,9 @@ classdef specdata < specparent
                     ff = '%f %f %f %f';
             end
             d = textscan(fi,ff);
-            comment = [comment,sprintf('\n')];
+            Comment = [Comment,sprintf('\n')];
             while ~feof(fi)
-                comment = [comment,fgets(fi)];
+                Comment = [Comment,fgets(fi)];
             end
             fclose(fi);
             d = cat(2,d{:});
@@ -1355,8 +1362,10 @@ classdef specdata < specparent
             % d = [d{:,1},d{:,2}];            
             
             if (exist('datev','var') && exist('timev','var'))                
-                datetime = datestr(cat(2,datev(1:3),timev(4:6)), ' yyyy-mm-dd HH:MM:SS');
-            else datetime = 'Unknown';
+                DateTime = datetime(cat(2,datev(1:3),timev(4:6)));
+            else
+                fd = dir(filename);
+                DateTime = datestring(fd.datenum,'ConvertFrom','datenum');
             end
         end %loadJWS
         
