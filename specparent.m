@@ -877,10 +877,12 @@ classdef specparent
                end
            end
            for f = 1:numel(argf)
-               property = argf{f};
+                property = argf{f};
                for i = 1:numel(SP)
                    if (numEL > 1)
                         SP(i).(property) = args(i).(property);
+                   elseif numel(args.(property))==numel(SP)
+                       SP(i).(property) = args.(property)(i);
                    else
                        SP(i).(property) = args.(property);
                    end
@@ -897,7 +899,9 @@ classdef specparent
            % If the ID of the input SP is 'file1.ext',
            % the output res ID will be 'file1'
            
-           res = SP.set('ID',regexprep({SP.ID}, '\.(\w{3})$',''));
+           OldIDs = SP.get('ID');
+           NewIDs = regexprep(OldIDs, '\.(\w{3})$','');
+           res = SP.set('ID',NewIDs);
        end
        
        function res = fi(SP,varargin)
@@ -1200,13 +1204,13 @@ classdef specparent
            SP1 = SP.remove_ext;
            wholewords = false;
            if nargin == 1
-               keywords = {};
+               keywords = [];
                wholewords = true;
                for i = 1:numel(SP1)
                    id = SP1(i).ID;
                    % relpace non-alphanumeric chars with spaces
                    % id = regexprep(id,'[^0-9a-zA-Z_\s]',' '); 
-                   ids = regexp(id, '[\s\-;]+', 'split');
+                   ids = regexp(id, "[\s\-;]+", 'split');
                    keywords = cat(2,keywords,ids);                   
                end
                keywords = unique(keywords); % sort unique words
