@@ -16,7 +16,7 @@ if exist('GroupVars','var') && ~isempty(GroupVars)
     if iscell(GroupVars) && numel(GroupVars) > 1
         GroupVars = array2str(GroupVars);       
     end
-    title(strjoin(GroupVars))
+    title(join(GroupVars))
     legend boxoff
 end
 
