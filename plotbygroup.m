@@ -42,7 +42,7 @@ function plotbygroup(Dat,Idx,GroupVars,varargin)
     % Create title and legend strings from variable names
     
     if ~exist("GroupVars","var") || isempty(GroupVars)
-        gi = true(width(Idx));
+        gi = true(1,width(Idx));
     else
         gi = contains(Idx.Properties.VariableNames,GroupVars);    
     end

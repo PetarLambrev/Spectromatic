@@ -3,7 +3,7 @@ function h = plotfun(Dat,TitleText,LegendText,FigStyle,ColorScheme)
 
 fh = figure;
 plot(Dat)
-if ~isempty(LegendText)
+if ~isempty(LegendText) && ~all(ismissing(LegendText))
     legend(LegendText)
 end
 if ~isempty(TitleText)
