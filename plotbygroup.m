@@ -2,6 +2,7 @@ function plotbygroup(Dat,Idx,GroupVars,varargin)
 % PLOTBYGROUP - Plot spectra in Dat by groups defined in Idx by GroupVars
 %
 % Synthax
+%   plotbygroup(Dat,Idx)
 %   plotbygroup(Dat,Idx,GroupVars)
 %   plotbygroup(Dat,Err,Idx,GroupVars)
 %
@@ -33,16 +34,18 @@ function plotbygroup(Dat,Idx,GroupVars,varargin)
     if height(Idx) ~= numel(Dat)
         error('The number of rows in Idx must be equal to the number of spectra in Dat.')
     end
-    if ~all(contains(GroupVars,Idx.Properties.VariableNames))
-        error('Variable not found. GroupVars must contain variable names found in Idx.')
-    end
     if ~istable(Idx)
         error('Idx must be a table')
     end
-    
+   
 
     % Create title and legend strings from variable names
-    gi = contains(Idx.Properties.VariableNames,GroupVars);    
+    
+    if ~exist("GroupVars","var") || isempty(GroupVars)
+        gi = true(width(Idx));
+    else
+        gi = contains(Idx.Properties.VariableNames,GroupVars);    
+    end
     varstring = @(T) join(string(table2cell(T)),2);
     TitleText = varstring(Idx(:,gi));
     LegendText = varstring(Idx(:,~gi));

@@ -3,8 +3,12 @@ function h = plotfun(Dat,TitleText,LegendText,FigStyle,ColorScheme)
 
 fh = figure;
 plot(Dat)
-legend(LegendText)
-title(TitleText(1))
+if ~isempty(LegendText)
+    legend(LegendText)
+end
+if ~isempty(TitleText)
+    title(TitleText(1))
+end
 
 if exist('FigStyle','var')
     setfigstyle(FigStyle)
