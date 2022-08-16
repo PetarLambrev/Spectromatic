@@ -501,6 +501,30 @@ classdef specparent
            S.Y = s;
        end %std
 
+       function S = stderr(A,w)
+           % STDERR Standard error of Y
+           %
+           % Synthax
+           %   S = std(A)
+           %   S = std(A,w)
+           %
+           % Description
+           %   S = stderr(A) calculates the standard error S of spectra A.
+           %   If A is a collection of spectra,
+           %   then S is a spectrum whose Y values contain the standard
+           %   deviations of the Y values of the spectra in A.
+           %
+           %   S = stderr(A,w) uses weighting factors w to calculate S.
+           %
+           % see also: STD
+
+           if exist('w','var')
+               S = std(A,w)./sqrt(numel(A));
+           else
+               S = std(A)./sqrt(numel(A));
+           end
+       end
+
        function res = xmax(SP)
            % XMAX Maximal X value
            res = zeros(size(SP));
@@ -831,8 +855,10 @@ classdef specparent
            else
                p0 = SP(1).(propname);
            end
-           if isscalar(p0)               
+           if isscalar(p0) && isnumeric(p0)               
                P = repmat(p0,size(SP));
+           elseif ischar(p0) || isstring(p0)
+               P = repmat("",size(SP));
            else
                P = cell(size(SP));
            end
