@@ -1,5 +1,7 @@
 function [fitcoeff,lincoeff,fitcurve,resid,comp] = gaussdecomp(Spectra,Start,Lower,Upper,FitOpt)
 % GAUSSDECOMP Skew-Gaussian Decomposition of spectra
+% 
+% Deprecated. Use peakdecomp instead.
 
 % Initial parameters
 
