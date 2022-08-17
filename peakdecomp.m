@@ -10,12 +10,11 @@ function [fitCoeff,linCoeff,fitSpectrum,resid,fitComponents] = peakdecomp(Spectr
 %   gaussian, or custom function. Uses nonlinear least squares fit to find
 %   the peak shape parameters and linear fit for the peak amplitudes.
 %
-%
 % Example
-%   A = specdata.load('IRspectrum_01.txt');
-%   S = [1600 100; 1650 100; 1700 100];
-%   L = [1550  80; 1600  80; 1650  80];
-%   U = [1650 200; 1700 200; 1750 200];
+%   A = specdata.load('IRspectrum_01.txt'); % load spectrum
+%   S = [1600 100; 1650 100; 1700 100]; % positions and widths for 3 peaks
+%   L = [1550  80; 1600  80; 1650  80]; % lower bounds
+%   U = [1650 200; 1700 200; 1750 200]; % upper bounds
 %   [fitCoeff,linCoeff,fitSpec] = peakdecomp(A,S,L,U,'gauss');
 %
 % Input arguments
@@ -33,7 +32,7 @@ function [fitCoeff,linCoeff,fitSpectrum,resid,fitComponents] = peakdecomp(Spectr
 %   linCoeff - linear coefficients (amplitudes) - n-element size array
 %   fitSpectrum - specdata object where Y is the fit curve
 %   resid - residuals
-%   fitComponents - matrix with column corresponding to the individual
+%   fitComponents - matrix with columns corresponding to the individual
 %   peak spectra (unscaled)
 
 % Initial parameters
@@ -58,7 +57,6 @@ Y = Spectrum.Y;
 % Run fit
 fitCoeff = lsqnonlin(@iterate,Start,Lower,Upper,nlFitOptions);
 [resid,linCoeff,fitCurve,fitComponents] = iterate(fitCoeff);
-fitCoeff = reshape(fitCoeff,npar,ncomp)';
 
 % Create fit spectrum
 fitSpectrum = Spectrum;
