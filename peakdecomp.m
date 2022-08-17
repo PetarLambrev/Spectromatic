@@ -42,7 +42,6 @@ if numel(Spectrum) > 1
 end
 
 ncomp = height(Start); % number of peaks
-npar = width(Start);   % number of peak shape parameters
 
 if ~exist("nlFitOptions","var") || ~isempty(nlFitOptions)
     nlFitOptions = optimoptions(@lsqnonlin);
