@@ -1,4 +1,4 @@
-function ploterrbygroup(Dat,Err,Idx,GroupVars,varargin)
+function ploterrbygroup(Dat,Err,GroupVars,varargin)
 % PLOTERRBYGROUP - Plot spectra in Dat by groups defined in Idx by GroupVars
 %
 % Synthax
@@ -20,33 +20,43 @@ function ploterrbygroup(Dat,Err,Idx,GroupVars,varargin)
 %   Err (specdata) - errors (variance)
 %   Idx (table) - categorical index. Each row corresponds to one spectrum
 %   GroupVars (string array) - grouping variables (must exist in Idx)
+%
+% Name-Value arguments
+%   See PLOTERRS for figure formatting Name-Value arguments
 
     % Input validation
     if numel(Err) ~= numel(Dat) 
         error('Dat and Err must have the same number of spectra.')
     end
-    if height(Idx) ~= numel(Dat)
-        error('The number of rows in Idx must be equal to the number of spectra in Dat.')
+    
+    if nargin > 3
+        argstruct = struct(varargin{:});
+        if isfield(argstruct,'Index')        
+            Idx = argstruct.Index;
+            if ~istable(Idx)
+                error('Idx must be a table')
+            elseif height(Idx) ~= numel(Dat)
+                error('The number of rows in Idx must be equal to the number of spectra in Dat.')
+            end
+            Dat = Dat.setmetadata(Idx);
+            argstruct = rmfield(argstruct,'Index');
+            varargin = namedargs2cell(argstruct);
+        else
+            Idx = Dat.proptable;
+        end
+    else
+        Idx = Dat.proptable;
     end
-    if ~all(contains(GroupVars,Idx.Properties.VariableNames))
-        error('Variable not found. GroupVars must contain variable names found in Idx.')
-    end
-    if ~istable(Idx)
-        error('Idx must be a table')
-    end    
 
     % Create title and legend strings from variable names
-    gi = contains(Idx.Properties.VariableNames,GroupVars);    
+    gIndex = contains(Idx.Properties.VariableNames,GroupVars);    
     varstring = @(T) join(string(table2cell(T)),2);
-    TitleText = varstring(Idx(:,gi));
-    LegendText = varstring(Idx(:,~gi));
+    TitleText = varstring(Idx(:,gIndex));
 
     % Plot
-    G = findgroups(Idx(:,gi));
-    if nargin > 3
-        splitapply(@ploterrfun, Dat, Err, TitleText, LegendText, varargin{:}, G)
-    else
-        splitapply(@ploterrfun, Dat, Err, TitleText, LegendText, G)
+    G = findgroups(Idx(:,gIndex));
+    for gn = 1:max(G)
+        gi = G==gn;
+        ploterrs(Dat(gi),Err(gi),'TitleText',TitleText(gi),varargin{:})
     end
-
 end

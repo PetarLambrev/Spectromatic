@@ -19,9 +19,9 @@ classdef specdata2D < specparent
     % See also: specdata
 
     properties
-        T = [];         % second axis (time)
-        TType = 'T'     % time axis name
-        TUnit = ''      % time axis unit
+        T double = [];        % second axis (time)
+        TType string = "T";   % time axis name
+        TUnit string = "";    % time axis unit
     end
     
     properties (Dependent = true, SetAccess = private)
@@ -54,7 +54,7 @@ classdef specdata2D < specparent
            %
            % The optional parameters can be also passed as one struct.
            
-           proplist = {'ID','DateTime','ExpID','XType','XUnit','TType','TUnit','YType','YUnit','Comment',};           
+           proplist = {'ID','DateTime','ExpID','XType','XUnit','TType','TUnit','YType','YUnit','Comment','Metadata'};           
            
            if nargin==1 && isa(newX,'specdata')
               % Convert specdata to specdata2D
@@ -652,23 +652,23 @@ function res = sett(SP,newT)
               end
               if(isempty(fy)), error 'The selected T values are not found in the dataset.'; end
               if SmoothL == 1 || (SmoothL == 0 && numel(SP1.X) < 24)
-                   nx = (numel(SP1.X)-1) * 10;
-                   dx = (max(SP1.X) - min(SP1.X)) / nx;
-                   try
-                       plX = min(SP1.X):dx:max(SP1.X);
-                       plY = interp1(SP1.X,SP1.Y(:,fy),plX,'spline');                       
-                       if numel(SP1.X) < 24
-                           plot(plX,plY,'-o','MarkerIndices',1:10:numel(plX));
-                       else
-                           plot(plX,plY);
-                       end
-                   catch
-                       warning('Cannot interpolate data for smoothing.')
-                       plot(plX,plY);
-                   end
+                  nx = (numel(SP1.X)-1) * 10;
+                  dx = (max(SP1.X) - min(SP1.X)) / nx;
+                  try
+                      plX = min(SP1.X):dx:max(SP1.X);
+                      plY = interp1(SP1.X,SP1.Y(:,fy),plX,'spline');
+                      if numel(SP1.X) < 24
+                          plot(plX,plY,'-o','MarkerIndices',1:10:numel(plX));
+                      else
+                          plot(plX,plY);
+                      end
+                  catch
+                      warning('Cannot interpolate data for smoothing.')
+                      plot(plX,plY);
+                  end
               else
                   plot(SP1.X,SP1.Y(:,fy));
-              end              
+              end
               % create legends
               legends = cell(numel(fy,0));
               for li = 1:numel(fy)
@@ -676,10 +676,18 @@ function res = sett(SP,newT)
               end
               
               legend(legends,'location','best');
-              xl = SP1.XType; if ~isempty(SP1.XUnit), xl = [xl, ' (',SP1.XUnit,')']; end
-              xlabel(xl);
-              yl = SP1.YType; if ~isempty(SP1.YUnit), yl = [yl, ' (',SP1.YUnit,')']; end
-              ylabel(yl);
+              if strcmp(SP1.XUnit,'')
+                  Lbl = sprintf('%s',SP1.XType);
+              else
+                  Lbl = sprintf('%s (%s)',SP1.XType,SP1.XUnit);
+              end
+              xlabel(Lbl);
+              if strcmp(SP1.YUnit,'')
+                  Lbl = sprintf('%s',SP1.YType);
+              else
+                  Lbl = sprintf('%s (%s)',SP1.YType,SP1.YUnit);
+              end
+              ylabel(Lbl);
               Xmin = min(SP1.X); Xmax = max(SP1.X);
               xlim([Xmin Xmax])              
           end

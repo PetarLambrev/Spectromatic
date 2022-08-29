@@ -21,7 +21,7 @@ nprop = numel(props); % number of columns (properties)
 nspec = numel(SP); % number of rows (spectra)
 propcell = cell(nspec,nprop);
 
-for k = 1:numel(SP);
+for k = 1:numel(SP)
     for p = 1:nprop
         propcell{k, p} = SP(k).(props{p});
     end

@@ -1,61 +1,75 @@
-function plotbygroup(Dat,Idx,GroupVars,varargin)
+function plotbygroup(Dat,GroupVars,varargin)
 % PLOTBYGROUP - Plot spectra in Dat by groups defined in Idx by GroupVars
 %
 % Synthax
-%   plotbygroup(Dat,Idx)
-%   plotbygroup(Dat,Idx,GroupVars)
-%   plotbygroup(Dat,Err,Idx,GroupVars)
+%   plotbygroup(Dat,GroupVars)
+%   plotbygroup(Dat,GroupVars,'Index',Idx)
+%   plotbygroup(...,Name,Value)
 %
 % Description
-%   plotbygroup(Dat,Idx,GroupVars) plots spectra in Dat in groups.
-%   GroupVars is a list of variables in the table (categorical index) Idx.
+%   plotbygroup(Dat,GroupVars) plots spectra in Dat in groups specified by
+%   the list of property/metadata variables GroupVars.
+%
+%   plotbygroup(Dat,GroupVars,'Index',Idx) uses an external index table Idx.
 %   
-%   Shows the group variables in the title and the remaining variable in
-%   the index table as legend text.
+%   plotbygroup(...,Name,Value) allows various formatting parameters.
 %
-%   Uses the function plotfun for actual plotting. Modify plotfun to
-%   control the plot appearance.
+%   Uses the function plots for actual plotting. See PLOTS for details.
 %
-%   plotbygroup(Dat,Err,Idx,GroupVars) or
-%   ploterrbygroup(Dat,Err,Idx,GroupVars) plots spectra and shaded errors.
-
+%   plotbygroup(Dat,Err,...) or
+%   ploterrbygroup(Dat,Err,...) plots spectra and shaded errors.
+%
 % Input arguments
 %   Dat (specdata) - spectra to plot 
-%   Idx (table) - categorical index. Each row corresponds to one spectrum
 %   GroupVars (string array) - grouping variables (must exist in Idx)
 %
-% See also: PLOTERRBYGROUP
+% Name-Value arguments
+%   Index - External categorical index to use
+%   See PLOTS for figure formatting Name-Value arguments
+
+% See also: PLOTS, PLOTERRBYGROUP
 
     % Input validation
-    if isa(Idx,'specdata') && istable(GroupVars)
-        ploterrbygroup(Dat,Idx,GroupVars,varargin{:})
+    if isa(GroupVars,'specdata')
+        ploterrbygroup(Dat,GroupVars,varargin{:})
         return
     end
-    if height(Idx) ~= numel(Dat)
-        error('The number of rows in Idx must be equal to the number of spectra in Dat.')
+    
+    if nargin > 2
+        argstruct = struct(varargin{:});
+        if isfield(argstruct,'Index')        
+            Idx = argstruct.Index;            
+            if ~istable(Idx)
+                error('Idx must be a table')
+            elseif height(Idx) ~= numel(Dat)
+                error('The number of rows in Idx must be equal to the number of spectra in Dat.')
+            end
+            Dat = Dat.setmetadata(Idx);
+            argstruct = rmfield(argstruct,'Index');
+            varargin = namedargs2cell(argstruct);
+        else
+            Idx = Dat.proptable;
+        end
+    else
+        Idx = Dat.proptable;
     end
-    if ~istable(Idx)
-        error('Idx must be a table')
-    end
-   
 
     % Create title and legend strings from variable names
-    
-    if ~exist("GroupVars","var") || isempty(GroupVars)
-        gi = true(1,width(Idx));
+    if isempty(GroupVars)
+        gIndex = true(1,width(Idx));
     else
-        gi = contains(Idx.Properties.VariableNames,GroupVars);    
+        gIndex = matches(Idx.Properties.VariableNames,GroupVars);    
+        if ~any(gIndex)
+            error('The grouping variables were not found in index/metadata');
+        end
     end
     varstring = @(T) join(string(table2cell(T)),2);
-    TitleText = varstring(Idx(:,gi));
-    LegendText = varstring(Idx(:,~gi));
+    TitleText = varstring(Idx(:,gIndex));
 
     % Plot
-    G = findgroups(Idx(:,gi));
-    if nargin > 3
-        splitapply(@plotfun, Dat, TitleText, LegendText, varargin{:}, G)
-    else
-        splitapply(@plotfun, Dat, TitleText, LegendText, G)
+    G = findgroups(Idx(:,gIndex));
+    for gn = 1:max(G)
+        gi = G==gn;
+        plots(Dat(gi), "TitleText", TitleText(gi), varargin{:})
     end
-    
 end

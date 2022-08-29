@@ -53,7 +53,7 @@ classdef specdata < specparent
            % id = {'sinx', 'cosx'}; % id: array of 2 strings
            % A = specdata(x,y,id);  % A: array of 2 spectra
            
-           proplist = {'DateTime','ExpID','XType','XUnit','YType','YUnit','Comment','History'};           
+           proplist = {'DateTime','ExpID','XType','XUnit','YType','YUnit','Comment','History','Metadata'};           
            if exist('newX','var') || exist('newY','var')
                if istable(newX), newX = table2struct(newX); end
                if isa(newX, 'specdata2D')
@@ -390,7 +390,7 @@ classdef specdata < specparent
             end
             
             % gauss model
-            if ~isempty(strfind(modelname,'gauss')) && nargin ~= 3
+            if contains(modelname,'gauss') && nargin ~= 3
                 ncomp = str2num(modelname(6)); % number of components
                 defopt = fitoptions(fmodel);
                 
@@ -488,65 +488,46 @@ classdef specdata < specparent
         end
             
        %% Display and plotting
-       function p = plot(SP,varargin)
+              function p = plot(SP,options)
            % PLOT Plot spectra
            %
            % Synthax
-           %    A.plot
-           %    A.plot('ShowExpID')
-           %    A.plot('NoTex')
-           %    A.plot('SmoothLine')
-           %    plot(A, ...)
-           %    plot(A1, A2, A3, ...)
-           %    p = plot(...)
+           %    plot(A)
+           %    p = plot(A,Name,Value)
            %
            % Description
-           % Plots the array of spectra A in the current figure. 
+           % plot(A) plots the array of spectra A in the current figure. 
            % If there is no figure, creates a new one. 
            % The axes are labeled using XType/XUnit, YType/YUnit of the 
            % first spectrum in A. Legend shows spectra IDs.
            %           
-           % Optional parameters
-           %    ShowExpID - show ExpID for each spectrum in the legend.
-           %    NoTeX - do not use LaTeX interpreter for legend entries.
-           %    SmoothLine - spline interpolation between data points.
+           % Name-Value arguments
+           %    LegendText - list of properties to display as legend text 
+           %         (default is "ID", can also be custom metadata)
+           %    LegendFun - custom legend function. Example: 
+           %         plot(A, "LegendFun", @(x) x.ExpID+"/"+x.ID)
+           %    LegendInterpreter - legend interpreter ("tex","none")
+           %    LegendBox - legend box ("on","off")
+           %    LegendLocation - legend location ("best")
+           %    SmoothLine - spline interpolation between data points
+           %    (true,false)
+           %    Line properties (LineWidth, Marker, etc.)
            
-           if isempty(SP)
-               error('Not enough input arguments')
+           arguments
+               SP specdata {mustBeNonempty}
+               options.LegendText string = "ID"
+               options.LegendFun function_handle = function_handle.empty;
+               options.LegendInterpreter string = "tex"
+               options.LegendLocation string = "best"
+               options.LegendBox string = "off"
+               options.SmoothLine (1,1) logical = false
+               options.?matlab.graphics.chart.primitive.Line
            end
-           ShowExpID = false;           
-           NoTeX = false;
-           SmoothL = false;
+           
            SP = SP(:);
-           if nargin > 1
-               i = 1;
-               while i <= length(varargin)
-                   if isa(varargin{i},'specdata')
-                       SP2 = varargin{i};
-                       SP = [SP; SP2(:)];
-                       varargin(i) = [];
-                   else
-                   arg = varargin{i};
-                   if ischar(arg), arg = lower(arg); 
-                   else arg = ''; end
-                   switch(arg)
-                       case 'showexpid'
-                           % Show ExpID in figure legend
-                           ShowExpID = true;                          
-                           varargin(i) = [];
-                       case 'notex'
-                           NoTeX = true;
-                           varargin(i) = [];
-                       case 'smoothline'
-                           SmoothL = true;
-                           varargin(i) = [];
-                       otherwise
-                           i = i + 1;
-                   end %switch
-                   end
-               end %for
-           end %if           
+           plotOptions = rmfield(options,["LegendText","LegendFun","LegendBox","LegendInterpreter","LegendLocation","SmoothLine"]);
            Xmin = min(SP(1).X); Xmax = max(SP(1).X);
+           
            for i = 1:length(SP)
                % set Xmin and Xmax for Xlim
                Xmin_i = min(SP(i).X);
@@ -559,43 +540,59 @@ classdef specdata < specparent
                end
                % plot curve
                nx = numel(SP(i).X) ;
-               if SmoothL
+               if options.SmoothLine
                    nx = (nx-1) * 10;
                    dx = (max(SP(i).X) - min(SP(i).X)) / nx;
                    try
                        smx = min(SP(i).X):dx:max(SP(i).X);
                        smy = interp1(SP(i).X,SP(i).Y,smx,'spline');
-                       h(i) = plot(smx,smy,'-o','MarkerIndices',1:10:numel(smx),varargin{:});
+                       h(i) = plot(smx,smy,'-o','MarkerIndices',1:10:numel(smx),plotOptions);
                    catch
                        warning('Cannot interpolate data for smoothing.')
-                       h(i) = plot(SP(i).X,SP(i).Y,varargin{:});
+                       h(i) = plot(SP(i).X,SP(i).Y,plotOptions);
                    end
                else
-                   h(i) = plot(SP(i).X,SP(i).Y,varargin{:});
+                   h(i) = plot(SP(i).X,SP(i).Y,plotOptions);
                end
                hold all;
-               % create legend
-               if ShowExpID
-                   l{i,:} = sprintf('%s/%s',SP(i).ExpID,SP(i).ID);
+           end
+           
+           % Create Legend
+           if ~isempty(options.LegendFun)
+               LString = options.LegendFun(SP);
+           else
+               if isempty(options.LegendText)
+                   options.LegendText = "ID";
+               end
+               LText = options.LegendText(:);
+               PropTable = SP.proptable;
+               if isempty(setdiff(LText,PropTable.Properties.VariableNames))
+                   % Display specdata properties
+                   LString = join(string(PropTable{:,LText}),2);
                else
-                   l{i,:} = SP(i).ID;
+                   % Display custom legend text
+                   LString = LText;
                end
            end
+           lh = legend(h,LString,"Location",options.LegendLocation);
+           lh.Interpreter = options.LegendInterpreter;
+           lh.Box = options.LegendBox;
+           
            if strcmp(SP(1).XUnit,'')
-               lbl = sprintf('%s',SP(1).XType);
+               Lbl = sprintf('%s',SP(1).XType);
            else
-               lbl = sprintf('%s (%s)',SP(1).XType,SP(1).XUnit);
+               Lbl = sprintf('%s (%s)',SP(1).XType,SP(1).XUnit);
            end
-           xlabel(lbl);
+           xlabel(Lbl);
            if strcmp(SP(1).YUnit,'')
-               lbl = sprintf('%s',SP(1).YType);
+               Lbl = sprintf('%s',SP(1).YType);
            else
-               lbl = sprintf('%s (%s)',SP(1).YType,SP(1).YUnit);
+               Lbl = sprintf('%s (%s)',SP(1).YType,SP(1).YUnit);
            end
            xlim([Xmin Xmax]);
-           ylabel(lbl);
-           hl = legend(h,l{:},'location','best');
-           if (NoTeX), set(hl,'Interpreter','none'); end
+           ylabel(Lbl);
+
+           
            if nargout, p = h; end
        end %plot
        
@@ -604,6 +601,7 @@ classdef specdata < specparent
            %
            % Synthax
            %   plot(S,E)
+           %   plot(S,E,Name,Value)
            %
            % Description
            %   plot(S,E) plots the spectra S as lines and the associated
@@ -628,7 +626,7 @@ classdef specdata < specparent
            if isempty(varargin)
                 plot(S);
            else
-               plot(S,varargin)
+               plot(S,varargin{:})
            end
        end
 
@@ -820,41 +818,11 @@ classdef specdata < specparent
            fprintf('File %s saved.\r',FileName);
        end %saveh5       
 
-       function T = table(SP, varargin)
-           % TABLE Convert specdata to table
-           %
-           % Synthax
-           %    T = table(S)
-           %
-           % Description
-           % Creates a table with rows for every spectrum and columns
-           % containing properties (metadata), such as ID, XType, etc.
-           % The actual data (X, Y) are also included in the table.
-        
-           for ix = 1:length(SP)
-               A = SP(ix);
-               B = struct;
-               B.ID = string(A.ID);
-               B.DateTime = datetime(A.DateTime);
-               B.ExpID = string(A.ExpID);
-               B.dim = A.dim;
-               B.X = A.X;
-               B.Y = A.Y;
-               B.XType = string(A.XType);
-               B.XUnit = string(A.XUnit);
-               B.YType = string(A.YType);
-               B.YUnit = string(A.YUnit);
-               B.Comment = A.Comment;
-               B.History = string(A.History);
-               S(ix) = B;
-           end
-           T = struct2table(S);
-       end
-
        function data2D = unstack(data, expr)
            % UNSTACK Convert specdata array to specdata2D array
            %
            % Synthax
+           %   data2D = unstack(data)
            %   data2D = unstack(data, expr)
            %
            % Input/Output parameters
@@ -862,8 +830,9 @@ classdef specdata < specparent
            %   expr - regular expression that defines the T dimension
            %   data2D - specdata2D array
            %                       
-           id1 = {data.ID};
-           id2 = regexprep(id1, expr, '');
+           
+           id1 = get(data,'ID');
+           id2 = regexprep(id1, expr, "");
            id3 = regexp(id1, expr, 'match', 'once');
            idn = str2double(regexp(id3, '\d+', 'match', 'once'));
            
@@ -880,7 +849,7 @@ classdef specdata < specparent
                l = find(g==k);
                data2D(k,1) = data(l)';
                data2D(k,1).ID = gid{k};
-               data2D(k,1).T = idn(l);
+               data2D(k,1).T = idn(l)';
            end           
        end % unstack
        

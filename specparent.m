@@ -7,29 +7,122 @@ classdef specparent
     % Petar Lambrev, 2012-2022
         
     properties
-        ID = "";        % string identifying the spectrum
-        DateTime = datetime;  % date and time
-        ExpID = "";     % experiment ID (default ? current directory)
-        X = [];         % vector (array) of X values
-        Y = [];         % vector (array) of Y values
-        XType = "X";    % X-axis quantity
-        XUnit = "";     % X-axis unit
-        YType = "Y";    % Y-axis quantity
-        YUnit = "";     % Y-axis unit
-        Comment = "";   % various comments
-        History = "";   % operations log
-    end 
+        ID string = "";        % string identifying the spectrum
+        DateTime datetime = datetime;  % date and time
+        ExpID string = "";     % experiment ID (default ? current directory)
+        X double = [];         % vector (array) of X values
+        Y double = [];         % vector (array) of Y values
+        XType string = "X";    % X-axis quantity
+        XUnit string = "";     % X-axis unit
+        YType string = "Y";    % Y-axis quantity
+        YUnit string = "";     % Y-axis unit
+        Comment string = "";   % various comments
+        History string = "";   % operations log
+        Metadata struct = struct.empty; % metadata
+    end
     
     methods
        %% Queries %%
-       function T = proptable(SP, varargin)
+       function T = metatable(SP,Vars)
+           % METATABLE Get all Metadata as a table
+           %
+           % Synthax
+           %   T = metatable(SP)
+           %   T = metatable(SP,Vars)
+           %   T = mt(...)
+           %
+           % Description
+           %  metatable is similar to proptable but only returns custom
+           %  metadata. It may be faster than proptable.
+           %
+           % See also: PROPTABLE     
+           
+           MetaStruct = [SP.Metadata];
+           if isempty(MetaStruct)
+               T = table.empty;
+           else
+               T = struct2table(MetaStruct);
+               if exist('Vars','var')
+                   if ~iscell(Vars) && ~isstring(Vars)
+                       error('Vars must be a cell array or a string');
+                   end
+                   T = T(:,Vars);
+               end
+           end
+       end
+
+       function T = mt(SP,VarNames)
+           % METATABLE Get all Metadata as a table
+           %
+           % Synthax
+           %   T = metatable(SP)
+           %   T = metatable(SP,VarNames)
+           %   T = mt(...)
+           %
+           % Description
+           %  metatable is similar to proptable but only returns custom
+           %  metadata. It may be faster than proptable esp. for big data.
+           %
+           % See also: PROPTABLE
+           
+           if nargin < 2
+               T = metatable(SP);
+           else
+               T = metatable(SP,VarNames);
+           end
+       end
+       
+       function T = table(SP,Options)
+           % TABLE Convert specdata to table
+           %
+           % Synthax
+           %    T = table(S)
+           %    T = table(S,'ExpandMetadata',true)
+           %
+           % Description
+           % 
+           % T = table(S)
+           % Creates a table with rows for every spectrum and columns
+           % containing properties and metadata, such as ID, XType, etc.
+           % The actual data (X, Y) are also included in the table.
+           %
+           % T = table(S,'ExpandMetadata',true)
+           % Creates separate columns for custom metadata properties
+           arguments
+               SP specparent {mustBeNonempty}
+               Options.ExpandMetadata logical = false
+           end
+           
+           props = fieldnames(SP);
+           
+           % Create a blank table
+           nprop = numel(props); % number of columns (properties)
+           nspec = numel(SP); % number of rows (spectra)
+           propcell = cell(nspec,nprop);
+           
+           for k = 1:numel(SP)
+               for p = 1:nprop
+                   propcell{k, p} = SP(k).(props{p});
+               end
+           end
+           
+           T = cell2table(propcell, 'VariableNames', props);   
+           
+           % Expand Metadata
+           if Options.ExpandMetadata
+               T = removevars(T,'Metadata');
+               MetaData = metatable(SP);
+               T = [T, MetaData];
+           end
+       end
+       
+       function T = proptable(SP, PropNames)
            % PROPTABLE Table of properties
            %
            % Synthax
            %    T = proptable(SP)
            %    T = SP.pt
            %    T = SP.pt(props)
-           %    T = SP.pt(prop1, prop2, ...)
            %
            % Description
            % Creates a table with rows for every spectrum and columns
@@ -52,79 +145,29 @@ classdef specparent
            %     'CD ID144.3-1'     ' 2017-03-09 11:33:14'    'D:\...\2017-03-09'    801    'Wavelength'    'nm'     'CD'     'mdeg'    'CD ID141.3'     'load CD ID144.3-1.txt' 
            %     'CD baseline-1'    ' 2017-03-09 11:38:37'    'D:\...\2017-03-09'    801    'Wavelength'    'nm'     'CD'     'mdeg'    'CD baseline'    'load CD baseline-1.txt'
            
-           if isempty(varargin)    
-               props = {'ID'; 'DateTime'; 'ExpID'};
-           else
-               if numel(varargin)==1
-                    props = varargin{1};
-               else
-                   props = varargin;
-               end
+           IgnoreProps = {'dim','X','Y','Z','Comment','History','Metadata'};
+           MetaData = metatable(SP);
+           AllProps = table(SP);
+           if nargin < 2
+               PropNames = fieldnames(SP);                              
+               KeepProps = ~matches(PropNames,IgnoreProps);
+               PropNames = PropNames(KeepProps);                              
+               T = [AllProps(:,PropNames), MetaData];
+           else               
+               T = [AllProps, MetaData];
+               T = T(:,PropNames);           
            end
-           Tbl = table(SP);
-           T = Tbl(:,props);           
        end
        
-       function T = pt(SP,varargin)
+       function T = pt(SP,VarNames)
            % See also: proptable
            if nargin<2
                T = proptable(SP);
            else
-               T = proptable(SP,varargin{:});
+               T = proptable(SP,VarNames);
            end
        end
        
-       function tbl = datatable(SP)
-           % DATATABLE get all data (single spectrum) as a MATLAB table object
-           %
-           % DATATABLE is deprecated. Use TABLE instead
-           %
-           % Synthax
-           %    tbl = datatable(SP)
-           %    tbl = SP.datatable
-           %
-           % Description
-           % Creates a table with rows for every spectrum and columns
-           % containing properties (metadata), such as ID, XType, etc.
-           % and the actual data (X, Y) arrays
-           %
-           % see also table, proptable, xytable
-
-           % get property names of spectra
-           mainprops = {'ID'; 'DateTime'; 'ExpID'};
-           allprops = fields(SP(1));
-           props = [mainprops; allprops(~ismember(allprops,mainprops))];
-           
-           % Create a blank table
-           nprop = numel(props); % number of columns (properties)
-           nspec = numel(SP); % number of rows (spectra)
-           propcell = cell(nspec,nprop);
-           
-           for k = 1:numel(SP)
-               for p = 1:nprop
-                   propcell{k, p} = SP(k).(props{p});
-               end
-           end
-           
-           tbl = cell2table(propcell, 'VariableNames', props);           
-       end
-       
-       function tbl = dt(SP)
-           % datatable - get all data as a MATLAB table object
-           %
-           % Synthax
-           %    tbl = datatable(SP)
-           %    tbl = SP.datatable
-           %
-           % Description
-           % Creates a table with rows for every spectrum and columns
-           % containing properties (metadata), such as ID, XType, etc.
-           % and the actual data (X, Y) arrays
-           %
-           % see also proptable, xytable
-           tbl = datatable(SP);
-       end
-
        function res = xind(SP,x)
            % XIND index of X values
            %
@@ -354,29 +397,42 @@ classdef specparent
            res = binary_arithmetic(SP,-1,@times);
        end %uminus
        
-       function res = sum(SP)
+       function res = sum(SP,dim)
            % SUM Sum of spectra
            % 
            % Synthax
-           %    SummedSpectrum = MySpectrum.sum
+           %    res = sum(SP)
+           %    res = sum(SP,dim)
+           %    res = sum(SP,'all')
+           %
+           % Description
+           %   res = sum(SP) sums all spectra across the first
+           %   non-singleton dimension
+           %   
+           %   res = sum(SP,dim) sums spectra across dimension dim
+           %
+           %   res = sum(SP,'all') sums spectra across all dimensions
            %
            % See also: plus, mean
-           res = SP(1);
-           if (numel(SP)>1)
-               for i = 2:numel(SP)
-                   res = res + SP(i);
-               end %for
-           end %if
+           if ~exist('dim','var')
+               dim = [];
+           end           
+           res = array_fun(SP,@sum,dim);
        end %sum
        
        function res = mean(SP)
            % MEAN Average spectra
            %
            % Synthax
-           %    avg = MySpectrum.mean
+           %    res = mean(SP)
+           %    res = mean(SP,dim)
+           %    res = mean(SP,'all')
            %
            % See also: sum
-           res = sum(SP) / numel(SP);
+           if ~exist('dim','var')
+               dim = [];
+           end           
+           res = array_fun(SP,@mean,dim);
        end %mean
        
        function [maxY, maxX] = max(SP,Xlim)           
@@ -505,8 +561,8 @@ classdef specparent
            % STDERR Standard error of Y
            %
            % Synthax
-           %   S = std(A)
-           %   S = std(A,w)
+           %   S = stderr(A)
+           %   S = stderr(A,w)
            %
            % Description
            %   S = stderr(A) calculates the standard error S of spectra A.
@@ -934,71 +990,7 @@ classdef specparent
            % See findindex
            res = findindex(SP,varargin{:});
        end
-       
-       function addmeta(SP,props)
-           % ADDMETA Add metadata as dynamic properties
-           %
-           % Synthax
-           %   SP.addmeta(name)
-           %   SP.addmeta(indextable)
-           %
-           % SP.addmeta(name) adds an empty dynamic property NAME
-           % to all spectra in SP. Use SP.set to set the property values.
-           % 
-           % SP.addmeta(indextable) adds properties and values from a
-           % table INDEXTABLE. 
-           %
-           % Input arguments
-           % name - property name or a cell array of property names to add
-           % indextable - table with property names (variable names) and
-           %              respective values. The number of rows must be
-           %              the same as the number of spectra in SP.
-           
-           n = numel(SP);
-           if ischar(props)
-               for k = 1:n
-                   addprop(SP(k),props);
-               end
-           elseif iscell(props)
-               for k = 1:n
-                   for l = 1:numel(props)
-                       addprop(SP(k),props{l});
-                   end
-               end
-           elseif istable(props)
-               propnames = props.Properties.VariableNames;
-               for k = 1:n
-                   for l = 1:numel(propnames)
-                       addprop(SP(k),propnames{l});
-                       SP(k).(propnames{l}) = props{k,l};
-                   end
-               end
-           else
-               error('The argument props must be a character array, a cell array or a table.')
-           end
-       end
-       
-       function removemeta(SP,props)
-           % REMOVEMETA Remove metadata (dynamic properties)
-           %
-           % Synthax
-           %   SP.removemeta(name)
-           %
-           % Input arguments
-           % name - property name or a cell array of property names
-
-           if ~iscell(props), props = {props}; end
-           for k = 1:numel(SP)
-               for l = 1:numel(props)
-                   metaobj = findprop(SP(k),props{l});
-                   if isempty(metaobj)
-                       error('Property %s not found in the data object.',props{l})
-                   end
-                   delete(metaobj);
-               end
-           end
-       end
-
+              
        %% Search and Index
        function res = findindex(SP,varargin)
             % FINDINDEX Search for keywords and return a logical index
@@ -1526,6 +1518,12 @@ classdef specparent
                        else
                             ix = ix & cindex.(vars{k}) == cindex.(vars{k})(i1);
                        end
+                   elseif isstring(cindex.(vars{k}))
+                       if ismissing(cindex.(vars{k})(i1))                                        
+                            ix = ix & ismissing(cindex.(vars{k}));                  
+                       else
+                            ix = ix & cindex.(vars{k}) == cindex.(vars{k})(i1);
+                       end                           
                    elseif ischar(cindex.(vars{k}))
                        ix = ix & strcmp(cindex.(vars{k}), cindex.(vars{k})(i1));
                    elseif isnumeric(cindex.(vars{k})(i1))
@@ -1703,7 +1701,136 @@ classdef specparent
            sorted = SP(index);
        end
 
+       %% Metadata
+       function res = setmetadata(SP,T)
+          % SETMETADATA Assign metatadata to spectra
+          %
+          % Synthax
+          %   res = setmetadata(SP,T)
+          %
+          % Description
+          %   res = setmetadata(SP,T) assigns metadata in table (categorical
+          %     index) T to the spectra SP. The number of rows in T must
+          %     match the number of spectra in SP.
+          
+          % Argument validation
+          arguments
+              SP specparent {mustBeNonempty}
+              T table {mustBeNonempty}
+          end
+          
+          if height(T) ~= numel(SP)
+              error("The number of rows in T must match the number of spectra in SP")
+          end
+          
+          % Implementation
+          MetaStruct = table2struct(T);
+          res = SP;
+          for k = 1:numel(SP)
+              res(k).Metadata = MetaStruct(k);
+          end          
+       end
+       
+       function res = setmd(SP,T)
+          % SETMETADATA Assign metatadata to spectra
+          %
+          % Synthax
+          %   res = setmetadata(SP,T)
+          %   res = setmd(SP,T)
+          %
+          % Description
+          %   res = setmetadata(SP,T) assigns metadata in table (categorical
+          %     index) T to the spectra SP. The number of rows in T must
+          %     match the number of spectra in SP.
         
+          res = setmetadata(SP,T);
+    end
+          
+       function res = metaindex(SP, Vars, newVars)
+           % METAINDEX Create categorical index and assign to metadata
+           %
+           % Synthax
+           %   res = metaindex(SP, Vars)
+           %   res = metaindex(SP, Vars, newVars)
+           %
+           % Description
+           %   res = metaindex(SP, Vars) creates a categorical index from
+           %   the variables in struct Vars and assigns it as Metadata in
+           %   the spectra in SP. It is equivalent to the commands:
+           %
+           %   Idx = catindex(SP,Vars)
+           %   res = setmetadata(SP,Idx)
+           %
+           % See also: CATINDEX, SETMETADATA           
+           
+           if nargin < 3
+               Idx = catindex(SP,Vars);
+           else
+               Idx = catindex(SP,Vars,newVars);
+           end
+           res = setmetadata(SP,Idx);           
+       end
+        
+       function res = addmetadata(SP,varargin)
+           % ADDMETADATA Add metadata to spectra
+           %
+           % Synthax
+           %   res = addmetadata(SP,VarName,Values)
+           %   res = addmd(...)
+           
+           varStruct = struct(varargin{:});
+           varNames = fieldnames(varStruct);
+           res = SP;
+           for varName = varNames'
+               for k = 1:numel(SP)
+                   varValue = varStruct.(varName{1});
+                   res(k).Metadata.(varName{1}) = varValue(1);
+               end
+           end
+       end
+       
+       function res = addmd(SP,varargin)
+           % ADDMETADATA Add metadata to spectra
+           %
+           % Synthax
+           %   res = addmetadata(SP,VarName,Values)
+           %   res = addmd(...)          
+           
+           res = addmetadata(SP,varargin{:});
+       end
+       
+       function res = deletemetadata(SP,VarNames)
+           % DELETEMETADATA Delete all metadata from spectra
+           %
+           % Synthax
+           %   res = deletemetadata(SP)
+           %   res = deletemetadata(SP,VarNames)
+           %   res = deletemd(...)
+           
+           res = SP;
+           for k = 1:numel(res)
+               if nargin < 2
+                   res(k).Metadata = struct.empty;
+               else
+                   res(k).Metadata = rmfield(SP(k).Metadata,VarNames);
+               end
+           end           
+       end    
+       
+       function res = deletemd(SP,VarNames)
+           % DELETEMETADATA Delete all metadata from spectra
+           %
+           % Synthax
+           %   res = deletemetadata(SP)
+           %   res = deletemetadata(SP,VarNames)
+           %   res = deletemd(...)
+           
+           if nargin < 2
+               res = deletemetadata(SP);
+           else
+               res = deletemetadata(SP,VarNames);
+           end
+       end
     end %methods
     
     %% Private methods
@@ -1861,6 +1988,75 @@ classdef specparent
                     end
             end % switch
         end        
+        
+        function res = array_fun(SP,fun,dim)
+            % AGGREGATEFUN Perform array function over specified dimension            
+            SP_size = size(SP);
+            if length(SP_size) > 2
+                error('Array functions only operate on 1- or 2-dimensional arrays of spectra.');
+            end
+            if isempty(dim)
+                if SP_size(1) > 1
+                    dim = 1;                    
+                elseif SP_size(2) > 1
+                    dim = 2;
+                else
+                    dim = 1;
+                end
+            elseif ischar(dim) && strcmpi(dim,'all')
+                SP = SP(:);
+                SP_size = size(SP);
+                dim = 1;
+            elseif dim < 1 || dim > 2
+                error("Dimension can only be 1, 2, or 'all'.")
+            end
+            
+            differentX = false;
+            switch dim
+                case 1
+                    res = SP(1,:);        
+                    for k = 1:SP_size(2)
+                        if SP_size(1) > 1
+                            x1 = SP(1,k).X;                            
+                            for m = 2:SP_size(1)
+                                x = intersect(x1,SP(m,k).X);
+                                if ~isequal(x,x1)
+                                    differentX = true;
+                                    x1 = x;
+                                end
+                            end           
+                            if differentX                                
+                                SP(:,k) = SP(:,k).setx(x);
+                            end
+                        end                        
+                        Ys = cat(2,SP(:,k).Y);
+                        res(k).Y = fun(Ys,2);
+                    end
+                case 2
+                    res = SP(:,1);
+                    for k = 1:SP_size(1)
+                        if SP_size(2) > 1
+                            x1 = SP(k,1).X;                            
+                            for m = 2:SP_size(2)
+                                x = intersect(x1,SP(k,m).X);
+                                if isequal(x,x1)
+                                    differentX = true;
+                                    x1 = x;
+                                end
+                            end             
+                            if differentX
+                                SP(k,:) = SP(k,:).setx(x);
+                            end
+                        end
+                        Ys = cat(2,SP(k,:).Y);
+                        res(k).Y = fun(Ys,2);
+                    end 
+            end
+            if differentX
+                warning('X values do not match across spectra. Some data have been discarded.');
+            end
+        end
+            
 
      end % private methods
     

@@ -2,11 +2,11 @@ Spectr-O-Matic Toolbox for MATLAB(R)
 
 by Petar H. Lambrev (2011-2022)
 
-Version 2.3
+Version 2.4
 
 Spectr-O-Matic is a MATLAB toolbox for analysis of spectroscopy data.  
 
-Requires MATLAB R2017b or later.
+Requires MATLAB R2020b or later.
 
 For introduction and tutorials, see
 https://plambrev.wixsite.com/spectromatic
@@ -18,9 +18,35 @@ Release notes
 
 v. 2.4
 
+Main features
+
+Spectra now can contain custom metadata. The custom metadata can be used 
+for grouped operations, like averaging, plotting, etc.
+
+The specparent class now enforces the data types of its properties, e.g. ID is string.
+
 New methods
 
+- metaindex creates a categorical index (catindex) and stores it as metadata
+- setmetadata (setmd) assigns the contents of a table as metadata
+- addmetadata (addmd) adds a custom metadata field to spectra
+- deletemetadata (deletemd) deletes metadata from spectra
+- metatable (mt) returns the custom metadata for all spectra as a table
 - table converts the spectra array to a MATLAB table.
+- plotbygroup, ploterrbygroup - plot spectra by groups using metadata
+- plots, ploterrs - plot spectra in new figure with figure formatting options
+- peakdecomp - peak decomposition of spectra (formerly gaussdecomp)
+
+Updated methods
+
+- plot can now dynamically generate legends using the LegendText and LegendFun arguments
+- proptable (pt) returns custom metadata as well as built-in properties
+- sum and mean can now accept a dimension argument as the original MATLAB functions
+
+Depreciated methods
+
+- addmeta, removemeta
+- gaussdecomp
 
 v. 2.3
 
