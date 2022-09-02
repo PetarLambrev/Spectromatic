@@ -1784,7 +1784,7 @@ classdef specparent
            for varName = varNames'
                for k = 1:numel(SP)
                    varValue = varStruct.(varName{1});
-                   res(k).Metadata.(varName{1}) = varValue(1);
+                   res(k).Metadata(1).(varName{1}) = varValue(1);
                end
            end
        end
