@@ -41,9 +41,11 @@ if numel(Spectrum) > 1
     warning('Only the first spectrum in the array is analyzed.')
 end
 
-ncomp = height(Start); % number of peaks
+nx = size(Start);
+ncomp = nx(1); % number of peaks
+npar = nx(1);   % number of peak shape parameters
 
-if ~exist("nlFitOptions","var") || ~isempty(nlFitOptions)
+if ~exist("nlFitOptions","var") || all(isempty(nlFitOptions))
     nlFitOptions = optimoptions(@lsqnonlin);
     nlFitOptions.MaxFunctionEvaluations = 1000;
     nlFitOptions.MaxIterations = 100;
@@ -81,7 +83,8 @@ end
                     y = exp(-x.^2/2);
                     y = y .* (1 + erf(p(3)*x/2));
                 case "lorentz"
-                    y = p(2)^2 ./ ((X-p(1)).^2+p(2)^2);
+                    y = 1/pi() * 0.5*p(2) ./ ((X-p(1)).^2+(0.5*p(2))^2);
+          
                 otherwise
                     error('%s is not a valid function name',peakFunction)
             end
