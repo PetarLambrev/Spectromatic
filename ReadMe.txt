@@ -2,7 +2,7 @@ Spectr-O-Matic Toolbox for MATLAB(R)
 
 by Petar H. Lambrev (2011-2022)
 
-Version 2.4
+Version 2.4.1
 
 Spectr-O-Matic is a MATLAB toolbox for analysis of spectroscopy data.  
 

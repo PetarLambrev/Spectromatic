@@ -26,7 +26,7 @@ function [fitres, gof]  = fitbaseline(SP, n, mask, varargin)
 
 %% Initialize
     FitType = fittype(['poly', num2str(n)]);
-    FitOptions = fitoptions(FitType);
+    FitOptions = fitoptions(FitType,'Robust','On');
      
     if ~exist('mask','var')
         mask = [];
