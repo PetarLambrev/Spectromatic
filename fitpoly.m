@@ -33,7 +33,7 @@ function [B, fitres, gof]  = fitpoly(SP, n, mask, varargin)
 
 %% Initialize
     FitType = fittype(['poly', num2str(n)]);
-    FitOptions = fitoptions(FitType,'Robust','On');
+    FitOptions = fitoptions(FitType);
      
     if ~exist('mask','var')
         mask = [];
@@ -68,4 +68,4 @@ end
 
 B = SP;
 B.Y = fitres(B.X-Xc);
-B.ID = B.ID + " fit";
+B.ID = SP.ID + " fit";
