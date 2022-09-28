@@ -41,7 +41,8 @@ classdef specparent
            if isempty(MetaStruct)
                T = table.empty;
            else
-               T = struct2table(MetaStruct);
+               T = struct2table(MetaStruct,'AsArray',true);
+               T.Properties.RowNames = matlab.lang.makeUniqueStrings([SP.ID]);
                if exist('Vars','var')
                    if ~iscell(Vars) && ~isstring(Vars)
                        error('Vars must be a cell array or a string');
@@ -420,7 +421,7 @@ classdef specparent
            res = array_fun(SP,@sum,dim);
        end %sum
        
-       function res = mean(SP)
+       function res = mean(SP,dim)
            % MEAN Average spectra
            %
            % Synthax
@@ -521,12 +522,13 @@ classdef specparent
            end           
        end %min       
        
-       function S = std(A,w)
+       function S = std(A,w,dim)
            % STD Standard deviation of Y
            %
            % Synthax
            %   S = std(A)
            %   S = std(A,w)
+           %   S = std(A,w,dim)
            %
            % Description
            %   S = std(A) calculates the standard deviation S of spectra A.
@@ -535,34 +537,26 @@ classdef specparent
            %   deviations of the Y values of the spectra in A.
            %
            %   S = std(A,w) uses weighting factors w to calculate S.
+           %   S = std(A,w,dim) calculates along dimension dim (1 or 2)
            
-           s = zeros(size(A(1).Y));           
-           nY = numel(A(1).Y);
-
-           for k = 1:nY
-               Yk = zeros(numel(A),1);
-               for j = 1:numel(A)
-                   if numel(A(j).Y) ~= nY
-                       error('The spectra have different sizes / data points.')
-                   end
-                   Yk(j) = A(j).Y(k);
-               end
-               if exist('w','var')
-                   s(k) = std(Yk,w);
-               else
-                   s(k) = std(Yk);
-               end
+           if ~exist('dim','var')
+               dim = [];
+           end           
+           if exist('w','var')
+               S = array_fun(A,@std,dim,w);
+           else
+               S = array_fun(A,@std,dim);
            end
-           S = A(1);
-           S.Y = s;
+
        end %std
 
-       function S = stderr(A,w)
+       function S = stderr(A,w,dim)
            % STDERR Standard error of Y
            %
            % Synthax
            %   S = stderr(A)
            %   S = stderr(A,w)
+           %   S = stderr(A,w,dim)
            %
            % Description
            %   S = stderr(A) calculates the standard error S of spectra A.
@@ -571,14 +565,19 @@ classdef specparent
            %   deviations of the Y values of the spectra in A.
            %
            %   S = stderr(A,w) uses weighting factors w to calculate S.
+           %   S = stderr(A,w,dim) calculates along dimension dim (1 or 2)
            %
            % see also: STD
 
+           if ~exist('dim','var')
+               dim = [];
+           end           
            if exist('w','var')
-               S = std(A,w)./sqrt(numel(A));
+               [S,d] = array_fun(A,@std,dim,w);
            else
-               S = std(A)./sqrt(numel(A));
+               [S,d] = array_fun(A,@std,dim);
            end
+           S = S ./ sqrt(size(A,d));
        end
 
        function res = xmax(SP)
@@ -1494,11 +1493,9 @@ classdef specparent
            if isstruct(cindex)
                cindex = struct2table(cindex);
            end
-           vars = cindex.Properties.VariableNames;
+           vars = string(cindex.Properties.VariableNames);
            if exist('groupvars', 'var') && ~isempty(groupvars)
-               if ~iscell(groupvars)
-                   groupvars = {groupvars};
-               end
+               groupvars = string(groupvars);
                vars = intersect(vars, groupvars);
            end
            nvar = numel(vars);                                 
@@ -1784,7 +1781,7 @@ classdef specparent
            for varName = varNames'
                for k = 1:numel(SP)
                    varValue = varStruct.(varName{1});
-                   res(k).Metadata(1).(varName{1}) = varValue(1);
+                   res(k).Metadata(1).(varName{1}) = varValue(k);
                end
            end
        end
@@ -1989,7 +1986,7 @@ classdef specparent
             end % switch
         end        
         
-        function res = array_fun(SP,fun,dim)
+        function [res,dim] = array_fun(SP,fun,dim,weights)
             % AGGREGATEFUN Perform array function over specified dimension            
             SP_size = size(SP);
             if length(SP_size) > 2
@@ -2011,6 +2008,7 @@ classdef specparent
                 error("Dimension can only be 1, 2, or 'all'.")
             end
             
+            funInfo = functions(fun);
             differentX = false;
             switch dim
                 case 1
@@ -2030,7 +2028,12 @@ classdef specparent
                             end
                         end                        
                         Ys = cat(2,SP(:,k).Y);
-                        res(k).Y = fun(Ys,2);
+                        if ismember(funInfo.function,'std')
+                            % function with weights
+                            res(k).Y = fun(Ys,weights,2);                        
+                        else 
+                            res(k).Y = fun(Ys,2);                        
+                        end
                     end
                 case 2
                     res = SP(:,1);
@@ -2039,7 +2042,7 @@ classdef specparent
                             x1 = SP(k,1).X;                            
                             for m = 2:SP_size(2)
                                 x = intersect(x1,SP(k,m).X);
-                                if isequal(x,x1)
+                                if ~isequal(x,x1)
                                     differentX = true;
                                     x1 = x;
                                 end
@@ -2049,7 +2052,13 @@ classdef specparent
                             end
                         end
                         Ys = cat(2,SP(k,:).Y);
-                        res(k).Y = fun(Ys,2);
+                        
+                        if ismember(funInfo.function,'std')
+                            % function with weights
+                            res(k).Y = fun(Ys,weights,2);                        
+                        else 
+                            res(k).Y = fun(Ys,2);                        
+                        end
                     end 
             end
             if differentX

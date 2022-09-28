@@ -51,6 +51,7 @@ function plotbygroup(Dat,GroupVars,varargin)
             Idx = Dat.proptable;
         end
     else
+        argstruct = struct;
         Idx = Dat.proptable;
     end
 
@@ -64,7 +65,14 @@ function plotbygroup(Dat,GroupVars,varargin)
         end
     end
     varstring = @(T) join(string(table2cell(T)),2);
-    TitleText = varstring(Idx(:,gIndex));
+    varnames = string(Idx.Properties.VariableNames);
+    if isfield(argstruct,'TitleText') && matches(string(argstruct.TitleText),varnames,'IgnoreCase',true)
+        TitleText = varstring(Idx(:,argstruct.TitleText));
+        argstruct = rmfield(argstruct,'TitleText');
+        varargin = namedargs2cell(argstruct);
+    else        
+        TitleText = varstring(Idx(:,gIndex));
+    end
 
     % Plot
     G = findgroups(Idx(:,gIndex));

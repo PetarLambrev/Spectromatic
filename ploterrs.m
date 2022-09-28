@@ -95,7 +95,12 @@ if ~isempty(Options.Legend)
     set(fl,Options.Legend)
 end
 
-% Return figure handle
+% Run End function
+if ~isempty(Options.EndFun)
+    Options.EndFun(Dat)
+end
+
+%% Return figure handle
 if nargout
     h = fh;
 end

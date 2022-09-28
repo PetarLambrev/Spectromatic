@@ -528,6 +528,7 @@ classdef specdata < specparent
            plotOptions = rmfield(options,["LegendText","LegendFun","LegendBox","LegendInterpreter","LegendLocation","SmoothLine"]);
            Xmin = min(SP(1).X); Xmax = max(SP(1).X);
            
+           h = matlab.graphics.chart.primitive.Line.empty;
            for i = 1:length(SP)
                % set Xmin and Xmax for Xlim
                Xmin_i = min(SP(i).X);
@@ -546,14 +547,16 @@ classdef specdata < specparent
                    try
                        smx = min(SP(i).X):dx:max(SP(i).X);
                        smy = interp1(SP(i).X,SP(i).Y,smx,'spline');
-                       h(i) = plot(smx,smy,'-o','MarkerIndices',1:10:numel(smx),plotOptions);
+                       handle = plot(smx,smy,'-o','MarkerIndices',1:10:numel(smx),plotOptions);
                    catch
                        warning('Cannot interpolate data for smoothing.')
-                       h(i) = plot(SP(i).X,SP(i).Y,plotOptions);
+                       handle = plot(SP(i).X,SP(i).Y,plotOptions);                       
                    end
                else
-                   h(i) = plot(SP(i).X,SP(i).Y,plotOptions);
+                   handle = plot(SP(i).X,SP(i).Y,plotOptions);
+                   
                end
+               h = [h handle];
                hold all;
            end
            
@@ -914,8 +917,8 @@ classdef specdata < specparent
             %       options.XUnit = 'nm';
             %       options.FileType = 'XY';
             %       data = specdata.load('file1.txt',options);
-            
-            if (iscell(FilePattern))
+            FilePattern = string(FilePattern);
+            if numel(FilePattern)>1
                 Files = FilePattern;
             else
                 Files = getdir(FilePattern, 'FullPath', true);
@@ -1169,7 +1172,7 @@ classdef specdata < specparent
                     l = fgetl(fi);
                     begindata = 1;
                 else
-                    comment = [comment, sprintf('\n'), l];
+                    comment = [comment, newline, l];
                     if strfind(l,'Available Properties:')
                         s = regexp(l,'\d+$','match');
                         ncol = str2double(s{1});
@@ -1185,7 +1188,7 @@ classdef specdata < specparent
                             error('Unsupported Chirascan file format.');
                         end                        
                         l2 = fgetl(fi);                        
-                        xunit = regexp(l2, '^\w*\>','match'); xunit = xunit{1};                    
+                        xunit = regexp(l2, '^\w*\>','match'); xunit = xunit{1};                        
                     end                    
                 end
             end
@@ -1212,8 +1215,8 @@ classdef specdata < specparent
                         xunits{k} = l2; yunits{k} = l3;
                         d(:,1) = s{1}; d(:,k+1) = s{2};
                     else
-                        if strcmp(l3, props(varindex))
-                            xunits{k} = l2; yunits{k} = l3;
+                        if strcmp(l3, props{varindex})
+                            xunits = l2; yunits = l3;
                             d(:,1) = s{1}; d(:,2) = s{2};
                             break
                         end
@@ -1266,8 +1269,9 @@ classdef specdata < specparent
             fclose(fi);
             if numel(varindex) == 1 && ndim == 2
                 yunits = repmat(yunits(varindex),1,size(d,2));
-                xunits = repmat(xunits(varindex),1,size(d,2));
+                xunits = repmat(xunits(varindex),1,size(d,2));                
             end
+            xunits = regexprep(xunits,',$','');
         end
         
         function [d, DateTime, YUnits, Comment] = loadJWS(filename)
