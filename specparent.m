@@ -37,6 +37,25 @@ classdef specparent
            %
            % See also: PROPTABLE     
            
+           if numel(SP) > 1
+
+               % Collect meta variables from ALL spectra
+               MetaVars = {};
+               for k = 1:numel(SP)
+                   MetaVars = union(MetaVars,fieldnames(SP(k).Metadata));
+               end
+
+               % Add missing variables and assign as <undefined>
+               for k = 1:numel(SP)
+                   M = setdiff(MetaVars,fieldnames(SP(k).Metadata));
+                   if ~isempty(M)
+                       for l = 1:numel(M)
+                           SP(k) = SP(k).addmd(M{l},categorical({''}));
+                       end
+                   end
+               end
+           end
+
            MetaStruct = [SP.Metadata];
            if isempty(MetaStruct)
                T = table.empty;
@@ -1694,53 +1713,81 @@ classdef specparent
                field = 'ID';
            end
            
-           [~, index] = sort({SP().(field)});
+           [~, index] = sort([SP().(field)]);
            sorted = SP(index);
        end
 
        %% Metadata
-       function res = setmetadata(SP,T)
+       function res = setmetadata(SP,Property,Values)
           % SETMETADATA Assign metatadata to spectra
           %
           % Synthax
+          %   res = setmetadata(SP,Property,Values)
           %   res = setmetadata(SP,T)
+          %   res = setmd(...)
           %
           % Description
           %   res = setmetadata(SP,T) assigns metadata in table (categorical
           %     index) T to the spectra SP. The number of rows in T must
           %     match the number of spectra in SP.
-          
-          % Argument validation
-          arguments
-              SP specparent {mustBeNonempty}
-              T table {mustBeNonempty}
+          %
+          %   res = setmetadata(SP,Property,Values) sets a specific
+          %     metadata property with the given value(s)
+
+          res = SP;          
+          if istable(Property)
+              % Set the whole metadata structure
+              T = Property;
+              if height(T) ~= numel(SP)
+                  error("The number of rows in T must match the number of spectra in SP")
+              end
+
+              % Implementation
+              MetaStruct = table2struct(T);
+
+              for k = 1:numel(SP)
+                  res(k).Metadata = MetaStruct(k);
+              end
+
+          else
+              % Set individual property/values
+              if numel(Values) == 1
+                  Values = repmat(Values,size(SP));
+              end
+
+              for k = 1:numel(SP)                  
+                  if isfield(SP(k).Metadata,Property)
+                      res(k).Metadata.(Property) = Values(k);
+                  else
+                      res(k) = res(k).addmd(Property,Values(k));
+                  end
+              end
           end
-          
-          if height(T) ~= numel(SP)
-              error("The number of rows in T must match the number of spectra in SP")
-          end
-          
-          % Implementation
-          MetaStruct = table2struct(T);
-          res = SP;
-          for k = 1:numel(SP)
-              res(k).Metadata = MetaStruct(k);
-          end          
        end
        
-       function res = setmd(SP,T)
+       function res = setmd(SP,Property,Values)
           % SETMETADATA Assign metatadata to spectra
           %
           % Synthax
-          %   res = setmetadata(SP,T)
           %   res = setmd(SP,T)
+          %   res = setmd(SP,Property,Values)
+          
           %
           % Description
-          %   res = setmetadata(SP,T) assigns metadata in table (categorical
+          %   res = setmd(SP,T) assigns metadata in table (categorical
           %     index) T to the spectra SP. The number of rows in T must
           %     match the number of spectra in SP.
-        
-          res = setmetadata(SP,T);
+          %
+          %   res = setmd(SP,Property,Values) sets a specific metadata
+          %     property with the given value(s)
+          %
+          % SEE ALSO: setmetadata
+            
+          if exist("Values","var")        
+              res = setmetadata(SP,Property,Values);
+          else
+              res = setmetadata(SP,Property);
+          end
     end
           
        function res = metaindex(SP, Vars, newVars)

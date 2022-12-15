@@ -69,7 +69,7 @@ classdef specdata < specparent
                        for col = 1:dim(2)
                            SP1(1,col).X = newX(k).X;
                            SP1(1,col).Y = newX(k).Y(:,col);
-                           SP1(1,col).ID = [newX(k).ID, ' ', num2str(newX(k).T(col)), ' ', newX(k).TUnit];
+                           SP1(1,col).ID = join(strtrim([newX(k).ID; num2str(newX(k).T(col)); newX(k).TUnit])," ");
                            for p = 1:numel(proplist)
                                    SP1(1,col).(proplist{p}) = newX(k).(proplist{p});
                            end
