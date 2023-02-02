@@ -26,7 +26,7 @@ function plotbygroup(Dat,GroupVars,varargin)
 % Name-Value arguments
 %   Index - External categorical index to use
 %   See PLOTS for figure formatting Name-Value arguments
-
+%
 % See also: PLOTS, PLOTERRBYGROUP
 
     % Input validation

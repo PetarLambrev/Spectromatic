@@ -16,7 +16,7 @@ http://www.mathworks.com/matlabcentral/fileexchange/32828-spectr-o-matic
 
 Release notes
 
-v. 2.4
+v. 2.4.1
 
 Main features
 
@@ -42,6 +42,7 @@ Updated methods
 - plot can now dynamically generate legends using the LegendText and LegendFun arguments
 - proptable (pt) returns custom metadata as well as built-in properties
 - sum and mean can now accept a dimension argument as the original MATLAB functions
+- find, findindex can search in custom metadata as well
 
 Depreciated methods
 

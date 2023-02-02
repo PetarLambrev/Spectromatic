@@ -45,13 +45,22 @@ function ploterrbygroup(Dat,Err,GroupVars,varargin)
             Idx = Dat.proptable;
         end
     else
+        argstruct = struct;
         Idx = Dat.proptable;
     end
 
     % Create title and legend strings from variable names
     gIndex = contains(Idx.Properties.VariableNames,GroupVars);    
     varstring = @(T) join(string(table2cell(T)),2);
-    TitleText = varstring(Idx(:,gIndex));
+    varnames = string(Idx.Properties.VariableNames);
+    if isfield(argstruct,'TitleText') && matches(string(argstruct.TitleText),varnames,'IgnoreCase',true)
+        TitleText = varstring(Idx(:,argstruct.TitleText));
+        argstruct = rmfield(argstruct,'TitleText');
+        varargin = namedargs2cell(argstruct);
+    else        
+        TitleText = varstring(Idx(:,gIndex));
+    end
+
 
     % Plot
     G = findgroups(Idx(:,gIndex));

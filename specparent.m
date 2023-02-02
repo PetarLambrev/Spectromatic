@@ -1058,8 +1058,11 @@ classdef specparent
             % 
             % See also: find, fi
             
+            % Get property table
+            T = SP.pt;
+            PropNames = T.Properties.VariableNames;
             n = numel(SP);
-            idxc = ones(n,1);
+            idxc = true(n,1);
             
             % parse arguments
             switch numel(varargin)
@@ -1084,9 +1087,10 @@ classdef specparent
                     end
                     props = cell(num_args,1); % properties to search in
                     terms = cell(num_args,1); % text to search for
+                    
                     for i = 1:num_args
                         props(i) = varargin((i-1)*2+1); % the property to search in
-                        if(~isprop(SP(1),props{i})) % check for a valid property name
+                        if(~ismember(props{i},PropNames)) % check for a valid property name
                             error('%s is not a valid specdata property',props{i});
                         end
                         terms(i) = varargin((i-1)*2+2);                        
@@ -1094,30 +1098,26 @@ classdef specparent
             end
                 % perform search
                 for i = 1:num_args
-                    idx = zeros(n,1);
-                    for j = 1:n % spectra in SP
-                        str = SP(j).(props{i});
-                        term = terms{i};
-                        if isstring(term),term = cellstr(term); end
-                        if ~iscell(term), term = {term}; end
+                    idx = false(n,1);
+                        str = T.(props{i});
+
+                        term = string(terms{i});                        
                            for k = 1:numel(term)    
                                if iscategorical(str)
-                                   match = str==term{k};                                   
+                                   idx = idx | str==term(k);                                   
                                elseif wholewords
                                    % whole-word search
-                                   match = ismember(regexp(str, '[\s\-]+', 'split'), term{k}); % whole words only
-                                   if any(match), break, end
+                                   idx = idx | contains(str, alphanumericBoundary+term(k)+alphanumericBoundary); % whole words only                                   
                                else
                                    % literal search
-                                   match = ~isempty(strfind(str, term{k})); % any match
-                                   if any(match), break, end
+                                   idx = idx | contains(str, term(k)); % any match
                                end
-                           end
-                        if any(match), idx(j) = 1; end
-                    end
-                    idxc = idxc & idx;
+                           end                   
+                           idxc = idxc & idx;
                 end
-                if (idxc == 0), warning('MATLAB:specdata:NotFound','The search returned zero results.'), end;
+                if ~any(idxc)
+                    warning('MATLAB:specdata:NotFound','The search returned zero results.')
+                end
                 res = idxc;
         end
         
@@ -1260,9 +1260,9 @@ classdef specparent
            for k = 1:numel(keywords)               
                try  
                    if wholewords
-                       idx = SP1.findindex('ID',keywords{k},'w');
+                       idx = SP1.findindex("ID",keywords(k),'w');
                    else                       
-                       idx = SP1.findindex('ID',keywords{k});
+                       idx = SP1.findindex("ID",keywords(k));
                    end
                    if any(idx) && ~all(idx)
                        index.(keynames{k}) = idx;
@@ -1712,8 +1712,8 @@ classdef specparent
            if nargin < 2
                field = 'ID';
            end
-           
-           [~, index] = sort([SP().(field)]);
+           PropTable = SP.proptable(field);
+           [~, index] = sortrows(PropTable);
            sorted = SP(index);
        end
 
@@ -2038,6 +2038,9 @@ classdef specparent
             SP_size = size(SP);
             if length(SP_size) > 2
                 error('Array functions only operate on 1- or 2-dimensional arrays of spectra.');
+            end
+            if ~exist('weights','var')
+                weights = [];
             end
             if isempty(dim)
                 if SP_size(1) > 1

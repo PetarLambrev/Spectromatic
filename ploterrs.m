@@ -56,7 +56,7 @@ if ~isempty(Options.FigStyle)
     setfigstyle(Options.FigStyle) % note: External function
 end
 if ~isempty(Options.ColorScheme)
-    setcolorscheme(ColorScheme) % note: External function
+    setcolorscheme(Options.ColorScheme) % note: External function
 end
 
 % Run Start function
