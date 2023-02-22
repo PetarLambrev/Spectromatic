@@ -1818,11 +1818,30 @@ classdef specparent
        function res = addmetadata(SP,varargin)
            % ADDMETADATA Add metadata to spectra
            %
-           % Synthax
+           % Synthax           
            %   res = addmetadata(SP,VarName,Values)
+           %   res = addmetadata(SP,Var1,Vals1,Var2,Vals2,...)
+           %   res = addmetadata(SP,VarStruct)
            %   res = addmd(...)
+           %
+           % Description
+           %   SP = addmetadata(SP,VarName,Values) assigns
+           %   Values to the metadata variable VarName in all elements of SP
+           %
+           %   SP = addmetadata(SP,Var1,Vals1,Var2,Vals2,...) assigns
+           %   multiple metadata variables
+           %
+           %   SP = addmetadata(SP,VarStruct) assigns metadata using the
+           %   struct VarStruct containing each variable as a field
+           %
+           % See also: deletemetadata, metatable, metaindex, find, findindex
+
            
-           varStruct = struct(varargin{:});
+           if nargin==2 && isstruct(varargin{1})
+               varStruct = varargin{1};
+           else
+               varStruct = struct(varargin{:});
+           end
            varNames = fieldnames(varStruct);
            res = SP;
            for varName = varNames'
@@ -1836,9 +1855,23 @@ classdef specparent
        function res = addmd(SP,varargin)
            % ADDMETADATA Add metadata to spectra
            %
-           % Synthax
+           % Synthax           
            %   res = addmetadata(SP,VarName,Values)
-           %   res = addmd(...)          
+           %   res = addmetadata(SP,Var1,Vals1,Var2,Vals2,...)
+           %   res = addmetadata(SP,VarStruct)
+           %   res = addmd(...)
+           %
+           % Description
+           %   SP = addmetadata(SP,VarName,Values) assigns
+           %   Values to the metadata variable VarName in all elements of SP
+           %
+           %   SP = addmetadata(SP,Var1,Vals1,Var2,Vals2,...) assigns
+           %   multiple metadata variables
+           %
+           %   SP = addmetadata(SP,VarStruct) assigns metadata using the
+           %   struct VarStruct containing each variable as a field
+           %
+           % See also: deletemetadata, metatable, metaindex, find, findindex      
            
            res = addmetadata(SP,varargin{:});
        end
@@ -1850,6 +1883,8 @@ classdef specparent
            %   res = deletemetadata(SP)
            %   res = deletemetadata(SP,VarNames)
            %   res = deletemd(...)
+           %
+           % See also: deletemetadata, metatable, metaindex, find, findindex
            
            res = SP;
            for k = 1:numel(res)
@@ -1868,6 +1903,8 @@ classdef specparent
            %   res = deletemetadata(SP)
            %   res = deletemetadata(SP,VarNames)
            %   res = deletemd(...)
+           %
+           % See also: deletemetadata, metatable, metaindex, find, findindex
            
            if nargin < 2
                res = deletemetadata(SP);
