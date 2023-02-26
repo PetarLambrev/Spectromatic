@@ -61,7 +61,9 @@ classdef specparent
                T = table.empty;
            else
                T = struct2table(MetaStruct,'AsArray',true);
-               T.Properties.RowNames = matlab.lang.makeUniqueStrings([SP.ID]);
+               IDs = [SP.ID];
+               IDs(IDs=="") = "noID";
+               T.Properties.RowNames = matlab.lang.makeUniqueStrings(IDs);
                if exist('Vars','var')
                    if ~iscell(Vars) && ~isstring(Vars)
                        error('Vars must be a cell array or a string');
