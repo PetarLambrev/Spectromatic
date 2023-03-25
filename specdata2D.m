@@ -2,7 +2,7 @@ classdef specdata2D < specparent
     % specdata2D - two-way (time-resolved) data
     % Spectr-O-Matic version 2.4
     % 
-    % Petar Lambrev, 2012-2022
+    % Petar Lambrev, 2012-2023
     %
     % Container for time-resolved spectroscopy data
     % A specdata2D dataset contains a 2D array of data (Z) dependent on two variables 

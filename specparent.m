@@ -1,10 +1,10 @@
 classdef specparent
     % specparent - Common methods for 1D and 2D data
-    % Spectr-O-Matic version 2.4
+    % Spectr-O-Matic version 2.4.2
     %
     % Parent class for specdata and specdata2D
     %
-    % Petar Lambrev, 2012-2022
+    % Petar Lambrev, 2012-2023
         
     properties
         ID string = "";        % string identifying the spectrum
@@ -1876,6 +1876,41 @@ classdef specparent
            % See also: deletemetadata, metatable, metaindex, find, findindex      
            
            res = addmetadata(SP,varargin{:});
+       end
+
+       function res = altmeta(SP,AltVars)
+           % ALTMETA Add alternative metadata variables
+           %
+           % Synthax
+           %    res = altmeta(SP,AltVars)
+           %
+           % Description
+           %   res = SP.altmeta(AltVars) creates a copy of one or more 
+           %     categorical metadata variables with an alternative name/values. 
+           %     Useful for creating human-readable metadata.
+           %     AltVars is a struct with fields corresponding to existing
+           %     metadata variables.
+           %     Each field must contain a 2-element cell array. The first
+           %     element contains the new variable name and the second
+           %     element contains the new metadata categories.
+           %
+           % Example
+           %   Vars.Var1 = ["Val1","Val2"];
+           %   Alt.FriendlyName = {'Var1',["Friendly Value 1", "Friendly Value 2"]};
+           %   Dat = Dat.metaindex(Vars);
+           %   Dat = Dat.altmeta(Alt);
+           %  
+           %   As a result, Dat will contain two metadata variables,
+           %   V1 and FriendlyName. The values in V1 will be assigned based
+           %   on the actual data IDs. The values in FriendlyName are
+           %   human-friendly synonyms of ["v1","v2"].
+
+           res = SP;
+           for f = fieldnames(AltVars)'
+               M = res.mt;
+               altVals = renamecats(M.(f{1}),AltVars.(f{1}){2});
+               res = res.addmd(AltVars.(f{1}){1},altVals);
+           end
        end
        
        function res = deletemetadata(SP,VarNames)

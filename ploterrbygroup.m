@@ -50,8 +50,15 @@ function ploterrbygroup(Dat,Err,GroupVars,varargin)
     end
 
     % Create title and legend strings from variable names
-    gIndex = contains(Idx.Properties.VariableNames,GroupVars);    
-    varstring = @(T) join(string(table2cell(T)),2);
+    if isempty(GroupVars)
+        gIndex = true(1,width(Idx));
+    else
+        gIndex = matches(Idx.Properties.VariableNames,GroupVars);
+        if ~any(gIndex)
+            error('The grouping variables were not found in index/metadata');
+        end
+    end
+varstring = @(T) join(string(table2cell(T)),2);
     varnames = string(Idx.Properties.VariableNames);
     if isfield(argstruct,'TitleText') && matches(string(argstruct.TitleText),varnames,'IgnoreCase',true)
         TitleText = varstring(Idx(:,argstruct.TitleText));

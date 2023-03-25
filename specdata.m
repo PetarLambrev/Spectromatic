@@ -7,7 +7,7 @@ classdef specdata < specparent
     % arithmetic, normalization, smoothing, etc., 
     % and plotting
     %
-    % Petar Lambrev, 2012-2022
+    % Petar Lambrev, 2012-2023
 
     properties (Dependent = true, SetAccess = private)
         dim % number of data points

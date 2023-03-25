@@ -16,6 +16,9 @@ http://www.mathworks.com/matlabcentral/fileexchange/32828-spectr-o-matic
 
 Release notes
 
+v. 2.4.2
+- altmeta - add alternative human-friendly versions of metadata
+
 v. 2.4.1
 
 Main features
