@@ -638,7 +638,7 @@ function res = sett(SP,newT)
                plotOneSP(SP)
            else
                for k = 1:numel(SP)
-                   figure;
+%                  figure;
                    plotOneSP(SP(k))
                    title(SP(k).ID)
                end
