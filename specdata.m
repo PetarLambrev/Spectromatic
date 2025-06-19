@@ -807,7 +807,7 @@ classdef specdata < specparent
            end
            
            for k = 1:numel(SP)
-              DS = ['/' SP(k).ID];              
+              DS = "/"+SP(k).ID;              
               h5create(FileName, DS, [2 SP(k).dim])
               h5write(FileName, DS, [SP(k).X'; SP(k).Y'])
               for p = 1:length(Props)                  
