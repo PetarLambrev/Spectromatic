@@ -18,7 +18,7 @@ classdef specdata < specparent
        function SP = specdata(newX, newY, ID, varargin)
            % SPECDATA Create specdata objects
            %
-           % Synthax
+           % Syntax
            % SP = specdata
            % SP = specdata(X, Y)
            % SP = specdata(X, Y, ID)
@@ -169,7 +169,7 @@ classdef specdata < specparent
        function n = get.dim(SP)
            % dim - number of data points
            %
-           % Synthax
+           % Syntax
            %    n = MySpectrum.dim
            n = zeros(1,length(SP));
            for i = 1:length(SP)
@@ -180,7 +180,7 @@ classdef specdata < specparent
        function res = mldivide(A,B)
            % MLDIVIDE Solve systems of linear equations Ax = B for x
            % 
-           % Synthax
+           % Syntax
            % x = A \ B
            % x = mldivide(A,B)
            %
@@ -223,7 +223,7 @@ classdef specdata < specparent
        function [TF,P] = islocalmax(SP,varargin)
            % ISLOCALMAX Find local maxima
            %
-           % Synthax
+           % Syntax
            %   [TF,P] = islocalmax(SP)
            %   [TF,P] = islocalmax(SP,Name,Value)
            %
@@ -237,7 +237,7 @@ classdef specdata < specparent
        function [TF,P] = islocalmin(SP,varargin)
            % ISLOCALMIN Find local minima
            %
-           % Synthax
+           % Syntax
            %   [TF,P] = islocalmin(SP)
            %   [TF,P] = islocalmin(SP,Name,Value)
            %
@@ -251,7 +251,7 @@ classdef specdata < specparent
         function res = xymat(SP)
            % XYMAT Matrix of X-Y values
            %
-           % Synthax
+           % Syntax
            %    res = Sp.xymat;
            %
            % Description
@@ -273,7 +273,7 @@ classdef specdata < specparent
         function tbl = xytable(SP)
             % XYTABLE Create an X-Y table from specdata objects
             %
-            % Synthax
+            % Syntax
             %    tbl = xytable(SP)
             %
             % Description
@@ -425,7 +425,7 @@ classdef specdata < specparent
        function res = merge(SP, weights)
             % MERGE Join spectra into one
             % 
-            % Synthax
+            % Syntax
             %     B  = A.merge
             %     B  = A.merge(weights)
             %     B  = merge(A,...)            
@@ -491,7 +491,7 @@ classdef specdata < specparent
               function p = plot(SP,options)
            % PLOT Plot spectra
            %
-           % Synthax
+           % Syntax
            %    plot(A)
            %    p = plot(A,Name,Value)
            %
@@ -509,8 +509,8 @@ classdef specdata < specparent
            %    LegendInterpreter - legend interpreter ("tex","none")
            %    LegendBox - legend box ("on","off")
            %    LegendLocation - legend location ("best")
-           %    SmoothLine - spline interpolation between data points
-           %    (true,false)
+           %    SmoothLine - interpolation between data points (true|false)
+           %    SmoothMethod - interpolation method for smoothing ("spline")
            %    Line properties (LineWidth, Marker, etc.)
            
            arguments
@@ -521,11 +521,12 @@ classdef specdata < specparent
                options.LegendLocation string = "best"
                options.LegendBox string = "off"
                options.SmoothLine (1,1) logical = false
+               options.SmoothMethod string = "spline"
                options.?matlab.graphics.chart.primitive.Line
            end
            
            SP = SP(:);
-           plotOptions = rmfield(options,["LegendText","LegendFun","LegendBox","LegendInterpreter","LegendLocation","SmoothLine"]);
+           plotOptions = rmfield(options,["LegendText","LegendFun","LegendBox","LegendInterpreter","LegendLocation","SmoothLine","SmoothMethod"]);
            Xmin = min(SP(1).X); Xmax = max(SP(1).X);
            
            h = matlab.graphics.chart.primitive.Line.empty;
@@ -546,7 +547,7 @@ classdef specdata < specparent
                    dx = (max(SP(i).X) - min(SP(i).X)) / nx;
                    try
                        smx = min(SP(i).X):dx:max(SP(i).X);
-                       smy = interp1(SP(i).X,SP(i).Y,smx,'spline');
+                       smy = interp1(SP(i).X,SP(i).Y,smx,options.SmoothMethod);
                        handle = plot(smx,smy,'-o','MarkerIndices',1:10:numel(smx),plotOptions);
                    catch
                        warning('Cannot interpolate data for smoothing.')
@@ -557,7 +558,7 @@ classdef specdata < specparent
                    
                end
                h = [h handle];
-               hold all;
+               hold on;
            end
            
            % Create Legend
@@ -571,7 +572,11 @@ classdef specdata < specparent
                PropTable = SP.proptable;
                if isempty(setdiff(LText,PropTable.Properties.VariableNames))
                    % Display specdata properties
-                   LString = join(string(PropTable{:,LText}),2);
+                   LString = [];
+                   for lti = 1:numel(LText)                       
+                       LString = [LString, string(PropTable{:,LText(lti)})];
+                   end
+                      LString = join(LString,2);
                else
                    % Display custom legend text
                    LString = LText;
@@ -602,7 +607,7 @@ classdef specdata < specparent
        function ploterror(S,E,varargin)
            % PLOTERROR Plot spectra with shaded error
            %
-           % Synthax
+           % Syntax
            %   plot(S,E)
            %   plot(S,E,Name,Value)
            %
@@ -635,7 +640,7 @@ classdef specdata < specparent
 
        function w = fwhm(S)
            %FWHM Find Full Width at Half Maximum of spectra
-           %   Synthax
+           %   Syntax
            %     w = fwhm(S)
            %
            %   Description
@@ -670,7 +675,7 @@ classdef specdata < specparent
        function markpeaks(spect,delta,varargin)
            % MARKPEAKS Mark peaks on the current graph
            % 
-           % Synthax
+           % Syntax
            %    markpeaks(A)  
            %    markpeaks(A, delta)
            %    markpeaks(A, delta, [Text properties])
@@ -748,7 +753,7 @@ classdef specdata < specparent
        function save(SP,filename)
            % SAVE Save spectra as tab-delimited ASCII file.
            %
-           % Synthax
+           % Syntax
            %    A.save(filename)
            %
            % Description
@@ -788,7 +793,7 @@ classdef specdata < specparent
        function saveh5(SP,FileName)
            % SAVEH5 Save spectra as an HDF5 file.
            %
-           % Synthax
+           % Syntax
            %    A.saveh5(filename)
            
            Profile = 'Simple';
@@ -824,7 +829,7 @@ classdef specdata < specparent
        function data2D = unstack(data, expr)
            % UNSTACK Convert specdata array to specdata2D array
            %
-           % Synthax
+           % Syntax
            %   data2D = unstack(data)
            %   data2D = unstack(data, expr)
            %
@@ -876,7 +881,7 @@ classdef specdata < specparent
         function S = load(FilePattern,varargin)
             % LOAD Load spectra from ASCII file
             %
-            % Synthax
+            % Syntax
             %    data = specdata.load(files,[options])
             %
             %    files: a cell array of filenames, 
