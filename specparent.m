@@ -1,10 +1,10 @@
 classdef specparent
     % specparent - Common methods for 1D and 2D data
-    % Spectr-O-Matic version 2.4.2
+    % Spectr-O-Matic version 2026-01
     %
     % Parent class for specdata and specdata2D
     %
-    % Petar Lambrev, 2012-2023
+    % Petar Lambrev, 2012-2026
         
     properties
         ID string = "";        % string identifying the spectrum
@@ -1847,8 +1847,11 @@ classdef specparent
            varNames = fieldnames(varStruct);
            res = SP;
            for varName = varNames'
-               for k = 1:numel(SP)
-                   varValue = varStruct.(varName{1});
+               varValue = varStruct.(varName{1});
+               if numel(SP)>1 && isscalar(varValue)
+                   varValue = repmat(varValue,numel(SP),1);
+               end
+               for k = 1:numel(SP)                                      
                    res(k).Metadata(1).(varName{1}) = varValue(k);
                end
            end

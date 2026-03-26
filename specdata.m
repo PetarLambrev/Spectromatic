@@ -1,13 +1,13 @@
 classdef specdata < specparent
     % specdata - one-way (X/Y) spectroscopy data
-    % Spectr-O-Matic version 2.4
+    % Spectr-O-Matic version 2026-01
     %
     % Container for X-Y data (wavelength, amplitude)
     % and methods for general spectral manipulation - 
     % arithmetic, normalization, smoothing, etc., 
     % and plotting
     %
-    % Petar Lambrev, 2012-2023
+    % Petar Lambrev, 2012-2026
 
     properties (Dependent = true, SetAccess = private)
         dim % number of data points
@@ -18,7 +18,7 @@ classdef specdata < specparent
        function SP = specdata(newX, newY, ID, varargin)
            % SPECDATA Create specdata objects
            %
-           % Syntax
+           % Synthax
            % SP = specdata
            % SP = specdata(X, Y)
            % SP = specdata(X, Y, ID)
@@ -169,7 +169,7 @@ classdef specdata < specparent
        function n = get.dim(SP)
            % dim - number of data points
            %
-           % Syntax
+           % Synthax
            %    n = MySpectrum.dim
            n = zeros(1,length(SP));
            for i = 1:length(SP)
@@ -180,7 +180,7 @@ classdef specdata < specparent
        function res = mldivide(A,B)
            % MLDIVIDE Solve systems of linear equations Ax = B for x
            % 
-           % Syntax
+           % Synthax
            % x = A \ B
            % x = mldivide(A,B)
            %
@@ -223,7 +223,7 @@ classdef specdata < specparent
        function [TF,P] = islocalmax(SP,varargin)
            % ISLOCALMAX Find local maxima
            %
-           % Syntax
+           % Synthax
            %   [TF,P] = islocalmax(SP)
            %   [TF,P] = islocalmax(SP,Name,Value)
            %
@@ -237,7 +237,7 @@ classdef specdata < specparent
        function [TF,P] = islocalmin(SP,varargin)
            % ISLOCALMIN Find local minima
            %
-           % Syntax
+           % Synthax
            %   [TF,P] = islocalmin(SP)
            %   [TF,P] = islocalmin(SP,Name,Value)
            %
@@ -251,7 +251,7 @@ classdef specdata < specparent
         function res = xymat(SP)
            % XYMAT Matrix of X-Y values
            %
-           % Syntax
+           % Synthax
            %    res = Sp.xymat;
            %
            % Description
@@ -273,7 +273,7 @@ classdef specdata < specparent
         function tbl = xytable(SP)
             % XYTABLE Create an X-Y table from specdata objects
             %
-            % Syntax
+            % Synthax
             %    tbl = xytable(SP)
             %
             % Description
@@ -425,7 +425,7 @@ classdef specdata < specparent
        function res = merge(SP, weights)
             % MERGE Join spectra into one
             % 
-            % Syntax
+            % Synthax
             %     B  = A.merge
             %     B  = A.merge(weights)
             %     B  = merge(A,...)            
@@ -491,7 +491,7 @@ classdef specdata < specparent
               function p = plot(SP,options)
            % PLOT Plot spectra
            %
-           % Syntax
+           % Synthax
            %    plot(A)
            %    p = plot(A,Name,Value)
            %
@@ -607,7 +607,7 @@ classdef specdata < specparent
        function ploterror(S,E,varargin)
            % PLOTERROR Plot spectra with shaded error
            %
-           % Syntax
+           % Synthax
            %   plot(S,E)
            %   plot(S,E,Name,Value)
            %
@@ -640,7 +640,7 @@ classdef specdata < specparent
 
        function w = fwhm(S)
            %FWHM Find Full Width at Half Maximum of spectra
-           %   Syntax
+           %   Synthax
            %     w = fwhm(S)
            %
            %   Description
@@ -675,7 +675,7 @@ classdef specdata < specparent
        function markpeaks(spect,delta,varargin)
            % MARKPEAKS Mark peaks on the current graph
            % 
-           % Syntax
+           % Synthax
            %    markpeaks(A)  
            %    markpeaks(A, delta)
            %    markpeaks(A, delta, [Text properties])
@@ -753,7 +753,7 @@ classdef specdata < specparent
        function save(SP,filename)
            % SAVE Save spectra as tab-delimited ASCII file.
            %
-           % Syntax
+           % Synthax
            %    A.save(filename)
            %
            % Description
@@ -793,7 +793,7 @@ classdef specdata < specparent
        function saveh5(SP,FileName)
            % SAVEH5 Save spectra as an HDF5 file.
            %
-           % Syntax
+           % Synthax
            %    A.saveh5(filename)
            
            Profile = 'Simple';
@@ -829,7 +829,7 @@ classdef specdata < specparent
        function data2D = unstack(data, expr)
            % UNSTACK Convert specdata array to specdata2D array
            %
-           % Syntax
+           % Synthax
            %   data2D = unstack(data)
            %   data2D = unstack(data, expr)
            %
@@ -881,7 +881,7 @@ classdef specdata < specparent
         function S = load(FilePattern,varargin)
             % LOAD Load spectra from ASCII file
             %
-            % Syntax
+            % Synthax
             %    data = specdata.load(files,[options])
             %
             %    files: a cell array of filenames, 

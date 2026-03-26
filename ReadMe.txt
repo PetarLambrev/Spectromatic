@@ -1,8 +1,8 @@
 Spectr-O-Matic Toolbox for MATLAB(R)
 
-by Petar H. Lambrev (2011-2022)
+by Petar H. Lambrev (2012-2026)
 
-Version 2.4.1
+Version 2026-01
 
 Spectr-O-Matic is a MATLAB toolbox for analysis of spectroscopy data.  
 
@@ -12,9 +12,12 @@ For introduction and tutorials, see
 https://plambrev.wixsite.com/spectromatic
 
 Download the latest version at
-http://www.mathworks.com/matlabcentral/fileexchange/32828-spectr-o-matic
+https://github.com/PetarLambrev/Spectromatic
 
 Release notes
+
+v. 2026-01
+- setmetadata (setmd) automatically distributes metadata values to all spectra in the array
 
 v. 2.4.2
 - altmeta - add alternative human-friendly versions of metadata

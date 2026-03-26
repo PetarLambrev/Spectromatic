@@ -1,8 +1,8 @@
 classdef specdata2D < specparent
     % specdata2D - two-way (time-resolved) data
-    % Spectr-O-Matic version 2.4
+    % Spectr-O-Matic version 2026-01
     % 
-    % Petar Lambrev, 2012-2023
+    % Petar Lambrev, 2012-2026
     %
     % Container for time-resolved spectroscopy data
     % A specdata2D dataset contains a 2D array of data (Z) dependent on two variables 
@@ -638,7 +638,7 @@ function res = sett(SP,newT)
                plotOneSP(SP)
            else
                for k = 1:numel(SP)
-%                  figure;
+                   figure;
                    plotOneSP(SP(k))
                    title(SP(k).ID)
                end
